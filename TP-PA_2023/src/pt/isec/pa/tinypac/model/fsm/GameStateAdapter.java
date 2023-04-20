@@ -1,14 +1,14 @@
 package pt.isec.pa.tinypac.model.fsm;
-import pt.isec.pa.tinypac.model.data.game.Game;
+import pt.isec.pa.tinypac.model.data.maze.Maze;
 
 abstract class GameStateAdapter implements IGameState {
     //Internal Data
-    protected Game game;
+    protected Maze maze;
     protected GameContext context;
 
     //Constructor
-    protected GameStateAdapter(GameContext context, Game game) {
-        this.game = game;
+    protected GameStateAdapter(GameContext context, Maze maze) {
+        this.maze = maze;
         this.context = context;
     }
 
@@ -25,19 +25,17 @@ abstract class GameStateAdapter implements IGameState {
 
     //Overrides
     @Override
-    public boolean actionKey() { return false; }
+    public boolean up() { return false; }
     @Override
-    public boolean pacmanFreeTimeOut() { return false; }
+    public boolean down() { return false; }
     @Override
-    public boolean enhancedPacman() { return false; }
+    public boolean left() { return false; }
     @Override
-    public boolean disableEnhancedPacman() { return false; }
+    public boolean right() { return false; }
     @Override
     public boolean pauseGame() { return false; }
     @Override
     public boolean resumeGame() { return false; }
-    @Override
-    public boolean endGame() { return false; }
 
     //Internal Functions
 
