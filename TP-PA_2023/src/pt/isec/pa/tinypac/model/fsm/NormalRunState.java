@@ -1,13 +1,13 @@
 package pt.isec.pa.tinypac.model.fsm;
-import pt.isec.pa.tinypac.model.data.game.Game;
+import pt.isec.pa.tinypac.model.data.maze.Maze;
 
 public class NormalRunState extends GameStateAdapter {
     //Internal Data
 
 
     //Constructor
-    NormalRunState(GameContext context, Game game) {
-        super(context, game);
+    NormalRunState(GameContext context, Maze maze) {
+        super(context, maze);
     }
 
     //Get Methods
@@ -21,18 +21,29 @@ public class NormalRunState extends GameStateAdapter {
 
     //Overrides
     @Override
-    public boolean enhancedPacman() {
-        changeState(new SuperPacmanState(context, game));
+    public boolean up() {
+        changeState(new NormalRunState(context, maze));
+        return true;
+    }
+    @Override
+    public boolean down() {
+        changeState(new NormalRunState(context, maze));
+        return true;
+    }
+    @Override
+    public boolean left() {
+        changeState(new NormalRunState(context, maze));
+        return true;
+    }
+    @Override
+    public boolean right() {
+        changeState(new NormalRunState(context, maze));
         return true;
     }
     @Override
     public boolean pauseGame() {
-        changeState(new PausedState(context, game));
-        return true;
-    }
-    @Override
-    public boolean endGame() {
-        changeState(new GameEndState(context, game));
+        changeState(new PausedState(context, maze));
+        context.gameEngine.pause();
         return true;
     }
     @Override
