@@ -1,17 +1,21 @@
 package pt.isec.pa.tinypac.ui.text;
+import pt.isec.pa.tinypac.gameengine.IGameEngine;
 import pt.isec.pa.tinypac.model.fsm.GameContext;
+import pt.isec.pa.tinypac.ui.curses.CursesGameUI;
 import pt.isec.pa.tinypac.utils.PAInput;
 
-import java.util.Arrays;
+import java.io.IOException;
 
-public class GameUI {
+public class TextGameUI {
     //Internal Data
     GameContext fsm;
+    CursesGameUI cursesUI;
     boolean finish = false;
 
     //Constructor
-    public GameUI(GameContext fsm) {
+    public TextGameUI(GameContext fsm, CursesGameUI cursesUI) {
         this.fsm = fsm;
+        this.cursesUI = cursesUI;
     }
 
     //Get Methods
@@ -21,7 +25,7 @@ public class GameUI {
 
 
     //Methods
-    public void initMenu() {
+    public void initMenu() throws IOException {
         int op;
         do {
             op = PAInput.chooseOption("Tiny-PAc", "Iniciar Jogo", "Consultar Top 5", "Sair");
@@ -29,14 +33,15 @@ public class GameUI {
                 case 1 -> gameStart();
                 case 2 -> topFive();
             }
-        } while (op >= 3);
+        } while (op > 3);
     }
 
     //Overrides
 
 
     //Internal Functions
-    private void gameStart() {
+    private void gameStart() throws IOException {
+        cursesUI.show();
         while (!finish) {
             switch (fsm.getState()) {
                 case INITSTATE -> initStateUI();
@@ -62,23 +67,30 @@ public class GameUI {
     private void normalRunStateUI() {
         System.out.println("Normal Run State");
         System.out.println("Pacman -> Current Direction: " + fsm.getPacmanDirection()
-        + "\r\nCurrent Position: " + fsm.getPacmanPosition());
+        + "\r\nCurrent Position: " + fsm.getPacmanPosition()
+        + "\r\nMazeX: " + fsm.getMaze()[0].length + ", MazeY: " + fsm.getMaze().length);
         switch (PAInput.chooseOption("Tiny-PAc", "up", "down", "left", "right", "Pause", "Show Maze", "Quit")) {
             case 1 -> fsm.up();
             case 2 -> fsm.down();
             case 3 -> fsm.left();
             case 4 -> fsm.right();
             case 5 -> fsm.pauseGame();
-            case 6 -> {
-
-                for (int i=0; i < 10; i++) {
-                    for (int ii=0; ii < 10; ii++) {
-                        System.out.print(fsm.getMaze()[i][ii]);
-                    }
-                    System.out.print("\r\n");
-                }
-            }
+            case 6 -> showMaze();
             case 7 -> {finish = true;}
+        }
+    }
+    private void showMaze() {
+        for (int i=0; i < fsm.getMaze().length; i++) {
+            System.out.print("|");
+            for (int ii=0; ii < (fsm.getMaze()[0].length * 2); ii++) {
+                if (fsm.getMaze()[i][ii/2] != ' ' && ii % 2 == 0)
+                    System.out.print(fsm.getMaze()[i][ii/2]);
+                else if (ii % 2 == 0)
+                    System.out.print("_");
+                else
+                    System.out.print(" ");
+            }
+            System.out.print("|\r\n");
         }
     }
     private void pausedStateUI() {

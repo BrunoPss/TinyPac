@@ -7,15 +7,16 @@ import pt.isec.pa.tinypac.model.data.maze.Maze;
 
 public class Pacman implements IGameEngineEvolve, IMazeElement {
     //Internal Data
+    public static final char SYMBOL = 'M';
     private Directions direction;
-    private Maze maze;
+    private final Maze maze;
     private int x, y;
 
     //Constructor
-    public Pacman(Maze maze) {
+    public Pacman(Maze maze, int x, int y) {
         this.direction = null;
-        this.x = 5;
-        this.y = 5;
+        this.x = x;
+        this.y = y;
         this.maze = maze;
         this.maze.set(y,x,this);
     }
@@ -39,10 +40,23 @@ public class Pacman implements IGameEngineEvolve, IMazeElement {
     public void evolve(IGameEngine gameEngine, long currentTime) {
         maze.set(y,x,null);
         switch (direction) {
-            case UP -> y--;
-            case DOWN -> y++;
-            case LEFT -> x--;
-            case RIGHT -> x++;
+            case UP -> {
+                if (y > 0) {    // Condicao if (y > 0 && maze.get(y-1, x) == ' ') no bloco que se pretende ir nao tem parede
+                    y--;
+                }
+            }
+            case DOWN -> {
+                if (y < (maze.getMaze().length - 1))
+                    y++;
+            }
+            case LEFT -> {
+                if (x > 0)
+                    x--;
+            }
+            case RIGHT -> {
+                if (x < (maze.getMaze()[0].length - 1))
+                    x++;
+            }
         }
         maze.set(y,x,this);
     }

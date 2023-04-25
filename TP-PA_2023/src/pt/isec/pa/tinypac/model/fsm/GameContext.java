@@ -13,10 +13,10 @@ public class GameContext {
     Pacman pacman;
 
     //Constructor
-    public GameContext() {
+    public GameContext(IGameEngine gameEngine) {
         this.maze = new Maze(10, 10);
-        this.pacman = new Pacman(maze);
-        this.gameEngine = new GameEngine();
+        this.pacman = new Pacman(maze, 5, 5);
+        this.gameEngine = gameEngine;
 
         gameEngine.registerClient(pacman);
 
