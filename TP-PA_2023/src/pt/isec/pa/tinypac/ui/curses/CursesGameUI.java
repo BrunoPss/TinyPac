@@ -4,23 +4,16 @@ import com.googlecode.lanterna.TerminalSize;
 import com.googlecode.lanterna.TextCharacter;
 import com.googlecode.lanterna.TextColor;
 import com.googlecode.lanterna.graphics.TextGraphics;
-import com.googlecode.lanterna.gui2.BasicWindow;
-import com.googlecode.lanterna.gui2.CheckBoxList;
-import com.googlecode.lanterna.gui2.MultiWindowTextGUI;
-import com.googlecode.lanterna.input.KeyStroke;
-import com.googlecode.lanterna.input.KeyType;
 import com.googlecode.lanterna.screen.Screen;
-import com.googlecode.lanterna.screen.TerminalScreen;
 import com.googlecode.lanterna.terminal.DefaultTerminalFactory;
-import com.googlecode.lanterna.terminal.Terminal;
 import pt.isec.pa.tinypac.gameengine.IGameEngine;
 import pt.isec.pa.tinypac.gameengine.IGameEngineEvolve;
 import pt.isec.pa.tinypac.model.fsm.GameContext;
 import pt.isec.pa.tinypac.model.data.Pacman.Pacman;
+import pt.isec.pa.tinypac.model.data.ball.Ball;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+
 
 public class CursesGameUI implements IGameEngineEvolve {
     //Internal Data
@@ -32,6 +25,7 @@ public class CursesGameUI implements IGameEngineEvolve {
         this.fsm = fsm;
         screen = new DefaultTerminalFactory().createScreen();
         screen.setCursorPosition(null);
+
         initMenu();
     }
 
@@ -49,11 +43,12 @@ public class CursesGameUI implements IGameEngineEvolve {
             for (int x=0; x < fsm.getMaze()[0].length; x++) {
                 TextColor tc = switch(env[y][x]) {
                     case Pacman.SYMBOL -> TextColor.ANSI.WHITE;
-                    //case Evolver.SYMBOL -> TextColor.ANSI.YELLOW;
+                    case Ball.SYMBOL -> TextColor.ANSI.GREEN;
                     default -> TextColor.ANSI.BLACK;
                 };
                 TextColor bc = switch(env[y][x]) {
                     case Pacman.SYMBOL -> TextColor.ANSI.GREEN;
+                    case Ball.SYMBOL -> TextColor.ANSI.WHITE;
                     //case Evolver.SYMBOL -> TextColor.ANSI.BLUE;
                     default -> TextColor.ANSI.WHITE;
                 };
@@ -68,6 +63,7 @@ public class CursesGameUI implements IGameEngineEvolve {
     public void evolve(IGameEngine gameEngine, long currentTime) {
         try {
             show();
+            /*
             KeyStroke key = screen.pollInput();
             if (key != null && (key.getKeyType() == KeyType.Escape ||
                                     (key.getKeyType() == KeyType.Character &&
@@ -75,7 +71,7 @@ public class CursesGameUI implements IGameEngineEvolve {
             ){
                 gameEngine.stop();
                 screen.close();
-            }
+            }*/
         } catch (IOException e) { }
     }
 

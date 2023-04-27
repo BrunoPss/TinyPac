@@ -1,5 +1,6 @@
 package pt.isec.pa.tinypac.model.fsm;
 import pt.isec.pa.tinypac.model.data.maze.Maze;
+import pt.isec.pa.tinypac.model.data.maze.MazeManager;
 
 public class InitState extends GameStateAdapter {
     //Internal Data
@@ -8,6 +9,7 @@ public class InitState extends GameStateAdapter {
     //Constructor
     InitState(GameContext context, Maze maze) {
         super(context, maze);
+        MazeManager.loadLevel(maze, "C:\\Projects\\TP-PA_2023\\TP-PA_2023\\src\\pt\\isec\\pa\\tinypac\\model\\data\\levels\\level00.txt");
     }
 
     //Get Methods
