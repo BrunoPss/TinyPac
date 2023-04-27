@@ -1,6 +1,7 @@
 package pt.isec.pa.tinypac.gameengine;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 public final class GameEngine implements IGameEngine {
@@ -37,7 +38,7 @@ public final class GameEngine implements IGameEngine {
         controlThread = new GameEngineThread(interval);
         setState(GameEngineState.RUNNING);
         controlThread.start();
-        return false;
+        return true;
     }
 
     @Override
@@ -61,7 +62,7 @@ public final class GameEngine implements IGameEngine {
         if (state != GameEngineState.PAUSED)
             return false;
         setState(GameEngineState.RUNNING);
-        return false;
+        return true;
     }
 
     @Override
@@ -105,7 +106,7 @@ public final class GameEngine implements IGameEngine {
                 if (state == GameEngineState.RUNNING) {
                     new Thread(() -> {
                         long time = System.nanoTime();
-                        clients.forEach(client -> client.evolve(GameEngine.this, time));
+                        List.copyOf(clients).forEach(client -> client.evolve(GameEngine.this, time));
                     }).start();
                 }
                 try {
