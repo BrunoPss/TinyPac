@@ -2,35 +2,29 @@ package pt.isec.pa.tinypac.model.data.Pacman;
 import pt.isec.pa.tinypac.gameengine.IGameEngineEvolve;
 import pt.isec.pa.tinypac.gameengine.IGameEngine;
 import pt.isec.pa.tinypac.model.data.Directions;
+import pt.isec.pa.tinypac.model.data.element.Element;
 import pt.isec.pa.tinypac.model.data.maze.IMazeElement;
 import pt.isec.pa.tinypac.model.data.maze.Maze;
 
-public class Pacman implements IGameEngineEvolve, IMazeElement {
+public class Pacman extends Element implements IGameEngineEvolve, IMazeElement {
     //Internal Data
     public static final char SYMBOL = 'M';
     private Directions direction;
-    private final Maze maze;
-    private int x, y;
+    //private final Maze maze;
+    //private int x, y;
 
     //Constructor
     public Pacman(Maze maze, int x, int y) {
+        super(maze, x, y);
         this.direction = null;
-        this.x = x;
-        this.y = y;
-        this.maze = maze;
-        this.maze.set(y,x,this);
     }
 
     //Get Methods
-    public String getCurrentDirection() {
-        return direction.toString();
-    }
-    public String getCurrentPosition() { return Integer.toString(x) + " " + Integer.toString(y); }
+
+
 
     //Set Methods
-    public void setDirection(Directions direction) {
-        this.direction = direction;
-    }
+    public void setDirection(Directions direction) { this.direction = direction; }
 
     //Methods
 

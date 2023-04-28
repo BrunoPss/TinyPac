@@ -66,9 +66,9 @@ public class TextGameUI {
     }
     private void normalRunStateUI() {
         System.out.println("Normal Run State");
-        System.out.println("Pacman -> Current Direction: " + fsm.getPacmanDirection()
-        + "\r\nCurrent Position: " + fsm.getPacmanPosition()
-        + "\r\nMazeX: " + fsm.getMaze()[0].length + ", MazeY: " + fsm.getMaze().length);
+        //System.out.println("Pacman -> Current Direction: " + fsm.getPacmanDirection()
+        //+ "\r\nCurrent Position: " + fsm.getPacmanPosition()
+        //+ "\r\nMazeX: " + fsm.getMaze()[0].length + ", MazeY: " + fsm.getMaze().length);
         switch (PAInput.chooseOption("Tiny-PAc", "up", "down", "left", "right", "Pause", "Show Maze", "Quit")) {
             case 1 -> fsm.up();
             case 2 -> fsm.down();

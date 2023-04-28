@@ -9,7 +9,7 @@ public class InitState extends GameStateAdapter {
     //Constructor
     InitState(GameContext context, Maze maze) {
         super(context, maze);
-        MazeManager.loadLevel(maze, "C:\\Projects\\TP-PA_2023\\TP-PA_2023\\src\\pt\\isec\\pa\\tinypac\\model\\data\\levels\\level00.txt");
+        //MazeManager.loadLevel(maze, context.gameEngine, "C:\\Projects\\TP-PA_2023\\TP-PA_2023\\src\\pt\\isec\\pa\\tinypac\\model\\data\\levels\\level01.txt");
     }
 
     //Get Methods
