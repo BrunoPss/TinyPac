@@ -2,6 +2,7 @@ package pt.isec.pa.tinypac.utils.files;
 
 import java.io.*;
 import java.util.Scanner;
+//NOT BEING USED
 
 public class FileHandler {
     //Internal Data

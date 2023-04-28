@@ -1,14 +1,14 @@
-package pt.isec.pa.tinypac.model.data.ball;
+package pt.isec.pa.tinypac.model.data.wall;
 
 import pt.isec.pa.tinypac.model.data.element.Element;
 import pt.isec.pa.tinypac.model.data.maze.Maze;
 
-public class Ball extends Element {
+public class Wall extends Element {
     //Internal Data
-    public static final char SYMBOL = 'o';
+    public static final char SYMBOL = 'x';
 
     //Constructor
-    public Ball(Maze maze, int x, int y) {
+    public Wall(Maze maze, int x, int y) {
         super(maze, x, y);
     }
 
@@ -24,7 +24,7 @@ public class Ball extends Element {
     //Overrides
     @Override
     public char getSymbol() {
-        return 'o';
+        return 'x';
     }
 
     //Internal Functions

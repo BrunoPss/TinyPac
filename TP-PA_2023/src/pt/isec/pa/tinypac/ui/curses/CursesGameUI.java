@@ -8,6 +8,7 @@ import com.googlecode.lanterna.screen.Screen;
 import com.googlecode.lanterna.terminal.DefaultTerminalFactory;
 import pt.isec.pa.tinypac.gameengine.IGameEngine;
 import pt.isec.pa.tinypac.gameengine.IGameEngineEvolve;
+import pt.isec.pa.tinypac.model.data.wall.Wall;
 import pt.isec.pa.tinypac.model.fsm.GameContext;
 import pt.isec.pa.tinypac.model.data.Pacman.Pacman;
 import pt.isec.pa.tinypac.model.data.ball.Ball;
@@ -42,15 +43,15 @@ public class CursesGameUI implements IGameEngineEvolve {
         for (int y=0; y < fsm.getMaze().length; y++) {
             for (int x=0; x < fsm.getMaze()[0].length; x++) {
                 TextColor tc = switch(env[y][x]) {
-                    case Pacman.SYMBOL -> TextColor.ANSI.WHITE;
-                    case Ball.SYMBOL -> TextColor.ANSI.GREEN;
+                    case Pacman.SYMBOL -> TextColor.ANSI.YELLOW_BRIGHT;
+                    case Wall.SYMBOL -> TextColor.ANSI.WHITE;
+                    case Ball.SYMBOL -> TextColor.ANSI.YELLOW;
                     default -> TextColor.ANSI.BLACK;
                 };
                 TextColor bc = switch(env[y][x]) {
-                    case Pacman.SYMBOL -> TextColor.ANSI.GREEN;
-                    case Ball.SYMBOL -> TextColor.ANSI.WHITE;
-                    //case Evolver.SYMBOL -> TextColor.ANSI.BLUE;
-                    default -> TextColor.ANSI.WHITE;
+                    case Pacman.SYMBOL -> TextColor.ANSI.YELLOW_BRIGHT;
+                    case Wall.SYMBOL -> TextColor.ANSI.BLUE;
+                    default -> TextColor.ANSI.WHITE_BRIGHT;
                 };
                 screen.setCharacter(x,y, TextCharacter.fromCharacter(env[y][x],tc,bc)[0]);
             }
