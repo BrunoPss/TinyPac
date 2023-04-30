@@ -1,4 +1,6 @@
 package pt.isec.pa.tinypac.model.fsm;
+import pt.isec.pa.tinypac.gameengine.IGameEngineEvolve;
+import pt.isec.pa.tinypac.model.data.element.ElementType;
 import pt.isec.pa.tinypac.model.data.maze.Maze;
 import pt.isec.pa.tinypac.model.data.maze.MazeManager;
 
@@ -9,7 +11,8 @@ public class InitState extends GameStateAdapter {
     //Constructor
     InitState(GameContext context, Maze maze) {
         super(context, maze);
-        //MazeManager.loadLevel(maze, context.gameEngine, "C:\\Projects\\TP-PA_2023\\TP-PA_2023\\src\\pt\\isec\\pa\\tinypac\\model\\data\\levels\\level01.txt");
+        super.context.entities = MazeManager.loadLevel(maze, "C:\\Projects\\TP-PA_2023\\TP-PA_2023\\src\\pt\\isec\\pa\\tinypac\\model\\data\\levels\\level01.txt");
+        this.context.gameEngine.registerClient((IGameEngineEvolve) super.context.entities.get(ElementType.PACMAN));
     }
 
     //Get Methods

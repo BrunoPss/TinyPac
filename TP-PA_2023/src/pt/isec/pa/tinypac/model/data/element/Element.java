@@ -1,6 +1,5 @@
 package pt.isec.pa.tinypac.model.data.element;
 
-import pt.isec.pa.tinypac.model.data.Directions;
 import pt.isec.pa.tinypac.model.data.maze.IMazeElement;
 import pt.isec.pa.tinypac.model.data.maze.Maze;
 
@@ -17,7 +16,12 @@ public abstract class Element implements IMazeElement {
     }
 
     //Get Methods
-
+    public int getX() {
+        return this.x;
+    }
+    public int getY() {
+        return this.y;
+    }
 
     //Set Methods
 

@@ -1,17 +1,14 @@
 package pt.isec.pa.tinypac.model.fsm;
-import pt.isec.pa.tinypac.gameengine.GameEngine;
 import pt.isec.pa.tinypac.gameengine.IGameEngine;
 import pt.isec.pa.tinypac.gameengine.IGameEngineEvolve;
 import pt.isec.pa.tinypac.model.data.Directions;
-import pt.isec.pa.tinypac.model.data.Pacman.Pacman;
+import pt.isec.pa.tinypac.model.data.pacman.Pacman;
 import pt.isec.pa.tinypac.model.data.element.Element;
 import pt.isec.pa.tinypac.model.data.element.ElementType;
 import pt.isec.pa.tinypac.model.data.maze.Maze;
 import pt.isec.pa.tinypac.model.data.maze.MazeManager;
 
 import java.util.Dictionary;
-import java.util.HashMap;
-import java.util.Hashtable;
 
 public class GameContext {
     //Internal Data
@@ -23,11 +20,7 @@ public class GameContext {
     //Constructor
     public GameContext(IGameEngine gameEngine) {
         this.maze = new Maze(MazeManager.getYSize("C:\\Projects\\TP-PA_2023\\TP-PA_2023\\src\\pt\\isec\\pa\\tinypac\\model\\data\\levels\\level01.txt"), MazeManager.getXSize("C:\\Projects\\TP-PA_2023\\TP-PA_2023\\src\\pt\\isec\\pa\\tinypac\\model\\data\\levels\\level01.txt"));
-        this.entities = MazeManager.loadLevel(maze, this.gameEngine, "C:\\Projects\\TP-PA_2023\\TP-PA_2023\\src\\pt\\isec\\pa\\tinypac\\model\\data\\levels\\level01.txt");
-        //this.pacman = new Pacman(maze, 1, 1);
         this.gameEngine = gameEngine;
-
-        gameEngine.registerClient((IGameEngineEvolve) entities.get(ElementType.PACMAN));
 
         this.state = new InitState(this, maze);
     }
@@ -36,6 +29,7 @@ public class GameContext {
     public GameState getState() {
         return state.getState();
     }
+    public int getPacmanPoints() { return ((Pacman) entities.get(ElementType.PACMAN)).getPoints(); }
     //public String getPacmanDirection() { return entities.get(ElementType.PACMAN).getCurrentDirection(); }
     //public String getPacmanPosition() { return entities.get(ElementType.PACMAN).getCurrentPosition(); }
     public char[][] getMaze() { return maze.getMaze(); }
