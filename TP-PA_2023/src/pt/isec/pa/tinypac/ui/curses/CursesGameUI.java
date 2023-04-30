@@ -10,7 +10,7 @@ import pt.isec.pa.tinypac.gameengine.IGameEngine;
 import pt.isec.pa.tinypac.gameengine.IGameEngineEvolve;
 import pt.isec.pa.tinypac.model.data.wall.Wall;
 import pt.isec.pa.tinypac.model.fsm.GameContext;
-import pt.isec.pa.tinypac.model.data.Pacman.Pacman;
+import pt.isec.pa.tinypac.model.data.pacman.Pacman;
 import pt.isec.pa.tinypac.model.data.ball.Ball;
 
 import java.io.IOException;
@@ -19,6 +19,8 @@ import java.io.IOException;
 public class CursesGameUI implements IGameEngineEvolve {
     //Internal Data
     Screen screen;
+    TextGraphics tGraphics;
+    TerminalSize size;
     GameContext fsm;
 
     //Constructor
@@ -64,6 +66,8 @@ public class CursesGameUI implements IGameEngineEvolve {
     public void evolve(IGameEngine gameEngine, long currentTime) {
         try {
             show();
+            updatePoints();
+
             /*
             KeyStroke key = screen.pollInput();
             if (key != null && (key.getKeyType() == KeyType.Escape ||
@@ -80,8 +84,8 @@ public class CursesGameUI implements IGameEngineEvolve {
     private void initMenu() throws IOException {
         TextColor tColor = TextColor.ANSI.WHITE;
         TextColor bColor = TextColor.ANSI.GREEN;
-        TerminalSize size;
-        TextGraphics tGraphics = screen.newTextGraphics();
+
+        tGraphics = screen.newTextGraphics();
 
         screen.startScreen();
         size = screen.getTerminalSize();
@@ -91,6 +95,11 @@ public class CursesGameUI implements IGameEngineEvolve {
         tGraphics.putString(0,size.getRows()-1, "Bruno Guiomar - 2021137345");
         tGraphics.putString(size.getColumns()-33, size.getRows()-1, "DEIS-ISEC-IPC LEI-CE PA 2022/2023");
 
+        tGraphics.putString(size.getColumns()-15, 0, "Points: ");
+
         screen.refresh();
+    }
+    private void updatePoints() {
+        tGraphics.putString(size.getColumns()-5, 0, String.valueOf(fsm.getPacmanPoints()));
     }
 }

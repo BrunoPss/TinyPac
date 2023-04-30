@@ -1,6 +1,6 @@
 package pt.isec.pa.tinypac.model.data.element;
 
-import pt.isec.pa.tinypac.model.data.Pacman.Pacman;
+import pt.isec.pa.tinypac.model.data.pacman.Pacman;
 import pt.isec.pa.tinypac.model.data.ball.Ball;
 import pt.isec.pa.tinypac.model.data.cave.Cave;
 import pt.isec.pa.tinypac.model.data.fruit.Fruit;

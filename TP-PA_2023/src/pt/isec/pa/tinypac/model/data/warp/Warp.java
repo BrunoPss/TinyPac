@@ -6,6 +6,7 @@ import pt.isec.pa.tinypac.model.data.maze.Maze;
 public class Warp extends Element {
     //Internal Data
     public static final char SYMBOL = 'W';
+    private Warp complementWarp = null;
 
     //Constructor
     public Warp(Maze maze, int x, int y) {
@@ -13,10 +14,14 @@ public class Warp extends Element {
     }
 
     //Get Methods
-
+    public Warp getComplementWarp() {
+        return this.complementWarp;
+    }
 
     //Set Methods
-
+    public void setComplementWarp(Element warp) {
+        this.complementWarp = (Warp) warp;
+    }
 
     //Methods
 
