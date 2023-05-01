@@ -41,9 +41,19 @@ public class NormalRunState extends GameStateAdapter {
         return true;
     }
     @Override
+    public boolean enhancedPacman() {
+        changeState(new SuperPacmanState(context, maze));
+        return true;
+    }
+    @Override
     public boolean pauseGame() {
         changeState(new PausedState(context, maze));
         context.gameEngine.pause();
+        return true;
+    }
+    @Override
+    public boolean restart() {
+        changeState(new InitState(context, maze));
         return true;
     }
     @Override
