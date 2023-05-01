@@ -6,7 +6,11 @@ public interface IGameState {
     boolean down();
     boolean left();
     boolean right();
+    boolean enhancedPacman();
+    boolean disableEnhancedPacman();
     boolean pauseGame();
     boolean resumeGame();
+    boolean restart();
+    boolean endGame();
     GameState getState();
 }

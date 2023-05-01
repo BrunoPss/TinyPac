@@ -33,9 +33,17 @@ abstract class GameStateAdapter implements IGameState {
     @Override
     public boolean right() { return false; }
     @Override
+    public boolean enhancedPacman() { return false; }
+    @Override
+    public boolean disableEnhancedPacman() { return false; }
+    @Override
     public boolean pauseGame() { return false; }
     @Override
     public boolean resumeGame() { return false; }
+    @Override
+    public boolean restart() { return false; }
+    @Override
+    public boolean endGame() { return false; }
 
     //Internal Functions
 
