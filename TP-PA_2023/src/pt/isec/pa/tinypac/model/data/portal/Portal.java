@@ -1,15 +1,15 @@
 package pt.isec.pa.tinypac.model.data.portal;
 
 import pt.isec.pa.tinypac.model.data.element.Element;
-import pt.isec.pa.tinypac.model.data.maze.Maze;
+import pt.isec.pa.tinypac.model.data.game.Game;
 
 public class Portal extends Element {
     //Internal Data
     public static final char SYMBOL = 'Y';
 
     //Constructor
-    public Portal(Maze maze, int x, int y) {
-        super(maze, x, y);
+    public Portal(Game gameData, int x, int y) {
+        super(gameData, x, y);
     }
 
     //Get Methods

@@ -1,7 +1,7 @@
 package pt.isec.pa.tinypac.model.data.warp;
 
 import pt.isec.pa.tinypac.model.data.element.Element;
-import pt.isec.pa.tinypac.model.data.maze.Maze;
+import pt.isec.pa.tinypac.model.data.game.Game;
 
 public class Warp extends Element {
     //Internal Data
@@ -9,8 +9,8 @@ public class Warp extends Element {
     private Warp complementWarp = null;
 
     //Constructor
-    public Warp(Maze maze, int x, int y) {
-        super(maze, x, y);
+    public Warp(Game gameData, int x, int y) {
+        super(gameData, x, y);
     }
 
     //Get Methods

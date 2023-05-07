@@ -1,5 +1,5 @@
 package pt.isec.pa.tinypac.ui.text;
-import pt.isec.pa.tinypac.gameengine.IGameEngine;
+
 import pt.isec.pa.tinypac.model.fsm.GameContext;
 import pt.isec.pa.tinypac.ui.curses.CursesGameUI;
 import pt.isec.pa.tinypac.utils.PAInput;
