@@ -1,14 +1,15 @@
 package pt.isec.pa.tinypac.model.fsm;
-import pt.isec.pa.tinypac.model.data.maze.Maze;
+
+import pt.isec.pa.tinypac.model.data.game.Game;
 
 abstract class GameStateAdapter implements IGameState {
     //Internal Data
-    protected Maze maze;
+    protected Game gameData;
     protected GameContext context;
 
     //Constructor
-    protected GameStateAdapter(GameContext context, Maze maze) {
-        this.maze = maze;
+    protected GameStateAdapter(GameContext context, Game gameData) {
+        this.gameData = gameData;
         this.context = context;
     }
 

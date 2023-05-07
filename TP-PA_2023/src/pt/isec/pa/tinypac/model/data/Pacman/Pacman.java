@@ -1,9 +1,10 @@
 package pt.isec.pa.tinypac.model.data.pacman;
+
 import pt.isec.pa.tinypac.gameengine.IGameEngineEvolve;
 import pt.isec.pa.tinypac.gameengine.IGameEngine;
 import pt.isec.pa.tinypac.model.data.Directions;
 import pt.isec.pa.tinypac.model.data.element.Element;
-import pt.isec.pa.tinypac.model.data.maze.Maze;
+import pt.isec.pa.tinypac.model.data.game.Game;
 import pt.isec.pa.tinypac.model.data.warp.Warp;
 
 public class Pacman extends Element implements IGameEngineEvolve {
@@ -13,8 +14,8 @@ public class Pacman extends Element implements IGameEngineEvolve {
     private int points;
 
     //Constructor
-    public Pacman(Maze maze, int x, int y) {
-        super(maze, x, y);
+    public Pacman(Game gameData, int x, int y) {
+        super(gameData, x, y);
         this.points = 0;
         this.direction = null;
     }
@@ -33,12 +34,12 @@ public class Pacman extends Element implements IGameEngineEvolve {
     //Overrides
     @Override
     public void evolve(IGameEngine gameEngine, long currentTime) {
-        maze.set(y,x,null);
+        gameData.getMaze().set(y,x,null);
         switch (direction) {
             case UP -> {
                 //Mudar cadeia de if's para switch
                 //Detecao Paredes
-                if ((maze.get(y-1,x) == null && y > 0) || maze.get(y-1,x).getSymbol() != 'x')
+                if ((gameData.getMaze().get(y-1,x) == null && y > 0) || gameData.getMaze().get(y-1,x).getSymbol() != 'x')
                     y--;
 
                 //Detecao Ball
@@ -49,7 +50,7 @@ public class Pacman extends Element implements IGameEngineEvolve {
             }
             case DOWN -> {
                 //Detecao Paredes
-                if ((maze.get(y+1, x) == null && y < maze.getMaze().length - 1) || maze.get(y+1, x).getSymbol() != 'x')
+                if ((gameData.getMaze().get(y+1, x) == null && y < gameData.getMaze().getMaze().length - 1) || gameData.getMaze().get(y+1, x).getSymbol() != 'x')
                     y++;
 
                 //Detecao Ball
@@ -60,7 +61,7 @@ public class Pacman extends Element implements IGameEngineEvolve {
             }
             case LEFT -> {
                 //Detecao Paredes
-                if ((maze.get(y, x-1) == null && x > 0) || maze.get(y, x-1).getSymbol() != 'x')
+                if ((gameData.getMaze().get(y, x-1) == null && x > 0) || gameData.getMaze().get(y, x-1).getSymbol() != 'x')
                     x--;
 
                 //Detecao Ball
@@ -71,7 +72,7 @@ public class Pacman extends Element implements IGameEngineEvolve {
             }
             case RIGHT -> {
                 //Detecao Paredes
-                if ((maze.get(y, x+1) == null && x < maze.getMaze()[0].length - 1) || maze.get(y, x+1).getSymbol() != 'x')
+                if ((gameData.getMaze().get(y, x+1) == null && x < gameData.getMaze().getMaze()[0].length - 1) || gameData.getMaze().get(y, x+1).getSymbol() != 'x')
                     x++;
 
                 //Detecao Ball
@@ -81,10 +82,9 @@ public class Pacman extends Element implements IGameEngineEvolve {
                 warpDetection();
             }
         }
-        maze.set(y,x,this);
+        gameData.getMaze().set(y,x,this);
     }
 
-    //Overrides
     @Override
     public char getSymbol() {
         return 'M';
@@ -96,15 +96,15 @@ public class Pacman extends Element implements IGameEngineEvolve {
 
     //Internal Functions
     private void warpDetection() {
-        if (maze.get(y,x) != null && maze.get(y,x).getSymbol() == 'W') {
-            Element warp = (Element) maze.get(y,x);
-            maze.set(((Warp) warp).getComplementWarp().getY(), ((Warp) warp).getComplementWarp().getX(), this);
+        if (gameData.getMaze().get(y,x) != null && gameData.getMaze().get(y,x).getSymbol() == 'W') {
+            Element warp = (Element) gameData.getMaze().get(y,x);
+            gameData.getMaze().set(((Warp) warp).getComplementWarp().getY(), ((Warp) warp).getComplementWarp().getX(), this);
             this.x = ((Warp) warp).getComplementWarp().getX();
             this.y = ((Warp) warp).getComplementWarp().getY();
         }
     }
     private void ballDetection() {
-        if (maze.get(y,x) != null && maze.get(y,x).getSymbol() == 'o') {
+        if (gameData.getMaze().get(y,x) != null && gameData.getMaze().get(y,x).getSymbol() == 'o') {
             this.points++;
         }
     }
