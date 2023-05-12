@@ -8,6 +8,14 @@ import pt.isec.pa.tinypac.model.fsm.GameContext;
 
 import java.io.IOException;
 
+/**
+ * Main Class
+ * <p>
+ *
+ * @ author Bruno Guiomar
+ * @ version 1.0.0
+ */
+
 public class Main {
     public static void main(String[] args) throws IOException {
         IGameEngine gameEngine = new GameEngine();

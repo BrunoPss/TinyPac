@@ -8,6 +8,14 @@ import pt.isec.pa.tinypac.model.data.maze.Maze;
 import pt.isec.pa.tinypac.model.data.maze.MazeManager;
 import pt.isec.pa.tinypac.model.data.pacman.Pacman;
 
+/**
+ * Game Data Model
+ * <p>Class that contains and manages all game data</p>
+ *
+ * @ author Bruno Guiomar
+ * @ version 1.0.0
+ */
+
 public class Game {
     //Internal Data
     private Pacman pacman;
@@ -20,6 +28,11 @@ public class Game {
     private int[] ghostDoor;
 
     //Constructor
+
+    /**
+     * Constructor
+     * @param gameEngine Game Engine
+     */
     public Game(IGameEngine gameEngine) {
         this.gameEngine = gameEngine;
         this.ghostDoor = new int[2];

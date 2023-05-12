@@ -7,6 +7,14 @@ import pt.isec.pa.tinypac.model.data.maze.IMazeElement;
 
 import java.util.Random;
 
+/**
+ * Blinky Class
+ * <p>Class that represents the Blinky Ghost Element</p>
+ *
+ * @ author Bruno Guiomar
+ * @ version 1.0.0
+ */
+
 public class Blinky extends Ghost {
     //Internal Data
     public static char SYMBOL = 'B';
@@ -15,6 +23,12 @@ public class Blinky extends Ghost {
     Random rnd;
 
     //Constructor
+    /**
+     * Constructor
+     * @param gameData Game Data Model
+     * @param x Initial Position (x cord.)
+     * @param y Initial Position (y cord.)
+     */
     public Blinky(Game gameData, int x, int y) {
         super(gameData, x, y);
         this.direction = Directions.UP;
@@ -572,6 +586,10 @@ public class Blinky extends Ghost {
             initTime--;
     }
 
+    /**
+     * Gets Element Symbol
+     * @return Symbol of the Element (Blinky)
+     */
     @Override
     public char getSymbol() {
         return 'B';

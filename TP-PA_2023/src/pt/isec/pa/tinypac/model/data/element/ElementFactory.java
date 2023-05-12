@@ -14,6 +14,14 @@ import pt.isec.pa.tinypac.model.data.superBall.SuperBall;
 import pt.isec.pa.tinypac.model.data.wall.Wall;
 import pt.isec.pa.tinypac.model.data.warp.Warp;
 
+/**
+ * Element Factory Class
+ * <p>Class Factory that creates new Elements</p>
+ *
+ * @ author Bruno Guiomar
+ * @ version 1.0.0
+ */
+
 public class ElementFactory {
     //Internal Data
 
@@ -28,6 +36,15 @@ public class ElementFactory {
 
 
     //Methods
+
+    /**
+     * Creates a new Element according to the type
+     * @param type Element type
+     * @param gameData Game Data Model
+     * @param x Initial Position (x cord.)
+     * @param y Initial Position (y cord.)
+     * @return New concrete Element
+     */
     public static Element createElement(ElementType type, Game gameData, int x, int y) {
         return switch (type) {
             case WALL -> new Wall(gameData, x, y);
