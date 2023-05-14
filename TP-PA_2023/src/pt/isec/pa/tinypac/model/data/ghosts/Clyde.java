@@ -37,7 +37,7 @@ public class Clyde extends Ghost {
 
     //Overrides
     @Override
-    public void evolve(IGameEngine gameEngine, long currentTime) {
+    public void evolve() {
 
     }
     /**

@@ -13,36 +13,37 @@ import pt.isec.pa.tinypac.model.data.game.Game;
 
 public class Fruit extends Element {
     //Internal Data
-    /**
-     * Symbol of the Element (Fruit)
-     */
     public static final char SYMBOL = 'F';
+    private boolean visible;
+    private int nextFruitTimeout;
 
     //Constructor
-    /**
-     * Constructor
-     * @param gameData Game Data Model
-     * @param x Initial Position (x cord.)
-     * @param y Initial Position (y cord.)
-     */
     public Fruit(Game gameData, int x, int y) {
         super(gameData, x, y);
+        this.visible = true;
+        this.nextFruitTimeout = 20;
     }
 
     //Get Methods
-
+    public boolean getVisible() { return visible; }
 
     //Set Methods
-
+    public void setVisible(boolean state) { this.visible = state; }
 
     //Methods
-
+    public void decrementNextFruitTimeout() {
+        if (nextFruitTimeout > 0) {
+            nextFruitTimeout--;
+            System.out.println("DECREMENT");
+        }
+        else {
+            System.out.println("CREATE");
+            gameData.newFruit();
+            nextFruitTimeout = 20;
+        }
+    }
 
     //Overrides
-    /**
-     * Gets Element Symbol
-     * @return Symbol of the Element (Fruit)
-     */
     @Override
     public char getSymbol() {
         return 'F';

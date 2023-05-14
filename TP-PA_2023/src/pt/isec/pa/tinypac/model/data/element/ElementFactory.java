@@ -36,7 +36,6 @@ public class ElementFactory {
 
 
     //Methods
-
     /**
      * Creates a new Element according to the type
      * @param type Element type
@@ -51,14 +50,9 @@ public class ElementFactory {
             case WARP -> new Warp(gameData, x, y);
             case BALL -> new Ball(gameData, x, y);
             case FRUIT -> new Fruit(gameData, x, y);
-            case PACMAN -> new Pacman(gameData, x, y);
             case SUPER_BALL -> new SuperBall(gameData, x, y);
             case PORTAL -> new Portal(gameData, x, y);
             case CAVE -> new Cave(gameData, x, y);
-            case BLINKY -> new Blinky(gameData, x, y);
-            case CLYDE -> new Clyde(gameData, x, y);
-            case INKY -> new Inky(gameData, x, y);
-            case PINKY -> new Pinky(gameData, x, y);
         };
     }
 

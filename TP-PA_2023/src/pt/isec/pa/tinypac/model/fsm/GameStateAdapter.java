@@ -45,6 +45,8 @@ abstract class GameStateAdapter implements IGameState {
     public boolean restart() { return false; }
     @Override
     public boolean endGame() { return false; }
+    @Override
+    public boolean exitGame() { return false; }
 
     //Internal Functions
 

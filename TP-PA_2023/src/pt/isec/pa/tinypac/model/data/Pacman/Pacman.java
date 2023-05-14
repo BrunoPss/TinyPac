@@ -1,9 +1,8 @@
 package pt.isec.pa.tinypac.model.data.pacman;
 
-import pt.isec.pa.tinypac.gameengine.IGameEngineEvolve;
-import pt.isec.pa.tinypac.gameengine.IGameEngine;
-import pt.isec.pa.tinypac.model.data.Directions;
+import pt.isec.pa.tinypac.model.data.entity.Directions;
 import pt.isec.pa.tinypac.model.data.element.Element;
+import pt.isec.pa.tinypac.model.data.entity.Entity;
 import pt.isec.pa.tinypac.model.data.game.Game;
 import pt.isec.pa.tinypac.model.data.warp.Warp;
 
@@ -15,32 +14,26 @@ import pt.isec.pa.tinypac.model.data.warp.Warp;
  * @ version 1.0.0
  */
 
-public class Pacman extends Element implements IGameEngineEvolve {
+public class Pacman extends Entity {
     //Internal Data
-    /**
-     * Symbol of the Element (Pacman)
-     */
     public static final char SYMBOL = 'M';
     private Directions direction;
     private int points;
+    private int lives;
 
     //Constructor
-    /**
-     * Constructor
-     * @param gameData Game Data Model
-     * @param x Initial Position (x cord.)
-     * @param y Initial Position (y cord.)
-     */
     public Pacman(Game gameData, int x, int y) {
         super(gameData, x, y);
         this.points = 0;
         this.direction = null;
+        this.lives = 3;
     }
 
     //Get Methods
     public int getPoints() {
         return this.points;
     }
+    public int getLives() { return this.lives; }
 
     //Set Methods
     public void setDirection(Directions direction) { this.direction = direction; }
@@ -50,62 +43,89 @@ public class Pacman extends Element implements IGameEngineEvolve {
 
     //Overrides
     @Override
-    public void evolve(IGameEngine gameEngine, long currentTime) {
-        gameData.getMaze().set(y,x,null);
+    public void evolve() {
         switch (direction) {
             case UP -> {
                 //Mudar cadeia de if's para switch
                 //Detecao Paredes
-                if ((gameData.getMaze().get(y-1,x) == null && y > 0) || gameData.getMaze().get(y-1,x).getSymbol() != 'x')
+                if ((gameData.getMaze().get(y-1,x) == null && y > 0) || gameData.getMaze().get(y-1,x).getSymbol() != 'x') {
+                    gameData.getMaze().set(y,x,null);
                     y--;
+                }
 
                 //Detecao Ball
                 ballDetection();
 
+                //Detecao Fruit
+                fruitDetection();
+
                 //Detecao Zona Warp
                 warpDetection();
+
+                //Detecao Super Ball
+                superBallDetection();
             }
             case DOWN -> {
                 //Detecao Paredes
-                if ((gameData.getMaze().get(y+1, x) == null && y < gameData.getMaze().getMaze().length - 1) || gameData.getMaze().get(y+1, x).getSymbol() != 'x')
+                if ((gameData.getMaze().get(y+1, x) == null && y < gameData.getMaze().getMaze().length - 1) || gameData.getMaze().get(y+1, x).getSymbol() != 'x') {
+                    gameData.getMaze().set(y,x,null);
                     y++;
+                }
 
                 //Detecao Ball
                 ballDetection();
 
+                //Detecao Fruit
+                fruitDetection();
+
                 //Detecao Zona Warp
                 warpDetection();
+
+                //Detecao Super Ball
+                superBallDetection();
             }
             case LEFT -> {
                 //Detecao Paredes
-                if ((gameData.getMaze().get(y, x-1) == null && x > 0) || gameData.getMaze().get(y, x-1).getSymbol() != 'x')
+                if ((gameData.getMaze().get(y, x-1) == null && x > 0) || gameData.getMaze().get(y, x-1).getSymbol() != 'x') {
+                    gameData.getMaze().set(y, x, null);
                     x--;
+                }
 
                 //Detecao Ball
                 ballDetection();
 
+                //Detecao Fruit
+                fruitDetection();
+
                 //Detecao Zona Warp
                 warpDetection();
+
+                //Detecao Super Ball
+                superBallDetection();
             }
             case RIGHT -> {
                 //Detecao Paredes
-                if ((gameData.getMaze().get(y, x+1) == null && x < gameData.getMaze().getMaze()[0].length - 1) || gameData.getMaze().get(y, x+1).getSymbol() != 'x')
+                if ((gameData.getMaze().get(y, x+1) == null && x < gameData.getMaze().getMaze()[0].length - 1) || gameData.getMaze().get(y, x+1).getSymbol() != 'x') {
+                    gameData.getMaze().set(y, x, null);
                     x++;
+                }
 
                 //Detecao Ball
                 ballDetection();
 
+                //Detecao Fruit
+                fruitDetection();
+
                 //Detecao Zona Warp
                 warpDetection();
+
+                //Detecao Super Ball
+                superBallDetection();
             }
         }
         gameData.getMaze().set(y,x,this);
     }
 
-    /**
-     * Gets Element Symbol
-     * @return Symbol of the Element (Ball)
-     */
     @Override
     public char getSymbol() {
         return 'M';
@@ -127,6 +147,17 @@ public class Pacman extends Element implements IGameEngineEvolve {
     private void ballDetection() {
         if (gameData.getMaze().get(y,x) != null && gameData.getMaze().get(y,x).getSymbol() == 'o') {
             this.points++;
+            gameData.decrementTotalBalls();
+        }
+    }
+    private void superBallDetection() {
+        if (gameData.getMaze().get(y,x) != null && gameData.getMaze().get(y,x).getSymbol() == 'O') {
+            gameData.getContext().enhancedPacman();
+        }
+    }
+    private void fruitDetection() {
+        if (gameData.getMaze().get(y,x) != null && gameData.getMaze().get(y,x).getSymbol() == 'F') {
+            gameData.catchFruit();
         }
     }
 }

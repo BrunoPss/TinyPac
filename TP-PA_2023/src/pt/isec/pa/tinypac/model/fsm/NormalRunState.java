@@ -1,6 +1,6 @@
 package pt.isec.pa.tinypac.model.fsm;
 
-import pt.isec.pa.tinypac.model.data.Directions;
+import pt.isec.pa.tinypac.model.data.entity.Directions;
 import pt.isec.pa.tinypac.model.data.game.Game;
 
 public class NormalRunState extends GameStateAdapter {
@@ -10,6 +10,7 @@ public class NormalRunState extends GameStateAdapter {
     //Constructor
     NormalRunState(GameContext context, Game gameData) {
         super(context, gameData);
+        System.out.println("NORMAL");
     }
 
     //Get Methods
@@ -54,12 +55,18 @@ public class NormalRunState extends GameStateAdapter {
     @Override
     public boolean pauseGame() {
         changeState(new PausedState(context, gameData));
-        gameData.getGameEngine().pause();
+        context.gameEngine.pause();
         return true;
     }
     @Override
     public boolean restart() {
+        context.gameEngine.stop();
         changeState(new InitState(context, gameData));
+        return true;
+    }
+    @Override
+    public boolean endGame() {
+        changeState(new GameEnd(context, gameData));
         return true;
     }
     @Override
