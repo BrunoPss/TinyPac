@@ -1,8 +1,7 @@
 package pt.isec.pa.tinypac.model.data.ghosts;
 
-import pt.isec.pa.tinypac.gameengine.IGameEngineEvolve;
-import pt.isec.pa.tinypac.model.data.Directions;
-import pt.isec.pa.tinypac.model.data.element.Element;
+import pt.isec.pa.tinypac.model.data.entity.Directions;
+import pt.isec.pa.tinypac.model.data.entity.Entity;
 import pt.isec.pa.tinypac.model.data.game.Game;
 
 /**
@@ -13,7 +12,7 @@ import pt.isec.pa.tinypac.model.data.game.Game;
  * @ version 1.0.0
  */
 
-abstract public class Ghost extends Element implements IGameEngineEvolve {
+abstract public class Ghost extends Entity {
     //Internal Data
     protected int initTime = 2; //5
     protected Directions direction;

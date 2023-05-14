@@ -28,6 +28,7 @@ public class CursesGameUI implements IGameEngineEvolve {
         this.fsm = fsm;
         screen = new DefaultTerminalFactory().createScreen();
         screen.setCursorPosition(null);
+        screen.startScreen();
 
         initMenu();
     }
@@ -41,7 +42,6 @@ public class CursesGameUI implements IGameEngineEvolve {
     //Methods
     public void show() throws IOException {
         char[][] env = fsm.getMaze();
-        screen.startScreen();
         for (int y=0; y < fsm.getMaze().length; y++) {
             for (int x=0; x < fsm.getMaze()[0].length; x++) {
                 TextColor tc = switch(env[y][x]) {

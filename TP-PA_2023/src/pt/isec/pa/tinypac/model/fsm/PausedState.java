@@ -24,7 +24,12 @@ public class PausedState extends GameStateAdapter {
     @Override
     public boolean resumeGame() {
         changeState(new NormalRunState(context, gameData));
-        gameData.getGameEngine().resume();
+        context.gameEngine.resume();
+        return true;
+    }
+    @Override
+    public boolean exitGame() {
+        changeState(new GameEnd(context, gameData));
         return true;
     }
     @Override

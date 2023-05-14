@@ -47,6 +47,7 @@ public class TextGameUI {
                 case INITSTATE -> initStateUI();
                 case NORMALRUNSTATE -> normalRunStateUI();
                 case PAUSEDSTATE -> pausedStateUI();
+                case GAME_END -> gameEndUI();
             }
         }
     }
@@ -97,7 +98,13 @@ public class TextGameUI {
         System.out.println("Paused State");
         switch (PAInput.chooseOption("Tiny-PAc", "resumeGame()", "Quit")) {
             case 1 -> fsm.resumeGame();
-            case 2 -> {finish = true;}
+            case 2 -> fsm.exitGame();
+        }
+    }
+    private void gameEndUI() {
+        System.out.println("Game End State");
+        if (PAInput.chooseOption("Tiny-PAc", "Quit") == 1) {
+            finish = true;
         }
     }
 }

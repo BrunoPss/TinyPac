@@ -1,12 +1,13 @@
 package pt.isec.pa.tinypac.model.fsm;
 
 import pt.isec.pa.tinypac.gameengine.IGameEngine;
+import pt.isec.pa.tinypac.gameengine.IGameEngineEvolve;
 import pt.isec.pa.tinypac.model.data.game.Game;
 
-public class GameContext {
+public class GameContext implements IGameEngineEvolve {
     //Internal Data
     IGameState state;
-    //IGameEngine gameEngine;
+    IGameEngine gameEngine;
     Game gameData;
     //Maze maze;
     //Dictionary<ElementType, Element> entities;
@@ -14,9 +15,10 @@ public class GameContext {
     //Constructor
     public GameContext(IGameEngine gameEngine) {
         //this.maze = new Maze(MazeManager.getYSize("C:\\Projects\\TP-PA_2023\\TP-PA_2023\\src\\pt\\isec\\pa\\tinypac\\model\\data\\levels\\level01.txt"), MazeManager.getXSize("C:\\Projects\\TP-PA_2023\\TP-PA_2023\\src\\pt\\isec\\pa\\tinypac\\model\\data\\levels\\level01.txt"));
-        //this.gameEngine = gameEngine;
-        this.gameData = new Game(gameEngine);
+        this.gameEngine = gameEngine;
+        this.gameData = new Game(this);
         this.state = new InitState(this, gameData);
+        gameEngine.registerClient(this);
     }
 
     //Get Methods
@@ -48,9 +50,17 @@ public class GameContext {
     }
     public boolean pauseGame() { return state.pauseGame(); }
     public boolean resumeGame() { return state.resumeGame(); }
+    public boolean enhancedPacman() { return state.enhancedPacman(); }
+    public boolean disableEnhancedPacman() { return state.disableEnhancedPacman(); }
+    public boolean restart() { return state.restart(); }
+    public boolean endGame() { return state.endGame(); }
+    public boolean exitGame() { return state.exitGame(); }
 
     //Overrides
-
+    @Override
+    public void evolve(IGameEngine gameEngine, long currentTime) {
+        gameData.gameEvolve();
+    }
 
     //Internal Functions
 

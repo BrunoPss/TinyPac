@@ -3,6 +3,9 @@ package pt.isec.pa.tinypac.model.data.maze;
 import pt.isec.pa.tinypac.model.data.element.Element;
 import pt.isec.pa.tinypac.model.data.element.ElementFactory;
 import pt.isec.pa.tinypac.model.data.element.ElementType;
+import pt.isec.pa.tinypac.model.data.entity.EntityFactory;
+import pt.isec.pa.tinypac.model.data.entity.EntityType;
+import pt.isec.pa.tinypac.model.data.fruit.Fruit;
 import pt.isec.pa.tinypac.model.data.game.Game;
 import pt.isec.pa.tinypac.model.data.warp.Warp;
 
@@ -37,7 +40,6 @@ public class MazeManager {
         {
             int content;
             while ((content = fr.read()) != -1) {
-                //System.out.print((char) content);
                 switch ((char) content) {
                     case 'x' -> gameData.getMaze().set(y,x, ElementFactory.createElement(ElementType.WALL, gameData, x, y));
                     case 'W' -> {
@@ -54,20 +56,21 @@ public class MazeManager {
                     case 'y' -> {
                         switch (f) {
                             case 1 -> {
-                                movingElements.put(ElementType.BLINKY, ElementFactory.createElement(ElementType.BLINKY, gameData, x, y));
-                                gameData.getMaze().set(y,x, movingElements.get(ElementType.BLINKY));
+                                //DESCOMENTAR
+                                gameData.setEntity(EntityType.BLINKY, EntityFactory.createEntity(EntityType.BLINKY, gameData, x, y));
+                                gameData.getMaze().set(y,x, movingElements.get(EntityType.BLINKY));
                             }
                             case 2 -> {
-                                movingElements.put(ElementType.CLYDE, ElementFactory.createElement(ElementType.CLYDE, gameData, x, y));
-                                gameData.getMaze().set(y,x, movingElements.get(ElementType.CLYDE));
+                                //gameData.setEntity(EntityType.CLYDE, EntityFactory.createEntity(EntityType.CLYDE, gameData, x, y));
+                                //gameData.getMaze().set(y,x, movingElements.get(EntityType.CLYDE));
                             }
                             case 3 -> {
-                                movingElements.put(ElementType.INKY, ElementFactory.createElement(ElementType.INKY, gameData, x, y));
-                                gameData.getMaze().set(y,x, movingElements.get(ElementType.INKY));
+                                //gameData.setEntity(EntityType.INKY, EntityFactory.createEntity(EntityType.INKY, gameData, x, y));
+                                //gameData.getMaze().set(y,x, movingElements.get(EntityType.INKY));
                             }
                             case 4 -> {
-                                movingElements.put(ElementType.PINKY, ElementFactory.createElement(ElementType.PINKY, gameData, x, y));
-                                gameData.getMaze().set(y,x, movingElements.get(ElementType.PINKY));
+                                gameData.setEntity(EntityType.PINKY, EntityFactory.createEntity(EntityType.PINKY, gameData, x, y));
+                                gameData.getMaze().set(y,x, movingElements.get(EntityType.PINKY));
                             }
                         }
                         f++;
@@ -75,11 +78,18 @@ public class MazeManager {
                     case 'Y' -> {
                         gameData.setGhostDoor(x,y);
                     }
-                    case 'o' -> gameData.getMaze().set(y,x, ElementFactory.createElement(ElementType.BALL, gameData, x, y));
-                    case 'F' -> gameData.getMaze().set(y,x, ElementFactory.createElement(ElementType.FRUIT, gameData, x, y));
+                    case 'o' -> {
+                        gameData.getMaze().set(y,x, ElementFactory.createElement(ElementType.BALL, gameData, x, y));
+                        gameData.incrementTotalBalls();
+                    }
+                    case 'F' -> {
+                        Element fruit = ElementFactory.createElement(ElementType.FRUIT, gameData, x, y);
+                        gameData.setFruit(fruit);
+                        gameData.getMaze().set(y,x, fruit);
+                    }
                     case 'M' -> {
-                        movingElements.put(ElementType.PACMAN, ElementFactory.createElement(ElementType.PACMAN, gameData, x, y));
-                        gameData.getMaze().set(y,x, movingElements.get(ElementType.PACMAN));
+                        gameData.setEntity(EntityType.PACMAN, EntityFactory.createEntity(EntityType.PACMAN, gameData, x, y));
+                        gameData.getMaze().set(y,x, movingElements.get(EntityType.PACMAN));
                     }
                     case 'O' -> gameData.getMaze().set(y,x, ElementFactory.createElement(ElementType.SUPER_BALL, gameData, x, y));
                     //case 'Y' -> maze.set(y,x, ElementFactory.createElement(ElementType.PORTAL, maze, x, y));

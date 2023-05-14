@@ -12,5 +12,6 @@ public interface IGameState {
     boolean resumeGame();
     boolean restart();
     boolean endGame();
+    boolean exitGame();
     GameState getState();
 }
