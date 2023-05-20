@@ -60,6 +60,7 @@ public class GameContext implements IGameEngineEvolve {
     @Override
     public void evolve(IGameEngine gameEngine, long currentTime) {
         gameData.gameEvolve();
+        //state.evolve();  //Maneira Correta//
     }
 
     //Internal Functions

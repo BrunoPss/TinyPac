@@ -1,8 +1,11 @@
 package pt.isec.pa.tinypac;
 
+import javafx.application.Application;
 import pt.isec.pa.tinypac.gameengine.GameEngine;
 import pt.isec.pa.tinypac.gameengine.IGameEngine;
+import pt.isec.pa.tinypac.model.GameManager;
 import pt.isec.pa.tinypac.ui.curses.CursesGameUI;
+import pt.isec.pa.tinypac.ui.gui.MainJFX;
 import pt.isec.pa.tinypac.ui.text.TextGameUI;
 import pt.isec.pa.tinypac.model.fsm.GameContext;
 
@@ -17,12 +20,19 @@ import java.io.IOException;
  */
 
 public class Main {
-    public static void main(String[] args) throws IOException {
+    public static GameManager gameManager;
+    static {
         IGameEngine gameEngine = new GameEngine();
-        GameContext fsm = new GameContext(gameEngine);
-        CursesGameUI cursesUI = new CursesGameUI(fsm);
-        TextGameUI ui = new TextGameUI(fsm, cursesUI);
-        gameEngine.registerClient(cursesUI);
-        ui.initMenu();
+        gameManager = new GameManager(gameEngine);
+    }
+    public static void main(String[] args) throws IOException {
+        //IGameEngine gameEngine = new GameEngine();
+        //GameContext fsm = new GameContext(gameEngine);
+        //CursesGameUI cursesUI = new CursesGameUI(fsm);
+        //TextGameUI ui = new TextGameUI(fsm, cursesUI);
+        //gameEngine.registerClient(cursesUI);
+        //ui.initMenu();
+
+        Application.launch(MainJFX.class, args);
     }
 }

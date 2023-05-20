@@ -24,6 +24,11 @@ public class NormalRunState extends GameStateAdapter {
 
     //Overrides
     @Override
+    public boolean evolve() {
+
+        return true;
+    }
+    @Override
     public boolean up() {
         gameData.getPacman().setDirection(Directions.UP);
         changeState(new NormalRunState(context, gameData));
