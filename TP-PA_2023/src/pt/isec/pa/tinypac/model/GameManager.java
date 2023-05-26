@@ -24,6 +24,8 @@ public class GameManager {
     //Get Methods
     public boolean getMainMenuState() { return fsm.getMainMenuState(); }
     public int getMusicVolume() { return fsm.getMusicVolume(); }
+    public boolean getMusicPlayStatus() { return fsm.getMusicPlayStatus(); }
+    public boolean getMuted() { return fsm.getMuted(); }
     public ColorPreset getMainColorPreset() { return fsm.getMainColorPreset(); }
     public MusicPreset getMusicPreset() { return fsm.getMusicPreset(); }
     public EQPreset getMainEQPreset() { return fsm.getMainEQPreset(); }
@@ -38,6 +40,14 @@ public class GameManager {
         int old = fsm.getMusicVolume();
         fsm.setMusicVolume(musicVolume);
         pcs.firePropertyChange(null, old, musicVolume);
+    }
+    public void toogleMusicPlayeStatus() {
+        fsm.setMusicPlayStatus(!fsm.getMusicPlayStatus());
+        pcs.firePropertyChange(null, null, null);
+    }
+    public void toogleMute() {
+        fsm.setMuted(!fsm.getMuted());
+        pcs.firePropertyChange(null, null, null);
     }
     public void setMainColorPreset(ColorPreset colorPreset) {
         ColorPreset old = fsm.getMainColorPreset();

@@ -22,7 +22,7 @@ public class MainJFX extends Application {
     //Methods
     private void newStageForTesting(Stage stage, String title) {
         RootPane root = new RootPane(gameManager);
-        Scene scene = new Scene(root, 1100.0, 600.0);
+        Scene scene = new Scene(root, 1100, 600);
         stage.setScene(scene);
         stage.setTitle(title);
         stage.setResizable(false);

@@ -71,7 +71,7 @@ public class ConfigMenu extends VBox {
         colorThemeSelector.getItems().add(ColorPreset.COLOR_PRESET1);
         colorThemeSelector.getItems().add(ColorPreset.COLOR_PRESET2);
         colorThemeSelector.getItems().add(ColorPreset.COLOR_PRESET3);
-        colorThemeSelector.setValue(colorThemeSelector.getItems().get(0));
+        colorThemeSelector.setValue(gameManager.getMainColorPreset());
         themeGroup.getChildren().addAll(choiceInfo1, colorThemeSelector);
         gPane.add(themeGroup, 1, 1);
         appearenceTab.setContent(gPane);
@@ -106,17 +106,17 @@ public class ConfigMenu extends VBox {
         soundEqSelector.getItems().add(EQPreset.EQ_PRESET1);
         soundEqSelector.getItems().add(EQPreset.EQ_PRESET2);
         soundEqSelector.getItems().add(EQPreset.EQ_PRESET3);
-        soundEqSelector.setValue(soundEqSelector.getItems().get(0));
+        soundEqSelector.setValue(gameManager.getMainEQPreset());
         eqBox.getChildren().addAll(eqLabel, soundEqSelector);
         eqBox.setSpacing(10);
         //Music Theme
         HBox musicThemeBox = new HBox();
-        Label musicThemeLabel = new Label("Sound EQ Preset");
+        Label musicThemeLabel = new Label("Music Preset");
         musicThemeSelector = new ChoiceBox<>();
-        musicThemeSelector.getItems().add(MusicPreset.MUSIC_PRESET1);
+        musicThemeSelector.getItems().add(MusicPreset.LOFI);
         musicThemeSelector.getItems().add(MusicPreset.MUSIC_PRESET2);
         musicThemeSelector.getItems().add(MusicPreset.MUSIC_PRESET3);
-        musicThemeSelector.setValue(musicThemeSelector.getItems().get(0));
+        musicThemeSelector.setValue(gameManager.getMusicPreset());
         musicThemeBox.getChildren().addAll(musicThemeLabel, musicThemeSelector);
         musicThemeBox.setSpacing(10);
         //Group Add
@@ -147,11 +147,7 @@ public class ConfigMenu extends VBox {
 
         //Music Mute ActionEvent
         muteButton.setOnAction(event -> {
-            volumeSlider.setDisable(muteButton.isSelected());
-            if (muteButton.isSelected())
-                gameManager.setMusicVolume(0);
-            else
-                gameManager.setMusicVolume((int) volumeSlider.getValue());
+            gameManager.toogleMute();
         });
 
         //Music Eq Preset Selector ActionEvent
@@ -168,6 +164,17 @@ public class ConfigMenu extends VBox {
     private void update() {
         //Music Volume Label Update
         //Comparacao feita pelo pcs {if (!(volumeValue.getText().equals(Integer.toString(gameManager.getMusicVolume()))))}
+        volumeSlider.setValue(gameManager.getMusicVolume());
+        volumeSlider.setDisable(gameManager.getMuted());
         volumeValue.setText(Integer.toString(gameManager.getMusicVolume()));
+        //Mute Button Update
+        muteButton.setSelected(gameManager.getMuted());
+
+        //Color Theme Update
+        colorThemeSelector.setValue(gameManager.getMainColorPreset());
+        //EQ Preset Update
+        soundEqSelector.setValue(gameManager.getMainEQPreset());
+        //Music Theme Update
+        musicThemeSelector.setValue(gameManager.getMusicPreset());
     }
 }
