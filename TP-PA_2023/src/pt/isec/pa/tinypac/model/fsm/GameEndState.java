@@ -9,6 +9,7 @@ public class GameEndState extends GameStateAdapter {
     //Constructor
     GameEndState(GameContext context, Game gameData) {
         super(context, gameData);
+        System.out.println("Game End State");
     }
 
     //Get Methods

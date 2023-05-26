@@ -8,11 +8,15 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 import pt.isec.pa.tinypac.model.GameManager;
 import pt.isec.pa.tinypac.ui.gui.ConfigMenu;
 import pt.isec.pa.tinypac.ui.gui.resources.ImageManager;
 
+import java.net.URISyntaxException;
+import java.util.Objects;
 import java.util.Optional;
 
 public class MainMenuUI extends BorderPane {
@@ -27,7 +31,7 @@ public class MainMenuUI extends BorderPane {
 
         createViews();
         registerHandlers();
-        //update();
+        update();
     }
 
     //Get Methods
@@ -105,7 +109,12 @@ public class MainMenuUI extends BorderPane {
         //Property ChangeListener
         gameManager.addPropertyChangeListener( evt -> { update();});
 
-        //About Button ActionEvent
+        //Config Menu Item ActionEvent
+        configItem.setOnAction( event -> {
+            new ConfigMenu(gameManager);
+        });
+
+        //About Menu Item ActionEvent
         aboutItem.setOnAction( event -> {
             //Popup infoPopup = new Popup();
             //CONSTRUIR POPUP

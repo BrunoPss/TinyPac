@@ -33,7 +33,9 @@ public class GameContext implements IGameEngineEvolve {
     //public String getPacmanPosition() { return entities.get(ElementType.PACMAN).getCurrentPosition(); }
     public char[][] getMaze() { return gameData.getMaze().getMaze(); }
     public boolean getMainMenuState() { return gameData.getMainMenuState(); }
+    public boolean getMusicPlayStatus() { return gameData.getMusicPlayStatus(); }
     public int getMusicVolume() { return gameData.getMusicVolume(); }
+    public boolean getMuted() { return gameData.getMuted(); }
     public ColorPreset getMainColorPreset() { return gameData.getMainColorPreset(); }
     public MusicPreset getMusicPreset() { return gameData.getMusicPreset(); }
     public EQPreset getMainEQPreset() { return gameData.getMainEQPreset(); }
@@ -43,7 +45,9 @@ public class GameContext implements IGameEngineEvolve {
         this.state = newState;
     }
     public void setMainMenuState(boolean value) { gameData.setMainMenuState(value); }
+    public void setMusicPlayStatus(boolean value) { gameData.setMusicPlayStatus(value); }
     public void setMusicVolume(int musicVolume) { gameData.setMusicVolume(musicVolume); }
+    public void setMuted(boolean value) { gameData.setMuted(value); }
     public void setMainColorPreset(ColorPreset colorPreset) { gameData.setMainColorPreset(colorPreset); }
     public void setMusicPreset(MusicPreset musicPreset) { gameData.setMusicPreset(musicPreset); }
     public void setMainEQPreset(EQPreset eqPreset) { gameData.setMainEQPreset(eqPreset); }

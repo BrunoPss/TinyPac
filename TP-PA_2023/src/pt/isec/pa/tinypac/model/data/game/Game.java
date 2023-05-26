@@ -39,7 +39,9 @@ public class Game {
 
     //Game Configurations
     private boolean mainMenuState;
+    private boolean musicPlayStatus;
     private int musicVolume;
+    private boolean muted;
     private ColorPreset mainColorPreset;
     private MusicPreset musicPreset;
     private EQPreset mainEQPreset;
@@ -58,22 +60,32 @@ public class Game {
         //Game Configurations
         this.mainMenuState = true;
         this.musicVolume = 8;
+        this.musicPlayStatus = true;
+        this.muted = false;
         this.mainColorPreset = ColorPreset.COLOR_PRESET1;
-        this.musicPreset = MusicPreset.MUSIC_PRESET1;
+        this.musicPreset = MusicPreset.LOFI;
         this.mainEQPreset = EQPreset.EQ_PRESET1;
     }
 
     //Game Configurations
     //Getters
     public boolean getMainMenuState() { return mainMenuState; }
+    public boolean getMusicPlayStatus() {
+        return musicPlayStatus;
+    }
     public int getMusicVolume() { return musicVolume; }
+    public boolean getMuted() { return muted; }
     public ColorPreset getMainColorPreset() { return mainColorPreset; }
     public MusicPreset getMusicPreset() { return musicPreset; }
     public EQPreset getMainEQPreset() { return mainEQPreset; }
 
     //Setters
     public void setMainMenuState(boolean value) { this.mainMenuState = value; }
+    public void setMusicPlayStatus(boolean value) {
+        this.musicPlayStatus = value;
+    }
     public void setMusicVolume(int musicVolume) { this.musicVolume = musicVolume; }
+    public void setMuted(boolean value) { this.muted = value; }
     public void setMainColorPreset(ColorPreset colorPreset) { this.mainColorPreset = colorPreset; }
     public void setMusicPreset(MusicPreset musicPreset) { this.musicPreset = musicPreset; }
     public void setMainEQPreset(EQPreset eqPreset) { this.mainEQPreset = eqPreset; }

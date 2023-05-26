@@ -17,6 +17,7 @@ import pt.isec.pa.tinypac.ui.gui.resources.ImageManager;
 public class MainGameUI extends BorderPane {
     //Internal Data
     private final GameManager gameManager;
+    Button arrowLEFT, arrowUP, arrowDOWN, arrowRIGHT, pauseBtn;
 
     //Constructor
     public MainGameUI(GameManager gameManager) {
@@ -67,7 +68,7 @@ public class MainGameUI extends BorderPane {
         HBox btnsPanel = new HBox();
         btnsPanel.setAlignment(Pos.BASELINE_CENTER);
         //Pause Button
-        Button pauseBtn = new Button("Pause");
+        pauseBtn = new Button("Pause");
         btnsPanel.getChildren().add(pauseBtn);
         //Controls Panel
         HBox controlsPanel = new HBox();
@@ -94,10 +95,10 @@ public class MainGameUI extends BorderPane {
         arrowDownIMG.setFitWidth(20);
         arrowRightIMG.setFitWidth(20);
         //Arrow Buttons
-        Button arrowLEFT = new Button();
-        Button arrowUP = new Button();
-        Button arrowDOWN = new Button();
-        Button arrowRIGHT = new Button();
+        arrowLEFT = new Button();
+        arrowUP = new Button();
+        arrowDOWN = new Button();
+        arrowRIGHT = new Button();
         //Button Creation
         arrowLEFT.setGraphic(arrowLeftIMG);
         arrowUP.setGraphic(arrowUpIMG);
@@ -129,7 +130,7 @@ public class MainGameUI extends BorderPane {
         gameManager.addPropertyChangeListener( evt -> { update();});
 
         //Keyboard Key Press ActionEvent
-        this.setOnKeyPressed(event -> {
+        this.setOnKeyPressed( event -> {
             KeyCode key = event.getCode();
             System.out.println(key);
             switch (key) {
@@ -140,16 +141,37 @@ public class MainGameUI extends BorderPane {
                 case ESCAPE -> gameManager.pauseGame();
             }
         });
+
+        //Virtual Arrows ActionEvent
+        arrowLEFT.setOnAction( event -> {
+            gameManager.left();
+        });
+        arrowUP.setOnAction( event -> {
+            gameManager.up();
+        });
+        arrowDOWN.setOnAction( event -> {
+            gameManager.down();
+        });
+        arrowRIGHT.setOnAction( event -> {
+            gameManager.right();
+        });
+
+        //Pause Button ActionEvent
+        pauseBtn.setOnAction( event -> {
+            gameManager.pauseGame();
+        });
     }
 
     private void update() {
         if ((gameManager.getState() != GameState.INITSTATE &&
-                gameManager.getState() != GameState.NORMALRUNSTATE) ||
+                gameManager.getState() != GameState.NORMALRUNSTATE &&
+                gameManager.getState() != GameState.PAUSEDSTATE) ||
                 gameManager.getMainMenuState()) {
             this.setVisible(false);
             return;
         }
-        if (!gameManager.getMainMenuState())
+        if (!gameManager.getMainMenuState()) {
             this.setVisible(true);
+        }
     }
 }
