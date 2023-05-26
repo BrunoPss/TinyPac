@@ -2,12 +2,12 @@ package pt.isec.pa.tinypac.model.fsm;
 
 import pt.isec.pa.tinypac.model.data.game.Game;
 
-public class GameEnd extends GameStateAdapter {
+public class GameEndState extends GameStateAdapter {
     //Internal Data
 
 
     //Constructor
-    GameEnd(GameContext context, Game gameData) {
+    GameEndState(GameContext context, Game gameData) {
         super(context, gameData);
     }
 
@@ -23,7 +23,7 @@ public class GameEnd extends GameStateAdapter {
     //Overrides
     @Override
     public GameState getState() {
-        return GameState.GAME_END;
+        return GameState.GAME_ENDSTATE;
     }
 
     //Internal Functions

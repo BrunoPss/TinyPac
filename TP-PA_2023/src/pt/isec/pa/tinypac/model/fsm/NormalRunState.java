@@ -10,7 +10,7 @@ public class NormalRunState extends GameStateAdapter {
     //Constructor
     NormalRunState(GameContext context, Game gameData) {
         super(context, gameData);
-        System.out.println("NORMAL");
+        System.out.println("NORMAL RUN STATE");
     }
 
     //Get Methods
@@ -71,7 +71,7 @@ public class NormalRunState extends GameStateAdapter {
     }
     @Override
     public boolean endGame() {
-        changeState(new GameEnd(context, gameData));
+        changeState(new GameEndState(context, gameData));
         return true;
     }
     @Override

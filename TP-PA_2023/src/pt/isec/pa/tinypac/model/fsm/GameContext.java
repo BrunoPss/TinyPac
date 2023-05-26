@@ -3,6 +3,9 @@ package pt.isec.pa.tinypac.model.fsm;
 import pt.isec.pa.tinypac.gameengine.IGameEngine;
 import pt.isec.pa.tinypac.gameengine.IGameEngineEvolve;
 import pt.isec.pa.tinypac.model.data.game.Game;
+import pt.isec.pa.tinypac.ui.gui.resources.presets.ColorPreset;
+import pt.isec.pa.tinypac.ui.gui.resources.presets.EQPreset;
+import pt.isec.pa.tinypac.ui.gui.resources.presets.MusicPreset;
 
 public class GameContext implements IGameEngineEvolve {
     //Internal Data
@@ -29,11 +32,21 @@ public class GameContext implements IGameEngineEvolve {
     //public String getPacmanDirection() { return entities.get(ElementType.PACMAN).getCurrentDirection(); }
     //public String getPacmanPosition() { return entities.get(ElementType.PACMAN).getCurrentPosition(); }
     public char[][] getMaze() { return gameData.getMaze().getMaze(); }
+    public boolean getMainMenuState() { return gameData.getMainMenuState(); }
+    public int getMusicVolume() { return gameData.getMusicVolume(); }
+    public ColorPreset getMainColorPreset() { return gameData.getMainColorPreset(); }
+    public MusicPreset getMusicPreset() { return gameData.getMusicPreset(); }
+    public EQPreset getMainEQPreset() { return gameData.getMainEQPreset(); }
 
     //Set Methods
     void changeState(IGameState newState) {
         this.state = newState;
     }
+    public void setMainMenuState(boolean value) { gameData.setMainMenuState(value); }
+    public void setMusicVolume(int musicVolume) { gameData.setMusicVolume(musicVolume); }
+    public void setMainColorPreset(ColorPreset colorPreset) { gameData.setMainColorPreset(colorPreset); }
+    public void setMusicPreset(MusicPreset musicPreset) { gameData.setMusicPreset(musicPreset); }
+    public void setMainEQPreset(EQPreset eqPreset) { gameData.setMainEQPreset(eqPreset); }
 
     //Methods
     public boolean up() {

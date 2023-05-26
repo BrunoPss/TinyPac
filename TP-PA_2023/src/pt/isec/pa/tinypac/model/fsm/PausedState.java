@@ -9,6 +9,7 @@ public class PausedState extends GameStateAdapter {
     //Constructor
     PausedState(GameContext context, Game gameData) {
         super(context, gameData);
+        System.out.println("PAUSED STATE");
     }
 
     //Get Methods
@@ -29,7 +30,7 @@ public class PausedState extends GameStateAdapter {
     }
     @Override
     public boolean exitGame() {
-        changeState(new GameEnd(context, gameData));
+        changeState(new GameEndState(context, gameData));
         return true;
     }
     @Override
