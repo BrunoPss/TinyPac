@@ -1,16 +1,16 @@
 package pt.isec.pa.tinypac.model.data.game;
 
-import pt.isec.pa.tinypac.gameengine.IGameEngine;
 import pt.isec.pa.tinypac.model.data.element.Element;
-import pt.isec.pa.tinypac.model.data.element.ElementType;
 import pt.isec.pa.tinypac.model.data.entity.Entity;
 import pt.isec.pa.tinypac.model.data.entity.EntityType;
 import pt.isec.pa.tinypac.model.data.fruit.Fruit;
-import pt.isec.pa.tinypac.model.data.ghosts.Ghost;
 import pt.isec.pa.tinypac.model.data.maze.Maze;
 import pt.isec.pa.tinypac.model.data.maze.MazeManager;
 import pt.isec.pa.tinypac.model.data.pacman.Pacman;
 import pt.isec.pa.tinypac.model.fsm.GameContext;
+import pt.isec.pa.tinypac.ui.gui.resources.presets.ColorPreset;
+import pt.isec.pa.tinypac.ui.gui.resources.presets.EQPreset;
+import pt.isec.pa.tinypac.ui.gui.resources.presets.MusicPreset;
 
 import java.io.File;
 import java.util.*;
@@ -37,6 +37,13 @@ public class Game {
     private Element fruit;
     private int nextFruit;
 
+    //Game Configurations
+    private boolean mainMenuState;
+    private int musicVolume;
+    private ColorPreset mainColorPreset;
+    private MusicPreset musicPreset;
+    private EQPreset mainEQPreset;
+
 
     //Constructor
     public Game(GameContext context) {
@@ -47,7 +54,29 @@ public class Game {
         this.ghostDoor = new int[2];
         this.enchancedPhase = false;
         this.currentLevel = 0;
+
+        //Game Configurations
+        this.mainMenuState = true;
+        this.musicVolume = 8;
+        this.mainColorPreset = ColorPreset.COLOR_PRESET1;
+        this.musicPreset = MusicPreset.MUSIC_PRESET1;
+        this.mainEQPreset = EQPreset.EQ_PRESET1;
     }
+
+    //Game Configurations
+    //Getters
+    public boolean getMainMenuState() { return mainMenuState; }
+    public int getMusicVolume() { return musicVolume; }
+    public ColorPreset getMainColorPreset() { return mainColorPreset; }
+    public MusicPreset getMusicPreset() { return musicPreset; }
+    public EQPreset getMainEQPreset() { return mainEQPreset; }
+
+    //Setters
+    public void setMainMenuState(boolean value) { this.mainMenuState = value; }
+    public void setMusicVolume(int musicVolume) { this.musicVolume = musicVolume; }
+    public void setMainColorPreset(ColorPreset colorPreset) { this.mainColorPreset = colorPreset; }
+    public void setMusicPreset(MusicPreset musicPreset) { this.musicPreset = musicPreset; }
+    public void setMainEQPreset(EQPreset eqPreset) { this.mainEQPreset = eqPreset; }
 
     //Get Methods
     public Pacman getPacman() {

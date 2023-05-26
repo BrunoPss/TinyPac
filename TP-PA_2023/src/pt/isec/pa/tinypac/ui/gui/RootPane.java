@@ -3,7 +3,9 @@ package pt.isec.pa.tinypac.ui.gui;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 import pt.isec.pa.tinypac.model.GameManager;
-import pt.isec.pa.tinypac.ui.gui.uistates.InitUI;
+import pt.isec.pa.tinypac.ui.gui.uistates.MainGameUI;
+import pt.isec.pa.tinypac.ui.gui.uistates.MainMenuUI;
+import pt.isec.pa.tinypac.ui.gui.uistates.PauseMenuUI;
 
 public class RootPane extends BorderPane {
     //Internal Data
@@ -34,7 +36,9 @@ public class RootPane extends BorderPane {
     private void createViews() {
         //StackPane Configuration
         StackPane stackPane = new StackPane(
-                new InitUI(gameManager)
+                new MainMenuUI(gameManager),
+                new MainGameUI(gameManager),
+                new PauseMenuUI(gameManager)
         );
         //Background Configuration
 

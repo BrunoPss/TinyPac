@@ -10,19 +10,19 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import pt.isec.pa.tinypac.model.GameManager;
-import pt.isec.pa.tinypac.model.fsm.GameState;
+import pt.isec.pa.tinypac.ui.gui.ConfigMenu;
 import pt.isec.pa.tinypac.ui.gui.resources.ImageManager;
 
 import java.util.Optional;
 
-public class InitUI extends BorderPane {
+public class MainMenuUI extends BorderPane {
     //Internal Data
     GameManager gameManager;
-    MenuItem aboutItem;
-    Button btnStart, btnTop5, btnExit;
+    MenuItem aboutItem, configItem;
+    Button btnStart, btnTop5, btnConfig, btnExit;
 
     //Constructor
-    public InitUI(GameManager gameManager) {
+    public MainMenuUI(GameManager gameManager) {
         this.gameManager = gameManager;
 
         createViews();
@@ -46,10 +46,14 @@ public class InitUI extends BorderPane {
     private void createViews() {
         //Menu Bar
         MenuBar menuBar = new MenuBar();
-        Menu menu = new Menu("Info");
+        Menu infoMenu = new Menu("Info");
+        Menu optionMenu = new Menu("Option");
         aboutItem = new MenuItem("About");
-        menu.getItems().add(aboutItem);
-        menuBar.getMenus().add(menu);
+        configItem = new MenuItem("Configuration");
+        optionMenu.getItems().add(configItem);
+        menuBar.getMenus().add(optionMenu);
+        infoMenu.getItems().add(aboutItem);
+        menuBar.getMenus().add(infoMenu);
 
         //Center Zone
         //Pacman Logo
@@ -63,6 +67,9 @@ public class InitUI extends BorderPane {
         //Top 5 Button
         btnTop5 = new Button("Consultar Top 5");
         btnTop5.setMinWidth(100);
+        //Configurations Button
+        btnConfig = new Button("Configuracoes");
+        btnConfig.setMinWidth(100);
         //Exit Button
         btnExit = new Button("Sair");
         btnExit.setMinWidth(100);
@@ -79,7 +86,7 @@ public class InitUI extends BorderPane {
         BorderPane bPane = new BorderPane();
 
         //Button Group
-        VBox btnGroup = new VBox(logoPacman, btnStart, btnTop5, btnExit);
+        VBox btnGroup = new VBox(logoPacman, btnStart, btnTop5, btnConfig, btnExit);
         btnGroup.setAlignment(Pos.CENTER);
         btnGroup.setSpacing(10);
 
@@ -95,7 +102,7 @@ public class InitUI extends BorderPane {
         this.setCenter(bPane);
     }
     private void registerHandlers() {
-        //FSM ChangeListener
+        //Property ChangeListener
         gameManager.addPropertyChangeListener( evt -> { update();});
 
         //About Button ActionEvent
@@ -124,11 +131,16 @@ public class InitUI extends BorderPane {
         });
         //Start Button ActionEvent
         btnStart.setOnAction( event -> {
-
+            gameManager.setMainMenuState(false);
+            this.setVisible(false);
         });
         //Top 5 Button ActionEvent
         btnTop5.setOnAction( event -> {
 
+        });
+        //Configurations Button ActionEvent
+        btnConfig.setOnAction( event -> {
+            new ConfigMenu(gameManager);
         });
         //Exit Button ActionEvent
         btnExit.setOnAction( event -> {
@@ -142,10 +154,6 @@ public class InitUI extends BorderPane {
         });
     }
     private void update() {
-        if (gameManager.getState() != GameState.INITSTATE) {
-            this.setVisible(false);
-            return;
-        }
-        this.setVisible(true);
+
     }
 }

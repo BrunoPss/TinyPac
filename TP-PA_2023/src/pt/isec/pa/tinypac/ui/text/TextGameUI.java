@@ -47,7 +47,7 @@ public class TextGameUI {
                 case INITSTATE -> initStateUI();
                 case NORMALRUNSTATE -> normalRunStateUI();
                 case PAUSEDSTATE -> pausedStateUI();
-                case GAME_END -> gameEndUI();
+                case GAME_ENDSTATE -> gameEndUI();
             }
         }
     }

@@ -3,13 +3,16 @@ package pt.isec.pa.tinypac.model;
 import pt.isec.pa.tinypac.gameengine.IGameEngine;
 import pt.isec.pa.tinypac.model.fsm.GameContext;
 import pt.isec.pa.tinypac.model.fsm.GameState;
+import pt.isec.pa.tinypac.ui.gui.resources.presets.ColorPreset;
+import pt.isec.pa.tinypac.ui.gui.resources.presets.EQPreset;
+import pt.isec.pa.tinypac.ui.gui.resources.presets.MusicPreset;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
 public class GameManager {
     //Internal Data
-    private GameContext fsm;
+    private final GameContext fsm;
     PropertyChangeSupport pcs;
 
     //Constructor
@@ -19,10 +22,38 @@ public class GameManager {
     }
 
     //Get Methods
-
+    public boolean getMainMenuState() { return fsm.getMainMenuState(); }
+    public int getMusicVolume() { return fsm.getMusicVolume(); }
+    public ColorPreset getMainColorPreset() { return fsm.getMainColorPreset(); }
+    public MusicPreset getMusicPreset() { return fsm.getMusicPreset(); }
+    public EQPreset getMainEQPreset() { return fsm.getMainEQPreset(); }
 
     //Set Methods
-
+    public void setMainMenuState(boolean value) {
+        boolean old = fsm.getMainMenuState();
+        fsm.setMainMenuState(value);
+        pcs.firePropertyChange(null, old, value);
+    }
+    public void setMusicVolume(int musicVolume) {
+        int old = fsm.getMusicVolume();
+        fsm.setMusicVolume(musicVolume);
+        pcs.firePropertyChange(null, old, musicVolume);
+    }
+    public void setMainColorPreset(ColorPreset colorPreset) {
+        ColorPreset old = fsm.getMainColorPreset();
+        fsm.setMainColorPreset(colorPreset);
+        pcs.firePropertyChange(null, old, colorPreset);
+    }
+    public void setMusicPreset(MusicPreset musicPreset) {
+        MusicPreset old = fsm.getMusicPreset();
+        fsm.setMusicPreset(musicPreset);
+        pcs.firePropertyChange(null, old, musicPreset);
+    }
+    public void setMainEQPreset(EQPreset eqPreset) {
+        EQPreset old = fsm.getMainEQPreset();
+        fsm.setMainEQPreset(eqPreset);
+        pcs.firePropertyChange(null, old, eqPreset);
+    }
 
     //Methods
     public void addPropertyChangeListener(PropertyChangeListener listener) {
