@@ -2,6 +2,7 @@ package pt.isec.pa.tinypac.ui.gui.resources;
 
 import javafx.scene.image.Image;
 import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import pt.isec.pa.tinypac.ui.gui.resources.presets.MusicPreset;
 
 import javax.print.URIException;
@@ -27,18 +28,22 @@ public class MediaManager {
 
 
     //Methods
-    private static void loadPlaylist(MusicPreset musicPreset) {
+    public static void loadPlaylist(MusicPreset musicPreset) {
+        if (!playList.isEmpty()) {
+            playList.clear();
+        }
         File path = new File(Objects.requireNonNull(MediaManager.class.getResource("music/" + musicPreset)).getPath());
         File[] fileList = path.listFiles();
         for (File file : fileList) {
             playList.add(file.getName());
         }
+        Collections.shuffle(playList, rand);
+        System.out.println(playList);
     }
     public static Media getMedia(MusicPreset musicPreset) {
-        loadPlaylist(musicPreset);
-
-        Collections.shuffle(playList, rand);
+        System.out.println(playList.get(currentSong));
         Media media = medias.get(playList.get(currentSong));
+
         if (media == null) {
             try {
                 media = new Media(Objects.requireNonNull(MediaManager.class.getResource("music/" + musicPreset + "/" + playList.get(currentSong))).toURI().toString());
@@ -49,8 +54,15 @@ public class MediaManager {
         }
         return media;
     }
-    public static void nextSong() {
-        currentSong++;
+    public static void nextSong(MusicPreset musicPreset) {
+        if (currentSong < playList.size()-1) {
+            currentSong++;
+        }
+        else {
+            System.out.println("LIMIT");
+            currentSong = 0;
+            loadPlaylist(musicPreset);
+        }
     }
 
     //Overrides

@@ -68,9 +68,8 @@ public class ConfigMenu extends VBox {
         gPane.setHgap(20);
         Label choiceInfo1 = new Label("Main Color Theme");
         colorThemeSelector = new ChoiceBox<>();
-        colorThemeSelector.getItems().add(ColorPreset.COLOR_PRESET1);
-        colorThemeSelector.getItems().add(ColorPreset.COLOR_PRESET2);
-        colorThemeSelector.getItems().add(ColorPreset.COLOR_PRESET3);
+        for (ColorPreset cPreset : ColorPreset.values())
+            colorThemeSelector.getItems().add(cPreset);
         colorThemeSelector.setValue(gameManager.getMainColorPreset());
         themeGroup.getChildren().addAll(choiceInfo1, colorThemeSelector);
         gPane.add(themeGroup, 1, 1);
@@ -103,9 +102,8 @@ public class ConfigMenu extends VBox {
         HBox eqBox = new HBox();
         Label eqLabel = new Label("Sound EQ Preset");
         soundEqSelector = new ChoiceBox<>();
-        soundEqSelector.getItems().add(EQPreset.EQ_PRESET1);
-        soundEqSelector.getItems().add(EQPreset.EQ_PRESET2);
-        soundEqSelector.getItems().add(EQPreset.EQ_PRESET3);
+        for (EQPreset eqPreset : EQPreset.values())
+            soundEqSelector.getItems().add(eqPreset);
         soundEqSelector.setValue(gameManager.getMainEQPreset());
         eqBox.getChildren().addAll(eqLabel, soundEqSelector);
         eqBox.setSpacing(10);
@@ -113,9 +111,8 @@ public class ConfigMenu extends VBox {
         HBox musicThemeBox = new HBox();
         Label musicThemeLabel = new Label("Music Preset");
         musicThemeSelector = new ChoiceBox<>();
-        musicThemeSelector.getItems().add(MusicPreset.LOFI);
-        musicThemeSelector.getItems().add(MusicPreset.MUSIC_PRESET2);
-        musicThemeSelector.getItems().add(MusicPreset.MUSIC_PRESET3);
+        for (MusicPreset mPreset : MusicPreset.values())
+            musicThemeSelector.getItems().add(mPreset);
         musicThemeSelector.setValue(gameManager.getMusicPreset());
         musicThemeBox.getChildren().addAll(musicThemeLabel, musicThemeSelector);
         musicThemeBox.setSpacing(10);

@@ -2,10 +2,13 @@ package pt.isec.pa.tinypac.ui.gui;
 
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.media.AudioEqualizer;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+import javafx.util.Duration;
 import pt.isec.pa.tinypac.model.GameManager;
 import pt.isec.pa.tinypac.ui.gui.resources.MediaManager;
+import pt.isec.pa.tinypac.ui.gui.resources.presets.EQPreset;
 import pt.isec.pa.tinypac.ui.gui.uistates.GameEndUI;
 import pt.isec.pa.tinypac.ui.gui.uistates.MainGameUI;
 import pt.isec.pa.tinypac.ui.gui.uistates.MainMenuUI;
@@ -18,6 +21,7 @@ public class RootPane extends BorderPane {
     //Internal Data
     GameManager gameManager;
     MediaPlayer mPlayer;
+    AudioEqualizer equalizer;
 
     //Constructor
     public RootPane(GameManager gameManager) {
@@ -52,9 +56,10 @@ public class RootPane extends BorderPane {
 
         //Audio Player
         mPlayer = null;
-
+        MediaManager.loadPlaylist(gameManager.getMusicPreset());
         mPlayer = new MediaPlayer(Objects.requireNonNull(MediaManager.getMedia(gameManager.getMusicPreset())));
-
+        equalizer = mPlayer.getAudioEqualizer();
+        mPlayer.play();
         //Background Configuration
 
         //Align Configuration
@@ -65,21 +70,37 @@ public class RootPane extends BorderPane {
         gameManager.addPropertyChangeListener( evt -> { update();});
 
         //Music End ActionEvent
-        mPlayer.setOnEndOfMedia(this::nextSong);
+        mPlayer.setOnEndOfMedia( this::nextSong );
     }
     private void nextSong() {
         System.out.println("END SONG");
-        MediaManager.nextSong();
+        MediaManager.nextSong(gameManager.getMusicPreset());
         mPlayer = new MediaPlayer(Objects.requireNonNull(MediaManager.getMedia(gameManager.getMusicPreset())));
+        equalizer = mPlayer.getAudioEqualizer();
+        mPlayer.setOnEndOfMedia(this::nextSong);
         mPlayer.play();
     }
     private void update() {
-        //Music Play Update
-        if (gameManager.getMusicPlayStatus()) {
+        //Music Preset Update
+        StringBuilder currentMediaSource = new StringBuilder(mPlayer.getMedia().getSource());
+        StringBuilder mediaFolder = new StringBuilder(currentMediaSource.substring(currentMediaSource.lastIndexOf("/", currentMediaSource.lastIndexOf("/") - 1) + 1, currentMediaSource.lastIndexOf("/")));
+        if (!mediaFolder.toString().equals(gameManager.getMusicPreset().toString())) {
+            System.out.println("STOP");
+            mPlayer.stop();
+            MediaManager.loadPlaylist(gameManager.getMusicPreset());
+            mPlayer = new MediaPlayer(Objects.requireNonNull(MediaManager.getMedia(gameManager.getMusicPreset())));
+            equalizer = mPlayer.getAudioEqualizer();
             mPlayer.play();
         }
-        else {
-            mPlayer.pause();
-        }
+
+        //Volume Update
+        mPlayer.setVolume((double) gameManager.getMusicVolume() / 20);
+
+        //Mute Update
+        mPlayer.setMute(gameManager.getMuted());
+
+        //EQ Preset Update
+        EQPreset.loadPreset(gameManager.getMainEQPreset(), equalizer);
+
     }
 }
