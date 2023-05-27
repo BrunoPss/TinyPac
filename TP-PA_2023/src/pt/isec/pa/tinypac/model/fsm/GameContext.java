@@ -2,7 +2,10 @@ package pt.isec.pa.tinypac.model.fsm;
 
 import pt.isec.pa.tinypac.gameengine.IGameEngine;
 import pt.isec.pa.tinypac.gameengine.IGameEngineEvolve;
+import pt.isec.pa.tinypac.model.data.entity.EntityType;
 import pt.isec.pa.tinypac.model.data.game.Game;
+import pt.isec.pa.tinypac.model.data.maze.IMazeElement;
+import pt.isec.pa.tinypac.model.data.pacman.Pacman;
 import pt.isec.pa.tinypac.ui.gui.resources.presets.ColorPreset;
 import pt.isec.pa.tinypac.ui.gui.resources.presets.EQPreset;
 import pt.isec.pa.tinypac.ui.gui.resources.presets.MusicPreset;
@@ -28,10 +31,13 @@ public class GameContext implements IGameEngineEvolve {
     public GameState getState() {
         return state.getState();
     }
-    public int getPacmanPoints() { return gameData.getPacman().getPoints(); }
+    public int getPacmanPoints() { return ((Pacman) gameData.getEntity(EntityType.PACMAN)).getPoints(); }
     //public String getPacmanDirection() { return entities.get(ElementType.PACMAN).getCurrentDirection(); }
     //public String getPacmanPosition() { return entities.get(ElementType.PACMAN).getCurrentPosition(); }
     public char[][] getMaze() { return gameData.getMaze().getMaze(); }
+    public int getMazeHeight() { return gameData.getMazeHeight(); }
+    public int getMazeLength() { return gameData.getMazeLength(); }
+    public char getMazeElement(int x, int y) { return gameData.getMazeElement(x,y); }
     public boolean getMainMenuState() { return gameData.getMainMenuState(); }
     public boolean getMusicPlayStatus() { return gameData.getMusicPlayStatus(); }
     public int getMusicVolume() { return gameData.getMusicVolume(); }

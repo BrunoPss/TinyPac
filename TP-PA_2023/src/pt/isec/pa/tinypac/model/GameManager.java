@@ -29,6 +29,9 @@ public class GameManager {
     public ColorPreset getMainColorPreset() { return fsm.getMainColorPreset(); }
     public MusicPreset getMusicPreset() { return fsm.getMusicPreset(); }
     public EQPreset getMainEQPreset() { return fsm.getMainEQPreset(); }
+    public int getMazeHeight() { return fsm.getMazeHeight(); }
+    public int getMazeLength() { return fsm.getMazeLength(); }
+    public char getMazeElement(int x, int y) { return fsm.getMazeElement(x,y); }
 
     //Set Methods
     public void setMainMenuState(boolean value) {
@@ -41,7 +44,7 @@ public class GameManager {
         fsm.setMusicVolume(musicVolume);
         pcs.firePropertyChange(null, old, musicVolume);
     }
-    public void toogleMusicPlayeStatus() {
+    public void toogleMusicPlayStatus() {
         fsm.setMusicPlayStatus(!fsm.getMusicPlayStatus());
         pcs.firePropertyChange(null, null, null);
     }

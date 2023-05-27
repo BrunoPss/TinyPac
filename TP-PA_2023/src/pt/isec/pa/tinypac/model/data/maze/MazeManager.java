@@ -29,11 +29,10 @@ public class MazeManager {
 
 
     //Methods
-    public static Dictionary<ElementType, Element> loadLevel(Game gameData, String filePath) {
+    public static void loadLevel(Game gameData, String filePath) {
         File file = new File(filePath);
         int x=0, y=0;
         int f = 0;
-        Dictionary<ElementType, Element> movingElements = new Hashtable<>();
         Element auxWarp = null;
 
         try (FileReader fr = new FileReader(file))
@@ -58,25 +57,29 @@ public class MazeManager {
                             case 1 -> {
                                 //DESCOMENTAR
                                 gameData.setEntity(EntityType.BLINKY, EntityFactory.createEntity(EntityType.BLINKY, gameData, x, y));
-                                gameData.getMaze().set(y,x, movingElements.get(EntityType.BLINKY));
+                                gameData.getMaze().set(y,x, gameData.getEntity(EntityType.BLINKY));
                             }
                             case 2 -> {
                                 //gameData.setEntity(EntityType.CLYDE, EntityFactory.createEntity(EntityType.CLYDE, gameData, x, y));
-                                //gameData.getMaze().set(y,x, movingElements.get(EntityType.CLYDE));
+                                //gameData.getMaze().set(y,x, gameData.getEntity(EntityType.CLYDE));
                             }
                             case 3 -> {
                                 //gameData.setEntity(EntityType.INKY, EntityFactory.createEntity(EntityType.INKY, gameData, x, y));
-                                //gameData.getMaze().set(y,x, movingElements.get(EntityType.INKY));
+                                //gameData.getMaze().set(y,x, gameData.getEntity(EntityType.INKY));
                             }
                             case 4 -> {
                                 gameData.setEntity(EntityType.PINKY, EntityFactory.createEntity(EntityType.PINKY, gameData, x, y));
-                                gameData.getMaze().set(y,x, movingElements.get(EntityType.PINKY));
+                                gameData.getMaze().set(y,x, gameData.getEntity(EntityType.PINKY));
                             }
                         }
                         f++;
+                        gameData.getMaze().set(y,x, ElementFactory.createElement(ElementType.WALL, gameData, x, y));
+                        //System.out.println("WALL: " + x + " " + y);
+                        //System.out.println(gameData.getMazeElement(x,y));
                     }
                     case 'Y' -> {
                         gameData.setGhostDoor(x,y);
+                        gameData.getMaze().set(y,x, ElementFactory.createElement(ElementType.WALL, gameData, x, y));
                     }
                     case 'o' -> {
                         gameData.getMaze().set(y,x, ElementFactory.createElement(ElementType.BALL, gameData, x, y));
@@ -89,7 +92,7 @@ public class MazeManager {
                     }
                     case 'M' -> {
                         gameData.setEntity(EntityType.PACMAN, EntityFactory.createEntity(EntityType.PACMAN, gameData, x, y));
-                        gameData.getMaze().set(y,x, movingElements.get(EntityType.PACMAN));
+                        gameData.getMaze().set(y,x, gameData.getEntity(EntityType.PACMAN));
                     }
                     case 'O' -> gameData.getMaze().set(y,x, ElementFactory.createElement(ElementType.SUPER_BALL, gameData, x, y));
                     //case 'Y' -> maze.set(y,x, ElementFactory.createElement(ElementType.PORTAL, maze, x, y));
@@ -106,7 +109,6 @@ public class MazeManager {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return movingElements;
     }
 
     public static int getXSize(String filePath) {

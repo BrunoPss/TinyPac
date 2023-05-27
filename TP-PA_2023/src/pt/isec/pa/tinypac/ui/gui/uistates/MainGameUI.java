@@ -1,5 +1,7 @@
 package pt.isec.pa.tinypac.ui.gui.uistates;
 
+import com.googlecode.lanterna.TextCharacter;
+import com.googlecode.lanterna.TextColor;
 import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
@@ -11,6 +13,9 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import pt.isec.pa.tinypac.model.GameManager;
+import pt.isec.pa.tinypac.model.data.ball.Ball;
+import pt.isec.pa.tinypac.model.data.pacman.Pacman;
+import pt.isec.pa.tinypac.model.data.wall.Wall;
 import pt.isec.pa.tinypac.model.fsm.GameState;
 import pt.isec.pa.tinypac.ui.gui.resources.ImageManager;
 
@@ -18,6 +23,7 @@ public class MainGameUI extends BorderPane {
     //Internal Data
     private final GameManager gameManager;
     Button arrowLEFT, arrowUP, arrowDOWN, arrowRIGHT, pauseBtn;
+    CheckBox muteButton;
 
     //Constructor
     public MainGameUI(GameManager gameManager) {
@@ -42,14 +48,35 @@ public class MainGameUI extends BorderPane {
 
     //Internal Functions
     private void createViews() {
+        //Maze Dimensions
+        int mazeWidth = 800;
+        int mazeHeight = 550;
+        int cellSize = 15;
+
         //Main Pane
         SplitPane mainPane = new SplitPane();
         //Maze Panel
-        Canvas maze = new Canvas(800,550);
+        Canvas maze = new Canvas(mazeWidth,mazeHeight);
         GraphicsContext mazeContext = maze.getGraphicsContext2D();
         mazeContext.setFill(Color.BLACK);
         mazeContext.fillRect(0, 0, maze.getWidth(), maze.getHeight());
         Group group = new Group(maze);
+        //Draw Maze
+        for (int y=0; y < gameManager.getMazeHeight(); y++) {
+            for (int x=0; x < gameManager.getMazeLength(); x++) {
+                //System.out.println("ELEMT: " + gameManager.getMazeElement(14,12) + x + " " + y);
+                Color color = switch(gameManager.getMazeElement(x,y)) {
+                    case Pacman.SYMBOL -> Color.YELLOW;
+                    case Wall.SYMBOL -> Color.BLUE;
+                    case Ball.SYMBOL -> Color.LIGHTYELLOW;
+                    default -> Color.BLACK;
+                };
+
+                mazeContext.setFill(color);
+                mazeContext.fillRect(x * cellSize, y * cellSize, cellSize, cellSize);
+            }
+        }
+
         //Second Panel
         VBox secondPanel = new VBox();
         secondPanel.setAlignment(Pos.BOTTOM_CENTER);
@@ -114,7 +141,7 @@ public class MainGameUI extends BorderPane {
         //Button Controls
         VBox btnControls = new VBox();
         //Mute Button
-        CheckBox muteButton = new CheckBox("Mute");
+        muteButton = new CheckBox("Mute");
         btnControls.getChildren().add(muteButton);
         //Group Add
         controlsPanel.getChildren().addAll(arrowsPane, separator2, btnControls);
@@ -159,6 +186,11 @@ public class MainGameUI extends BorderPane {
         //Pause Button ActionEvent
         pauseBtn.setOnAction( event -> {
             gameManager.pauseGame();
+        });
+
+        //Mute Button ActionEvent
+        muteButton.setOnAction( event -> {
+            gameManager.toogleMute();
         });
     }
 

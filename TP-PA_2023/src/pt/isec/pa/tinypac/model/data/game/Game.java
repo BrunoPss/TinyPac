@@ -4,6 +4,7 @@ import pt.isec.pa.tinypac.model.data.element.Element;
 import pt.isec.pa.tinypac.model.data.entity.Entity;
 import pt.isec.pa.tinypac.model.data.entity.EntityType;
 import pt.isec.pa.tinypac.model.data.fruit.Fruit;
+import pt.isec.pa.tinypac.model.data.maze.IMazeElement;
 import pt.isec.pa.tinypac.model.data.maze.Maze;
 import pt.isec.pa.tinypac.model.data.maze.MazeManager;
 import pt.isec.pa.tinypac.model.data.pacman.Pacman;
@@ -59,12 +60,12 @@ public class Game {
 
         //Game Configurations
         this.mainMenuState = true;
-        this.musicVolume = 8;
+        this.musicVolume = 12;
         this.musicPlayStatus = true;
         this.muted = false;
         this.mainColorPreset = ColorPreset.COLOR_PRESET1;
         this.musicPreset = MusicPreset.LOFI;
-        this.mainEQPreset = EQPreset.EQ_PRESET1;
+        this.mainEQPreset = EQPreset.NONE;
     }
 
     //Game Configurations
@@ -91,15 +92,17 @@ public class Game {
     public void setMainEQPreset(EQPreset eqPreset) { this.mainEQPreset = eqPreset; }
 
     //Get Methods
-    public Pacman getPacman() {
-        return (Pacman) entities.get(EntityType.PACMAN);
-    }
-    public Maze getMaze() {
-        return maze;
-    }
+    public Entity getEntity(EntityType type) { return entities.get(type); }
     public int[] getGhostDoor() { return ghostDoor; }
     public GameContext getContext() { return context; }
     public String getCurrentLevelFilePath() { return levels.get(currentLevel); }
+    public Maze getMaze() { return maze; }
+    public int getMazeHeight() { return maze.getMaze().length; }
+    public int getMazeLength() { return maze.getMaze()[0].length; }
+    public char getMazeElement(int x, int y) {
+        //System.out.println(x + " " + y);
+        return maze.get(y, x).getSymbol();
+    }
 
     //Set Methods
     public void setGhostDoor(int x, int y) { this.ghostDoor[0] = x; this.ghostDoor[1] = y; }

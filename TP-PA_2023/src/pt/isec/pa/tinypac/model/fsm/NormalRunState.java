@@ -1,7 +1,9 @@
 package pt.isec.pa.tinypac.model.fsm;
 
 import pt.isec.pa.tinypac.model.data.entity.Directions;
+import pt.isec.pa.tinypac.model.data.entity.EntityType;
 import pt.isec.pa.tinypac.model.data.game.Game;
+import pt.isec.pa.tinypac.model.data.pacman.Pacman;
 
 public class NormalRunState extends GameStateAdapter {
     //Internal Data
@@ -30,25 +32,25 @@ public class NormalRunState extends GameStateAdapter {
     }
     @Override
     public boolean up() {
-        gameData.getPacman().setDirection(Directions.UP);
+        ((Pacman) gameData.getEntity(EntityType.PACMAN)).setDirection(Directions.UP);
         changeState(new NormalRunState(context, gameData));
         return true;
     }
     @Override
     public boolean down() {
-        gameData.getPacman().setDirection(Directions.DOWN);
+        ((Pacman) gameData.getEntity(EntityType.PACMAN)).setDirection(Directions.DOWN);
         changeState(new NormalRunState(context, gameData));
         return true;
     }
     @Override
     public boolean left() {
-        gameData.getPacman().setDirection(Directions.LEFT);
+        ((Pacman) gameData.getEntity(EntityType.PACMAN)).setDirection(Directions.LEFT);
         changeState(new NormalRunState(context, gameData));
         return true;
     }
     @Override
     public boolean right() {
-        gameData.getPacman().setDirection(Directions.RIGHT);
+        ((Pacman) gameData.getEntity(EntityType.PACMAN)).setDirection(Directions.RIGHT);
         changeState(new NormalRunState(context, gameData));
         return true;
     }
