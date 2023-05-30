@@ -78,6 +78,9 @@ public class RootPane extends BorderPane {
         mPlayer = new MediaPlayer(Objects.requireNonNull(MediaManager.getMedia(gameManager.getMusicPreset())));
         equalizer = mPlayer.getAudioEqualizer();
         mPlayer.setOnEndOfMedia(this::nextSong);
+        mPlayer.setVolume((double) gameManager.getMusicVolume() / 20);
+        mPlayer.setMute(gameManager.getMuted());
+        EQPreset.loadPreset(gameManager.getMainEQPreset(), equalizer);
         mPlayer.play();
     }
     private void update() {

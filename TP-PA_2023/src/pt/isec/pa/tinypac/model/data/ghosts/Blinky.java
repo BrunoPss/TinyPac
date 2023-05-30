@@ -16,7 +16,7 @@ import java.util.Random;
 
 public class Blinky extends Ghost {
     //Internal Data
-    public static char SYMBOL = 'B';
+    public static final char SYMBOL = 'B';
     private IMazeElement auxF = null;
     private IMazeElement auxA = null;
     private Random rnd;

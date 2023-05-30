@@ -13,7 +13,7 @@ import pt.isec.pa.tinypac.model.data.game.Game;
 
 public class Clyde extends Ghost {
     //Internal Data
-
+    public static final char SYMBOL = 'C';
 
     //Constructor
     /**

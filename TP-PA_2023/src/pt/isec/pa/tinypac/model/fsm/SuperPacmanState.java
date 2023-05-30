@@ -28,6 +28,16 @@ public class SuperPacmanState extends GameStateAdapter {
 
     //Overrides
     @Override
+    public boolean update() {
+        gameData.checkEnchancedMode();
+        gameData.checkLevelChange();
+        gameData.checkGameEnd();
+        gameData.evolveEntities();
+        //System.out.println("Super Pacman State Update");
+        return true;
+    }
+
+    @Override
     public boolean up() {
         ((Pacman) gameData.getEntity(EntityType.PACMAN)).setDirection(Directions.UP);
         changeState(new NormalRunState(context, gameData));

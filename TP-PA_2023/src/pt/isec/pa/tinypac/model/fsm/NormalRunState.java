@@ -26,10 +26,15 @@ public class NormalRunState extends GameStateAdapter {
 
     //Overrides
     @Override
-    public boolean evolve() {
-
+    public boolean update() {
+        gameData.checkEnchancedMode();
+        gameData.checkLevelChange();
+        gameData.checkGameEnd();
+        gameData.evolveEntities();
+        //System.out.println("Normal Run State Update");
         return true;
     }
+
     @Override
     public boolean up() {
         ((Pacman) gameData.getEntity(EntityType.PACMAN)).setDirection(Directions.UP);

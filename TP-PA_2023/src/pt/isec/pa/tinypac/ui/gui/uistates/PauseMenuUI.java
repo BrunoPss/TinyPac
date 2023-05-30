@@ -1,6 +1,8 @@
 package pt.isec.pa.tinypac.ui.gui.uistates;
 
 import java.util.Optional;
+
+import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Alert;
@@ -75,7 +77,7 @@ public class PauseMenuUI extends BorderPane {
 
     private void registerHandlers() {
         //Property Change Listener
-        gameManager.addPropertyChangeListener( evt -> { update();});
+        gameManager.addPropertyChangeListener(evt -> Platform.runLater(this::update));
 
         //Resume Button ActionEvent
         resumeBtn.setOnAction( event -> {
