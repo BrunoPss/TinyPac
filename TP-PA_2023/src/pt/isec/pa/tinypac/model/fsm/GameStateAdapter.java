@@ -26,7 +26,7 @@ abstract class GameStateAdapter implements IGameState {
 
     //Overrides
     @Override
-    public boolean evolve() { return false; }
+    public boolean update() { return false; }
     @Override
     public boolean up() { return false; }
     @Override

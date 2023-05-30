@@ -31,7 +31,9 @@ public class GameManager {
     public EQPreset getMainEQPreset() { return fsm.getMainEQPreset(); }
     public int getMazeHeight() { return fsm.getMazeHeight(); }
     public int getMazeLength() { return fsm.getMazeLength(); }
-    public char getMazeElement(int x, int y) { return fsm.getMazeElement(x,y); }
+    public char getMazeElement(int x, int y) {
+        return fsm.getMazeElement(x,y);
+    }
 
     //Set Methods
     public void setMainMenuState(boolean value) {
@@ -69,8 +71,15 @@ public class GameManager {
     }
 
     //Methods
+    public void addPropertyChangeListener(String property, PropertyChangeListener listener) {
+        pcs.addPropertyChangeListener(property, listener);
+    }
     public void addPropertyChangeListener(PropertyChangeListener listener) {
         pcs.addPropertyChangeListener(listener);
+    }
+    public void update() {
+        fsm.update();
+        pcs.firePropertyChange(null, null, null);
     }
     public void up() {
         fsm.up();

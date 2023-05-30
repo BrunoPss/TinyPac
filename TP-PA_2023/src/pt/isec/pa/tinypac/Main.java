@@ -1,6 +1,7 @@
 package pt.isec.pa.tinypac;
 
 import javafx.application.Application;
+import javafx.application.Platform;
 import pt.isec.pa.tinypac.gameengine.GameEngine;
 import pt.isec.pa.tinypac.gameengine.IGameEngine;
 import pt.isec.pa.tinypac.model.GameManager;
@@ -24,8 +25,9 @@ public class Main {
     static {
         IGameEngine gameEngine = new GameEngine();
         gameManager = new GameManager(gameEngine);
+        gameEngine.registerClient((g,t) -> gameManager.update());
     }
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
         //IGameEngine gameEngine = new GameEngine();
         //GameContext fsm = new GameContext(gameEngine);
         //CursesGameUI cursesUI = new CursesGameUI(fsm);

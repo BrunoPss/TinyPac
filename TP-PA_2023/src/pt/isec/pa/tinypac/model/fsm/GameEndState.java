@@ -1,6 +1,9 @@
 package pt.isec.pa.tinypac.model.fsm;
 
 import pt.isec.pa.tinypac.model.data.game.Game;
+import pt.isec.pa.tinypac.model.fsm.GameContext;
+import pt.isec.pa.tinypac.model.fsm.GameState;
+import pt.isec.pa.tinypac.model.fsm.GameStateAdapter;
 
 public class GameEndState extends GameStateAdapter {
     //Internal Data

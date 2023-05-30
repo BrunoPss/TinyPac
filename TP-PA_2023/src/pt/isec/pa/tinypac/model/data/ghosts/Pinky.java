@@ -17,6 +17,7 @@ import java.util.Random;
 
 public class Pinky extends Ghost {
     //Internal Data
+    public static final char SYMBOL = 'P';
     private Corners objectiveCorner;
     private int[] objectiveCords;
     private Random rnd;

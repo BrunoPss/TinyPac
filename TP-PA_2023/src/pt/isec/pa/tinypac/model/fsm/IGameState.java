@@ -1,8 +1,7 @@
 package pt.isec.pa.tinypac.model.fsm;
 
-
 public interface IGameState {
-    boolean evolve();
+    boolean update();
     boolean up();
     boolean down();
     boolean left();

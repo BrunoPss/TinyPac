@@ -4,13 +4,12 @@ import pt.isec.pa.tinypac.gameengine.IGameEngine;
 import pt.isec.pa.tinypac.gameengine.IGameEngineEvolve;
 import pt.isec.pa.tinypac.model.data.entity.EntityType;
 import pt.isec.pa.tinypac.model.data.game.Game;
-import pt.isec.pa.tinypac.model.data.maze.IMazeElement;
 import pt.isec.pa.tinypac.model.data.pacman.Pacman;
 import pt.isec.pa.tinypac.ui.gui.resources.presets.ColorPreset;
 import pt.isec.pa.tinypac.ui.gui.resources.presets.EQPreset;
 import pt.isec.pa.tinypac.ui.gui.resources.presets.MusicPreset;
 
-public class GameContext implements IGameEngineEvolve {
+public class GameContext {
     //Internal Data
     IGameState state;
     IGameEngine gameEngine;
@@ -24,7 +23,7 @@ public class GameContext implements IGameEngineEvolve {
         this.gameEngine = gameEngine;
         this.gameData = new Game(this);
         this.state = new InitState(this, gameData);
-        gameEngine.registerClient(this);
+        //gameEngine.registerClient(this);
     }
 
     //Get Methods
@@ -37,7 +36,9 @@ public class GameContext implements IGameEngineEvolve {
     public char[][] getMaze() { return gameData.getMaze().getMaze(); }
     public int getMazeHeight() { return gameData.getMazeHeight(); }
     public int getMazeLength() { return gameData.getMazeLength(); }
-    public char getMazeElement(int x, int y) { return gameData.getMazeElement(x,y); }
+    public char getMazeElement(int x, int y) {
+        return gameData.getMazeElement(x,y);
+    }
     public boolean getMainMenuState() { return gameData.getMainMenuState(); }
     public boolean getMusicPlayStatus() { return gameData.getMusicPlayStatus(); }
     public int getMusicVolume() { return gameData.getMusicVolume(); }
@@ -80,10 +81,9 @@ public class GameContext implements IGameEngineEvolve {
     public boolean exitGame() { return state.exitGame(); }
 
     //Overrides
-    @Override
-    public void evolve(IGameEngine gameEngine, long currentTime) {
-        gameData.gameEvolve();
-        //state.evolve();  //Maneira Correta//
+    //@Override
+    public void update() {
+        state.update();  //Implementacao Correta
     }
 
     //Internal Functions
