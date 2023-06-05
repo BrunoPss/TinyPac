@@ -25,7 +25,7 @@ public class Pacman extends Entity {
     public Pacman(Game gameData, int x, int y) {
         super(gameData, x, y);
         this.points = 0;
-        this.direction = null;
+        this.direction = Directions.LEFT;
         this.lives = 3;
     }
 
@@ -34,6 +34,7 @@ public class Pacman extends Entity {
         return this.points;
     }
     public int getLives() { return this.lives; }
+    public Directions getDirection() { return this.direction; };
 
     //Set Methods
     public void setDirection(Directions direction) { this.direction = direction; }

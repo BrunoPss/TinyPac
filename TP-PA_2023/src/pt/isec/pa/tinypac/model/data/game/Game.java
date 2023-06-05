@@ -1,6 +1,7 @@
 package pt.isec.pa.tinypac.model.data.game;
 
 import pt.isec.pa.tinypac.model.data.element.Element;
+import pt.isec.pa.tinypac.model.data.entity.Directions;
 import pt.isec.pa.tinypac.model.data.entity.Entity;
 import pt.isec.pa.tinypac.model.data.entity.EntityType;
 import pt.isec.pa.tinypac.model.data.fruit.Fruit;
@@ -40,6 +41,7 @@ public class Game {
 
     //Game Configurations
     private boolean mainMenuState;
+    private boolean top5MenuState;
     private boolean musicPlayStatus;
     private int musicVolume;
     private boolean muted;
@@ -60,6 +62,7 @@ public class Game {
 
         //Game Configurations
         this.mainMenuState = true;
+        this.top5MenuState = false;
         this.musicVolume = 12;
         this.musicPlayStatus = true;
         this.muted = false;
@@ -71,6 +74,7 @@ public class Game {
     //Game Configurations
     //Getters Config
     public boolean getMainMenuState() { return mainMenuState; }
+    public boolean getTop5MenuState() { return top5MenuState; }
     public boolean getMusicPlayStatus() {
         return musicPlayStatus;
     }
@@ -82,6 +86,7 @@ public class Game {
 
     //Setters Config
     public void setMainMenuState(boolean value) { this.mainMenuState = value; }
+    public void setTop5MenuState(boolean value) { this.top5MenuState = value; }
     public void setMusicPlayStatus(boolean value) {
         this.musicPlayStatus = value;
     }
@@ -112,6 +117,7 @@ public class Game {
     public int getEnchancedTimeout() { return enchancedTimeout; }
     public int getTotalBalls() { return totalBalls; }
     public int getCurrentLevel() { return currentLevel; }
+    public Directions getPacmanDirections() { return ((Pacman) entities.get(EntityType.PACMAN)).getDirection(); }
 
     //Set Methods
     public void setGhostDoor(int x, int y) { this.ghostDoor[0] = x; this.ghostDoor[1] = y; }

@@ -2,6 +2,7 @@ package pt.isec.pa.tinypac.model.fsm;
 
 import pt.isec.pa.tinypac.gameengine.IGameEngine;
 import pt.isec.pa.tinypac.gameengine.IGameEngineEvolve;
+import pt.isec.pa.tinypac.model.data.entity.Directions;
 import pt.isec.pa.tinypac.model.data.entity.EntityType;
 import pt.isec.pa.tinypac.model.data.game.Game;
 import pt.isec.pa.tinypac.model.data.pacman.Pacman;
@@ -40,18 +41,21 @@ public class GameContext {
         return gameData.getMazeElement(x,y);
     }
     public boolean getMainMenuState() { return gameData.getMainMenuState(); }
+    public boolean getTop5MenuState() { return gameData.getTop5MenuState(); }
     public boolean getMusicPlayStatus() { return gameData.getMusicPlayStatus(); }
     public int getMusicVolume() { return gameData.getMusicVolume(); }
     public boolean getMuted() { return gameData.getMuted(); }
     public ColorPreset getMainColorPreset() { return gameData.getMainColorPreset(); }
     public MusicPreset getMusicPreset() { return gameData.getMusicPreset(); }
     public EQPreset getMainEQPreset() { return gameData.getMainEQPreset(); }
+    public Directions getPacmanDirection() { return gameData.getPacmanDirections(); }
 
     //Set Methods
     void changeState(IGameState newState) {
         this.state = newState;
     }
     public void setMainMenuState(boolean value) { gameData.setMainMenuState(value); }
+    public void setTop5MenuState(boolean value) { gameData.setTop5MenuState(value); }
     public void setMusicPlayStatus(boolean value) { gameData.setMusicPlayStatus(value); }
     public void setMusicVolume(int musicVolume) { gameData.setMusicVolume(musicVolume); }
     public void setMuted(boolean value) { gameData.setMuted(value); }

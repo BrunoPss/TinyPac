@@ -145,7 +145,8 @@ public class MainMenuUI extends BorderPane {
         });
         //Top 5 Button ActionEvent
         btnTop5.setOnAction( event -> {
-
+            gameManager.setTop5MenuState(true);
+            this.setVisible(false);
         });
         //Configurations Button ActionEvent
         btnConfig.setOnAction( event -> {
