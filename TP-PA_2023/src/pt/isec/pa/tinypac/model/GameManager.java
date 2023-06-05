@@ -1,6 +1,7 @@
 package pt.isec.pa.tinypac.model;
 
 import pt.isec.pa.tinypac.gameengine.IGameEngine;
+import pt.isec.pa.tinypac.model.data.entity.Directions;
 import pt.isec.pa.tinypac.model.fsm.GameContext;
 import pt.isec.pa.tinypac.model.fsm.GameState;
 import pt.isec.pa.tinypac.ui.gui.resources.presets.ColorPreset;
@@ -23,6 +24,7 @@ public class GameManager {
 
     //Get Methods
     public boolean getMainMenuState() { return fsm.getMainMenuState(); }
+    public boolean getTop5MenuState() { return fsm.getTop5MenuState(); }
     public int getMusicVolume() { return fsm.getMusicVolume(); }
     public boolean getMusicPlayStatus() { return fsm.getMusicPlayStatus(); }
     public boolean getMuted() { return fsm.getMuted(); }
@@ -34,11 +36,17 @@ public class GameManager {
     public char getMazeElement(int x, int y) {
         return fsm.getMazeElement(x,y);
     }
+    public Directions getPacmanDirection() { return fsm.getPacmanDirection(); }
 
     //Set Methods
     public void setMainMenuState(boolean value) {
         boolean old = fsm.getMainMenuState();
         fsm.setMainMenuState(value);
+        pcs.firePropertyChange(null, old, value);
+    }
+    public void setTop5MenuState(boolean value) {
+        boolean old = fsm.getTop5MenuState();
+        fsm.setTop5MenuState(value);
         pcs.firePropertyChange(null, old, value);
     }
     public void setMusicVolume(int musicVolume) {

@@ -109,7 +109,8 @@ public class PauseMenuUI extends BorderPane {
 
     private void update() {
         if (gameManager.getState() != GameState.PAUSEDSTATE ||
-                gameManager.getMainMenuState()) {
+                gameManager.getMainMenuState() ||
+                gameManager.getTop5MenuState()) {
             this.setVisible(false);
             return;
         }

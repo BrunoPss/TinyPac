@@ -9,10 +9,7 @@ import javafx.util.Duration;
 import pt.isec.pa.tinypac.model.GameManager;
 import pt.isec.pa.tinypac.ui.gui.resources.MediaManager;
 import pt.isec.pa.tinypac.ui.gui.resources.presets.EQPreset;
-import pt.isec.pa.tinypac.ui.gui.uistates.GameEndUI;
-import pt.isec.pa.tinypac.ui.gui.uistates.MainGameUI;
-import pt.isec.pa.tinypac.ui.gui.uistates.MainMenuUI;
-import pt.isec.pa.tinypac.ui.gui.uistates.PauseMenuUI;
+import pt.isec.pa.tinypac.ui.gui.uistates.*;
 
 import java.net.URISyntaxException;
 import java.util.Objects;
@@ -49,6 +46,7 @@ public class RootPane extends BorderPane {
         //StackPane Configuration
         StackPane stackPane = new StackPane(
                 new MainMenuUI(gameManager),
+                new Top5MenuUI(gameManager),
                 new MainGameUI(gameManager),
                 new PauseMenuUI(gameManager),
                 new GameEndUI(gameManager)

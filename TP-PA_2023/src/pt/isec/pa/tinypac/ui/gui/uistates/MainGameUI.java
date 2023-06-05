@@ -7,6 +7,7 @@ import javafx.scene.Group;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.*;
@@ -215,23 +216,77 @@ public class MainGameUI extends BorderPane {
         mazeContext.clearRect(0, 0, maze.getWidth(), maze.getHeight());
         for (int y=0; y < gameManager.getMazeHeight(); y++) {
             for (int x=0; x < gameManager.getMazeLength(); x++) {
+                Image icon = null;
+                int[] iconSize = new int[2];
+                int[] iconPos = new int[2];
                 Color color = switch(gameManager.getMazeElement(x,y)) {
-                    case Pacman.SYMBOL -> Color.YELLOW;
-                    case Wall.SYMBOL -> Color.DARKBLUE;
-                    case Ball.SYMBOL -> Color.LIGHTYELLOW;
-                    case SuperBall.SYMBOL -> Color.INDIANRED;
-                    case Fruit.SYMBOL -> Color.GREEN;
-                    case Warp.SYMBOL -> Color.SANDYBROWN;
-                    case Blinky.SYMBOL -> Color.RED;
-                    case Clyde.SYMBOL -> Color.ORANGE;
-                    case Inky.SYMBOL -> Color.BLUEVIOLET;
-                    case Pinky.SYMBOL -> Color.PINK;
-                    case ' ' -> Color.WHITE; //Normal Empty Path
+                    case Pacman.SYMBOL -> {
+                        switch (gameManager.getPacmanDirection()) {
+                            case RIGHT -> icon = ImageManager.getImage("pacmanRight.png");
+                            case LEFT -> icon = ImageManager.getImage("pacmanLeft.png");
+                            case UP -> icon = ImageManager.getImage("pacmanUp.png");
+                            case DOWN -> icon = ImageManager.getImage("pacmanDown.png");
+                        }
+                        iconSize = new int[]{15, 15};
+                        iconPos = new int[]{2, 2};
+                        yield Color.BLACK;
+                    }
+                    case Wall.SYMBOL -> Color.BLUEVIOLET;
+                    case Ball.SYMBOL -> {
+                        icon = ImageManager.getImage("ball.png");
+                        iconSize = new int[]{8, 8};
+                        iconPos = new int[]{5, 5};
+                        yield Color.BLACK;
+                    }
+                    case SuperBall.SYMBOL -> {
+                        icon = ImageManager.getImage("superBall.png");
+                        iconSize = new int[]{19, 19};
+                        iconPos = new int[]{0, 0};
+                        yield Color.BLACK;
+                    }
+                    case Fruit.SYMBOL -> {
+                        icon = ImageManager.getImage("fruit2.png");
+                        iconSize = new int[]{15, 15};
+                        iconPos = new int[]{3, 1};
+                        yield Color.BLACK;
+                    }
+                    case Warp.SYMBOL -> {
+                        icon = ImageManager.getImage("warp.png");
+                        iconSize = new int[]{10, 15};
+                        iconPos = new int[]{4, 2};
+                        yield Color.BLACK;
+                    }
+                    case Blinky.SYMBOL -> {
+                        icon = ImageManager.getImage("blinky.png");
+                        iconSize = new int[]{15, 15};
+                        iconPos = new int[]{3, 1};
+                        yield Color.BLACK;
+                    }
+                    case Clyde.SYMBOL -> {
+                        icon = ImageManager.getImage("");
+                        iconSize = new int[]{15, 15};
+                        iconPos = new int[]{3, 1};
+                        yield Color.BLACK;
+                    }
+                    case Inky.SYMBOL -> {
+                        icon = ImageManager.getImage("inky.png");
+                        iconSize = new int[]{15, 15};
+                        iconPos = new int[]{3, 1};
+                        yield Color.BLUEVIOLET;
+                    }
+                    case Pinky.SYMBOL -> {
+                        icon = ImageManager.getImage("pinky.png");
+                        iconSize = new int[]{15, 15};
+                        iconPos = new int[]{3, 1};
+                        yield Color.PINK;
+                    }
+                    //case ' ' -> Color.WHITE; //Normal Empty Path
                     default -> Color.BLACK;
                 };
 
                 mazeContext.setFill(color);
                 mazeContext.fillRect(x * cellSize, y * cellSize, cellSize, cellSize);
+                mazeContext.drawImage(icon, x * cellSize + iconPos[0], y * cellSize + iconPos[1], iconSize[0], iconSize[1]);
             }
         }
     }
