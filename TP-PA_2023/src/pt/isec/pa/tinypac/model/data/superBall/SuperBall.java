@@ -17,6 +17,7 @@ public class SuperBall extends Element {
      * Symbol of the Element (Super Ball)
      */
     public static final char SYMBOL = 'O';
+    public static boolean ACTIVE = false;
 
     //Constructor
     /**
@@ -27,6 +28,7 @@ public class SuperBall extends Element {
      */
     public SuperBall(Game gameData, int x, int y) {
         super(gameData, x, y);
+        ACTIVE = true;
     }
 
     //Get Methods

@@ -1,7 +1,10 @@
 package pt.isec.pa.tinypac.model;
 
 import pt.isec.pa.tinypac.gameengine.IGameEngine;
+import pt.isec.pa.tinypac.model.data.element.ElementType;
 import pt.isec.pa.tinypac.model.data.entity.Directions;
+import pt.isec.pa.tinypac.model.data.entity.EntityType;
+import pt.isec.pa.tinypac.model.data.player.Player;
 import pt.isec.pa.tinypac.model.fsm.GameContext;
 import pt.isec.pa.tinypac.model.fsm.GameState;
 import pt.isec.pa.tinypac.ui.gui.resources.presets.ColorPreset;
@@ -10,6 +13,8 @@ import pt.isec.pa.tinypac.ui.gui.resources.presets.MusicPreset;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
+import java.util.ArrayList;
+import java.util.List;
 
 public class GameManager {
     //Internal Data
@@ -37,6 +42,13 @@ public class GameManager {
         return fsm.getMazeElement(x,y);
     }
     public Directions getPacmanDirection() { return fsm.getPacmanDirection(); }
+    public int getPacmanPoints() { return fsm.getPacmanPoints(); }
+    public int getCurrentLevel() { return fsm.getCurrentLevel(); }
+    public int getTotalBalls() { return fsm.getTotalBalls(); }
+    public int getPacmanLives() { return fsm.getPacmanLives(); }
+    public boolean getElementActive(ElementType type) { return fsm.getElementActive(type); }
+    public boolean getEntityActive(EntityType type) { return fsm.getEntityActive(type); }
+    public ArrayList<Player> getTop5List() { return fsm.getTop5List(); }
 
     //Set Methods
     public void setMainMenuState(boolean value) {

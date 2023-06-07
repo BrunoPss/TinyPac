@@ -14,6 +14,7 @@ import pt.isec.pa.tinypac.model.data.game.Game;
 public class Inky extends Ghost {
     //Internal Data
     public static final char SYMBOL = 'I';
+    public static boolean ACTIVE = false;
 
     //Constructor
     /**
@@ -24,6 +25,7 @@ public class Inky extends Ghost {
      */
     public Inky(Game gameData, int x, int y) {
         super(gameData, x, y);
+        ACTIVE = true;
     }
 
     //Get Methods

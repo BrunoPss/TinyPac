@@ -1,19 +1,33 @@
 package pt.isec.pa.tinypac.ui.gui.uistates;
 
+import com.googlecode.lanterna.gui2.WindowListenerAdapter;
 import javafx.application.Platform;
+import javafx.event.EventHandler;
+import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
+import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.InputEvent;
 import javafx.scene.input.KeyCode;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import pt.isec.pa.tinypac.model.GameManager;
+//NAO SE PODE IMPORTAR COISAS DO MODELO DE DADOS (APAGAR)
 import pt.isec.pa.tinypac.model.data.ball.Ball;
+import pt.isec.pa.tinypac.model.data.element.ElementType;
+import pt.isec.pa.tinypac.model.data.entity.EntityType;
 import pt.isec.pa.tinypac.model.data.superBall.SuperBall;
 import pt.isec.pa.tinypac.model.data.pacman.Pacman;
 import pt.isec.pa.tinypac.model.data.warp.Warp;
@@ -26,6 +40,8 @@ import pt.isec.pa.tinypac.model.data.wall.Wall;
 import pt.isec.pa.tinypac.model.fsm.GameState;
 import pt.isec.pa.tinypac.ui.gui.resources.ImageManager;
 
+import java.awt.*;
+
 public class MainGameUI extends BorderPane {
     //Internal Data
     private final GameManager gameManager;
@@ -35,6 +51,11 @@ public class MainGameUI extends BorderPane {
     private GraphicsContext mazeContext;
     private Button arrowLEFT, arrowUP, arrowDOWN, arrowRIGHT, pauseBtn;
     private CheckBox muteButton;
+    private Stage popupStage;
+    private Button infoPacmanButton, infoBlinkyButton, infoClydeButton, infoInkyButton, infoPinkyButton, infoBallButton, infoWarpButton, infoFruitButton, infoSuperBallButton;
+    private Label popupMSG;
+    private Label scoreInfo, levelInfo, ballsInfo, livesInfo;
+    private ImageView iconFruit, iconSuperBall, iconBlinky, iconInky, iconPinky, iconClyde;
 
     //Constructor
     public MainGameUI(GameManager gameManager) {
@@ -62,23 +83,252 @@ public class MainGameUI extends BorderPane {
         //Main Pane
         SplitPane mainPane = new SplitPane();
         //Maze Panel
-        maze = new Canvas(mazeWidth,mazeHeight);
+        maze = new Canvas(mazeWidth-100,mazeHeight);
         mazeContext = maze.getGraphicsContext2D();
         mazeContext.setFill(Color.BLACK);
         mazeContext.fillRect(0, 0, maze.getWidth(), maze.getHeight());
-        Group group = new Group(maze);
         //Draw Maze
         drawMaze();
 
         //Second Panel
         VBox secondPanel = new VBox();
-        secondPanel.setAlignment(Pos.BOTTOM_CENTER);
+        secondPanel.setAlignment(Pos.TOP_CENTER);
         secondPanel.setSpacing(20);
         //Score Panel
         VBox scorePanel = new VBox();
+        scorePanel.setSpacing(10);
+        //Icons Panel
+        TilePane iconsPanel = new TilePane();
+        iconsPanel.setHgap(10);
+        iconsPanel.setVgap(10);
+        iconsPanel.setAlignment(Pos.BASELINE_CENTER);
+        iconsPanel.setStyle("-fx-background-color: #A0A6A6");
+        //Title Label
+        Label iconsTitle = new Label("Game Elements");
+        //Icon 1 (Pacman)
+        VBox iconPacmanPanel = new VBox();
+        iconPacmanPanel.setAlignment(Pos.CENTER);
+        ImageView iconPacman = new ImageView(ImageManager.getImage("pacmanRight.png"));
+        iconPacman.setPreserveRatio(true);
+        iconPacman.setFitHeight(20);
+        iconPacman.setFitWidth(20);
+        HBox infoPacmanPanel = new HBox();
+        infoPacmanPanel.setAlignment(Pos.CENTER);
+        infoPacmanPanel.setPadding(new Insets(5));
+        infoPacmanPanel.setSpacing(5);
+        Label infoPacman = new Label("Pacman");
+        infoPacman.setStyle("-fx-font-size: 10; -fx-text-fill: white");
+        infoPacmanButton = new Button("?");
+        infoPacmanButton.setStyle("-fx-font-size: 8");
+        infoPacmanPanel.getChildren().addAll(infoPacman, infoPacmanButton);
+        iconPacmanPanel.getChildren().addAll(iconPacman, infoPacmanPanel);
+
+        //Icon 2 (Blinky)
+        VBox iconBlinkyPanel = new VBox();
+        iconBlinkyPanel.setAlignment(Pos.CENTER);
+        iconBlinky = new ImageView(ImageManager.getImage("blinky.png"));
+        iconBlinky.setPreserveRatio(true);
+        iconBlinky.setFitHeight(20);
+        iconBlinky.setFitWidth(20);
+        HBox infoBlinkyPanel = new HBox();
+        infoBlinkyPanel.setAlignment(Pos.CENTER);
+        infoBlinkyPanel.setPadding(new Insets(5));
+        infoBlinkyPanel.setSpacing(5);
+        Label infoBlinky = new Label("Blinky");
+        infoBlinky.setStyle("-fx-font-size: 10; -fx-text-fill: white");
+        infoBlinkyButton = new Button("?");
+        infoBlinkyButton.setStyle("-fx-font-size: 8");
+        infoBlinkyPanel.getChildren().addAll(infoBlinky, infoBlinkyButton);
+        iconBlinkyPanel.getChildren().addAll(iconBlinky, infoBlinkyPanel);
+
+        //Icon 3 (Clyde)
+        VBox iconClydePanel = new VBox();
+        iconClydePanel.setAlignment(Pos.CENTER);
+        iconClyde = new ImageView(ImageManager.getImage("clyde.png"));
+        iconClyde.setPreserveRatio(true);
+        iconClyde.setFitHeight(20);
+        iconClyde.setFitWidth(20);
+        HBox infoClydePanel = new HBox();
+        infoClydePanel.setAlignment(Pos.CENTER);
+        infoClydePanel.setPadding(new Insets(5));
+        infoClydePanel.setSpacing(5);
+        Label infoClyde = new Label("Clyde");
+        infoClyde.setStyle("-fx-font-size: 10; -fx-text-fill: white");
+        infoClydeButton = new Button("?");
+        infoClydeButton.setStyle("-fx-font-size: 8");
+        infoClydePanel.getChildren().addAll(infoClyde, infoClydeButton);
+        iconClydePanel.getChildren().addAll(iconClyde, infoClydePanel);
+
+        //Icon 4 (Inky)
+        VBox iconInkyPanel = new VBox();
+        iconInkyPanel.setAlignment(Pos.CENTER);
+        iconInky = new ImageView(ImageManager.getImage("inky.png"));
+        iconInky.setPreserveRatio(true);
+        iconInky.setFitHeight(20);
+        iconInky.setFitWidth(20);
+        HBox infoInkyPanel = new HBox();
+        infoInkyPanel.setAlignment(Pos.CENTER);
+        infoInkyPanel.setPadding(new Insets(5));
+        infoInkyPanel.setSpacing(5);
+        Label infoInky = new Label("Inky");
+        infoInky.setStyle("-fx-font-size: 10; -fx-text-fill: white");
+        infoInkyButton = new Button("?");
+        infoInkyButton.setStyle("-fx-font-size: 8");
+        infoInkyPanel.getChildren().addAll(infoInky, infoInkyButton);
+        iconInkyPanel.getChildren().addAll(iconInky, infoInkyPanel);
+
+        //Icon 5 (Pinky)
+        VBox iconPinkyPanel = new VBox();
+        iconPinkyPanel.setAlignment(Pos.CENTER);
+        iconPinky = new ImageView(ImageManager.getImage("pinky.png"));
+        iconPinky.setPreserveRatio(true);
+        iconPinky.setFitHeight(20);
+        iconPinky.setFitWidth(20);
+        HBox infoPinkyPanel = new HBox();
+        infoPinkyPanel.setAlignment(Pos.CENTER);
+        infoPinkyPanel.setPadding(new Insets(5));
+        infoPinkyPanel.setSpacing(5);
+        Label infoPinky = new Label("Pinky");
+        infoPinky.setStyle("-fx-font-size: 10; -fx-text-fill: white");
+        infoPinkyButton = new Button("?");
+        infoPinkyButton.setStyle("-fx-font-size: 8");
+        infoPinkyPanel.getChildren().addAll(infoPinky, infoPinkyButton);
+        iconPinkyPanel.getChildren().addAll(iconPinky, infoPinkyPanel);
+
+        //Icon 6 (Ball)
+        VBox iconBallPanel = new VBox();
+        iconBallPanel.setAlignment(Pos.CENTER);
+        ImageView iconBall = new ImageView(ImageManager.getImage("ball.png"));
+        iconBall.setPreserveRatio(true);
+        iconBall.setFitHeight(20);
+        iconBall.setFitWidth(20);
+        HBox infoBallPanel = new HBox();
+        infoBallPanel.setAlignment(Pos.CENTER);
+        infoBallPanel.setPadding(new Insets(5));
+        infoBallPanel.setSpacing(5);
+        Label infoBall = new Label("Ball");
+        infoBall.setStyle("-fx-font-size: 10; -fx-text-fill: white");
+        infoBallButton = new Button("?");
+        infoBallButton.setStyle("-fx-font-size: 8");
+        infoBallPanel.getChildren().addAll(infoBall, infoBallButton);
+        iconBallPanel.getChildren().addAll(iconBall, infoBallPanel);
+
+        //Icon 7 (Fruit)
+        VBox iconFruitPanel = new VBox();
+        iconFruitPanel.setAlignment(Pos.CENTER);
+        iconFruit = new ImageView(ImageManager.getImage("fruit.png"));
+        iconFruit.setPreserveRatio(true);
+        iconFruit.setFitHeight(20);
+        iconFruit.setFitWidth(20);
+        HBox infoFruitPanel = new HBox();
+        infoFruitPanel.setAlignment(Pos.CENTER);
+        infoFruitPanel.setPadding(new Insets(5));
+        infoFruitPanel.setSpacing(5);
+        Label infoFruit = new Label("Fruit");
+        infoFruit.setStyle("-fx-font-size: 10; -fx-text-fill: white");
+        infoFruitButton = new Button("?");
+        infoFruitButton.setStyle("-fx-font-size: 8");
+        infoFruitPanel.getChildren().addAll(infoFruit, infoFruitButton);
+        iconFruitPanel.getChildren().addAll(iconFruit, infoFruitPanel);
+
+        //Icon 8 (Super Ball)
+        VBox iconSuperBallPanel = new VBox();
+        iconSuperBallPanel.setAlignment(Pos.CENTER);
+        iconSuperBall = new ImageView(ImageManager.getImage("superBall.png"));
+        iconSuperBall.setPreserveRatio(true);
+        iconSuperBall.setFitHeight(20);
+        iconSuperBall.setFitWidth(20);
+        HBox infoSuperBallPanel = new HBox();
+        infoSuperBallPanel.setAlignment(Pos.CENTER);
+        infoSuperBallPanel.setPadding(new Insets(5));
+        infoSuperBallPanel.setSpacing(5);
+        Label infoSuperBall = new Label("SuperBall");
+        infoSuperBall.setStyle("-fx-font-size: 10; -fx-text-fill: white");
+        infoSuperBallButton = new Button("?");
+        infoSuperBallButton.setStyle("-fx-font-size: 8");
+        infoSuperBallPanel.getChildren().addAll(infoSuperBall, infoSuperBallButton);
+        iconSuperBallPanel.getChildren().addAll(iconSuperBall, infoSuperBallPanel);
+
+        //Icon 9 (Warp)
+        VBox iconWarpPanel = new VBox();
+        iconWarpPanel.setAlignment(Pos.CENTER);
+        ImageView iconWarp = new ImageView(ImageManager.getImage("warp.png"));
+        iconWarp.setPreserveRatio(true);
+        iconWarp.setFitHeight(20);
+        iconWarp.setFitWidth(20);
+        HBox infoWarpPanel = new HBox();
+        infoWarpPanel.setAlignment(Pos.CENTER);
+        infoWarpPanel.setPadding(new Insets(5));
+        infoWarpPanel.setSpacing(5);
+        Label infoWarp = new Label("Warp");
+        infoWarp.setStyle("-fx-font-size: 10; -fx-text-fill: white");
+        infoWarpButton = new Button("?");
+        infoWarpButton.setStyle("-fx-font-size: 8");
+        infoWarpPanel.getChildren().addAll(infoWarp, infoWarpButton);
+        iconWarpPanel.getChildren().addAll(iconWarp, infoWarpPanel);
+        //Add Elements
+        iconsPanel.getChildren().addAll(iconPacmanPanel, iconBlinkyPanel, iconClydePanel, iconInkyPanel, iconPinkyPanel, iconBallPanel, iconFruitPanel, iconSuperBallPanel, iconWarpPanel);
+
+        //Separator (Horizontal)
+        Separator separator3 = new Separator(Orientation.HORIZONTAL);
+
+        //Game Information
+        Label gameInfoLabel = new Label("Game Information");
+        //Info Pane (Tile Pane)
+        TilePane gameInfoPane = new TilePane();
+        gameInfoPane.setHgap(40);
+        gameInfoPane.setVgap(40);
+        gameInfoPane.setAlignment(Pos.CENTER);
+        //Block 1 (Score)
+        VBox scoreBlock = new VBox();
+        scoreBlock.setStyle("-fx-border-width: 1; -fx-border-color: black;");
+        scoreBlock.setAlignment(Pos.CENTER);
+        scoreBlock.setPadding(new Insets(5));
         Label scoreLabel = new Label("Score");
-        //...
-        //Separator
+        scoreInfo = new Label();
+        scoreBlock.getChildren().addAll(scoreLabel, scoreInfo);
+
+        //Block 2 (Nivel)
+        VBox levelBlock = new VBox();
+        levelBlock.setStyle("-fx-border-width: 1; -fx-border-color: black;");
+        levelBlock.setAlignment(Pos.CENTER);
+        levelBlock.setPadding(new Insets(5));
+        Label levelLabel = new Label("Nivel");
+        levelInfo = new Label();
+        levelBlock.getChildren().addAll(levelLabel, levelInfo);
+
+        //Block 3 (Bolas)
+        VBox ballsBlock = new VBox();
+        ballsBlock.setStyle("-fx-border-width: 1; -fx-border-color: black;");
+        ballsBlock.setAlignment(Pos.CENTER);
+        ballsBlock.setPadding(new Insets(5));
+        Label ballsLabel = new Label("Bolas");
+        ballsInfo = new Label();
+        ballsBlock.getChildren().addAll(ballsLabel, ballsInfo);
+
+        //Block 4 (Vidas)
+        VBox livesBlock = new VBox();
+        livesBlock.setStyle("-fx-border-width: 1; -fx-border-color: black;");
+        livesBlock.setAlignment(Pos.CENTER);
+        livesBlock.setPadding(new Insets(5));
+        Label livesLabel = new Label("Vidas");
+        livesInfo = new Label();
+        livesBlock.getChildren().addAll(livesLabel, livesInfo);
+
+        //Add Elements
+        gameInfoPane.getChildren().addAll(scoreBlock, levelBlock, ballsBlock, livesBlock);
+
+        //Help Popup (Normal Hidden)
+        popupStage = new Stage();
+        popupStage.initStyle(StageStyle.UNDECORATED);
+        BorderPane popupPane = new BorderPane();
+        popupPane.setPrefSize(100, 80);
+        popupMSG = new Label();
+        popupMSG.setWrapText(true);
+        popupPane.setCenter(popupMSG);
+        popupStage.setScene(new Scene(popupPane));
+
+        //Separator (Horizontal)
         Separator separator1 = new Separator(Orientation.HORIZONTAL);
         //Options Panel
         Label optionsLabel = new Label("Options");
@@ -138,7 +388,7 @@ public class MainGameUI extends BorderPane {
         btnControls.getChildren().add(muteButton);
         //Group Add
         controlsPanel.getChildren().addAll(arrowsPane, separator2, btnControls);
-        scorePanel.getChildren().addAll(scoreLabel);
+        scorePanel.getChildren().addAll(iconsTitle, iconsPanel, separator3, gameInfoLabel, gameInfoPane);
         optionsPanel.getChildren().addAll(optionsLabel, btnsPanel, controlsPanel);
         secondPanel.getChildren().addAll(scorePanel,separator1, optionsPanel);
         mainPane.getItems().addAll(maze, secondPanel);
@@ -161,6 +411,70 @@ public class MainGameUI extends BorderPane {
                 case D -> gameManager.right();
                 case ESCAPE -> gameManager.pauseGame();
             }
+        });
+
+        //Hover Help Popup ActionEvent (Pacman)
+        infoPacmanButton.setOnMousePressed(evt -> {
+            helpPopupShow("Pacman Description");
+        });
+        infoPacmanButton.setOnMouseReleased(evt -> {
+            popupStage.hide();
+        });
+        //Hover Help Popup ActionEvent (Blinky)
+        infoBlinkyButton.setOnMousePressed(evt -> {
+            helpPopupShow("Blinky Description");
+        });
+        infoBlinkyButton.setOnMouseReleased(evt -> {
+            popupStage.hide();
+        });
+        //Hover Help Popup ActionEvent (Clyde)
+        infoClydeButton.setOnMousePressed(evt -> {
+            helpPopupShow("Clyde Description");
+        });
+        infoClydeButton.setOnMouseReleased(evt -> {
+            popupStage.hide();
+        });
+        //Hover Help Popup ActionEvent (Inky)
+        infoInkyButton.setOnMousePressed(evt -> {
+            helpPopupShow("Inky Description");
+        });
+        infoInkyButton.setOnMouseReleased(evt -> {
+            popupStage.hide();
+        });
+        //Hover Help Popup ActionEvent (Pinky)
+        infoPinkyButton.setOnMousePressed(evt -> {
+            helpPopupShow("Pinky Description");
+        });
+        infoPinkyButton.setOnMouseReleased(evt -> {
+            popupStage.hide();
+        });
+        //Hover Help Popup ActionEvent (Ball)
+        infoBallButton.setOnMousePressed(evt -> {
+            helpPopupShow("Ball Description");
+        });
+        infoBallButton.setOnMouseReleased(evt -> {
+            popupStage.hide();
+        });
+        //Hover Help Popup ActionEvent (Fruit)
+        infoFruitButton.setOnMousePressed(evt -> {
+            helpPopupShow("Fruit Description");
+        });
+        infoFruitButton.setOnMouseReleased(evt -> {
+            popupStage.hide();
+        });
+        //Hover Help Popup ActionEvent (Super Ball)
+        infoSuperBallButton.setOnMousePressed(evt -> {
+            helpPopupShow("Super Ball Description");
+        });
+        infoSuperBallButton.setOnMouseReleased(evt -> {
+            popupStage.hide();
+        });
+        //Hover Help Popup ActionEvent (Warp)
+        infoWarpButton.setOnMousePressed(evt -> {
+            helpPopupShow("Warp Description");
+        });
+        infoWarpButton.setOnMouseReleased(evt -> {
+            popupStage.hide();
         });
 
         //Virtual Arrows ActionEvent
@@ -189,7 +503,6 @@ public class MainGameUI extends BorderPane {
     }
 
     private void update() {
-        System.out.println("update");
         //Pause Button Update
         pauseBtn.setDisable(gameManager.getState() != GameState.NORMALRUNSTATE);
 
@@ -198,6 +511,51 @@ public class MainGameUI extends BorderPane {
 
         //Maze Update
         drawMaze();
+
+        //Element Icons Update
+        ColorAdjust removeColor = new ColorAdjust();
+        removeColor.setBrightness(-1);
+        //Fruit Icon
+        if (!gameManager.getElementActive(ElementType.FRUIT))
+            iconFruit.setEffect(removeColor);
+        else
+            iconFruit.setEffect(null);
+        //Super Ball Icon
+        System.out.println(gameManager.getElementActive(ElementType.SUPER_BALL));
+        if (!gameManager.getElementActive(ElementType.SUPER_BALL))
+            iconSuperBall.setEffect(removeColor);
+        else
+            iconSuperBall.setEffect(null);
+        //Blinky Icon
+        if (!gameManager.getEntityActive(EntityType.BLINKY))
+            iconBlinky.setEffect(removeColor);
+        else
+            iconBlinky.setEffect(null);
+        //Inky Icon
+        if (!gameManager.getEntityActive(EntityType.INKY))
+            iconInky.setEffect(removeColor);
+        else
+            iconInky.setEffect(null);
+        //Pinky Icon
+        if (!gameManager.getEntityActive(EntityType.PINKY))
+            iconPinky.setEffect(removeColor);
+        else
+            iconPinky.setEffect(null);
+        //Clyde Icon
+        if (!gameManager.getEntityActive(EntityType.CLYDE))
+            iconClyde.setEffect(removeColor);
+        else
+            iconClyde.setEffect(null);
+
+        //Game Information Update
+        //Score Update
+        scoreInfo.setText(Integer.toString(gameManager.getPacmanPoints()));
+        //Level Update
+        levelInfo.setText(Integer.toString(gameManager.getCurrentLevel()));
+        //Balls Remaining Update
+        ballsInfo.setText(Integer.toString(gameManager.getTotalBalls()));
+        //Pacman Lives Update
+        livesInfo.setText(Integer.toString(gameManager.getPacmanLives()));
 
         //State Change Update
         if ((gameManager.getState() != GameState.INITSTATE &&
@@ -245,7 +603,7 @@ public class MainGameUI extends BorderPane {
                         yield Color.BLACK;
                     }
                     case Fruit.SYMBOL -> {
-                        icon = ImageManager.getImage("fruit2.png");
+                        icon = ImageManager.getImage("fruit.png");
                         iconSize = new int[]{15, 15};
                         iconPos = new int[]{3, 1};
                         yield Color.BLACK;
@@ -263,7 +621,7 @@ public class MainGameUI extends BorderPane {
                         yield Color.BLACK;
                     }
                     case Clyde.SYMBOL -> {
-                        icon = ImageManager.getImage("");
+                        icon = ImageManager.getImage("clyde.png");
                         iconSize = new int[]{15, 15};
                         iconPos = new int[]{3, 1};
                         yield Color.BLACK;
@@ -272,13 +630,13 @@ public class MainGameUI extends BorderPane {
                         icon = ImageManager.getImage("inky.png");
                         iconSize = new int[]{15, 15};
                         iconPos = new int[]{3, 1};
-                        yield Color.BLUEVIOLET;
+                        yield Color.BLACK;
                     }
                     case Pinky.SYMBOL -> {
                         icon = ImageManager.getImage("pinky.png");
                         iconSize = new int[]{15, 15};
                         iconPos = new int[]{3, 1};
-                        yield Color.PINK;
+                        yield Color.BLACK;
                     }
                     //case ' ' -> Color.WHITE; //Normal Empty Path
                     default -> Color.BLACK;
@@ -289,5 +647,12 @@ public class MainGameUI extends BorderPane {
                 mazeContext.drawImage(icon, x * cellSize + iconPos[0], y * cellSize + iconPos[1], iconSize[0], iconSize[1]);
             }
         }
+    }
+    //Hover Help Popup ActionEven
+    private void helpPopupShow(String desc) {
+        popupStage.setX(MouseInfo.getPointerInfo().getLocation().getX());
+        popupStage.setY(MouseInfo.getPointerInfo().getLocation().getY());
+        popupMSG.setText(desc);
+        popupStage.show();
     }
 }

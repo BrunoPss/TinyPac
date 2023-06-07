@@ -1,14 +1,21 @@
 package pt.isec.pa.tinypac.model.data.game;
 
 import pt.isec.pa.tinypac.model.data.element.Element;
+import pt.isec.pa.tinypac.model.data.element.ElementType;
 import pt.isec.pa.tinypac.model.data.entity.Directions;
 import pt.isec.pa.tinypac.model.data.entity.Entity;
 import pt.isec.pa.tinypac.model.data.entity.EntityType;
 import pt.isec.pa.tinypac.model.data.fruit.Fruit;
+import pt.isec.pa.tinypac.model.data.ghosts.Blinky;
+import pt.isec.pa.tinypac.model.data.ghosts.Clyde;
+import pt.isec.pa.tinypac.model.data.ghosts.Inky;
+import pt.isec.pa.tinypac.model.data.ghosts.Pinky;
 import pt.isec.pa.tinypac.model.data.maze.IMazeElement;
 import pt.isec.pa.tinypac.model.data.maze.Maze;
 import pt.isec.pa.tinypac.model.data.maze.MazeManager;
 import pt.isec.pa.tinypac.model.data.pacman.Pacman;
+import pt.isec.pa.tinypac.model.data.player.Player;
+import pt.isec.pa.tinypac.model.data.superBall.SuperBall;
 import pt.isec.pa.tinypac.model.fsm.GameContext;
 import pt.isec.pa.tinypac.ui.gui.resources.presets.ColorPreset;
 import pt.isec.pa.tinypac.ui.gui.resources.presets.EQPreset;
@@ -38,6 +45,7 @@ public class Game {
     private int currentLevel;
     private Element fruit;
     private int nextFruit;
+    private ArrayList<Player> top5List;
 
     //Game Configurations
     private boolean mainMenuState;
@@ -59,6 +67,12 @@ public class Game {
         this.ghostDoor = new int[2];
         this.enchancedPhase = false;
         this.currentLevel = 0;
+        this.top5List = new ArrayList<>();
+        top5List.add(new Player("Player 1", 5)); //APAGAR
+        top5List.add(new Player("Player 2", 3)); //APAGAR
+        top5List.add(new Player("Player 3", 3)); //APAGAR
+        top5List.add(new Player("Player 4", 3)); //APAGAR
+        top5List.add(new Player("Player 5", 3)); //APAGAR
 
         //Game Configurations
         this.mainMenuState = true;
@@ -83,6 +97,7 @@ public class Game {
     public ColorPreset getMainColorPreset() { return mainColorPreset; }
     public MusicPreset getMusicPreset() { return musicPreset; }
     public EQPreset getMainEQPreset() { return mainEQPreset; }
+    public ArrayList<Player> getTop5List() { return top5List; }
 
     //Setters Config
     public void setMainMenuState(boolean value) { this.mainMenuState = value; }
@@ -97,7 +112,7 @@ public class Game {
     public void setMainEQPreset(EQPreset eqPreset) { this.mainEQPreset = eqPreset; }
 
     //Get Methods
-    public Entity getEntity(EntityType type) { return entities.get(type); }
+    public Entity getEntity(EntityType type) { return entities.get(type); } //ELIMINAR (FAZER SET CONTROLADO DA DIRECTION)
     public int[] getGhostDoor() { return ghostDoor; }
     public GameContext getContext() { return context; }
     public String getCurrentLevelFilePath() { return levels.get(currentLevel); }
@@ -118,12 +133,31 @@ public class Game {
     public int getTotalBalls() { return totalBalls; }
     public int getCurrentLevel() { return currentLevel; }
     public Directions getPacmanDirections() { return ((Pacman) entities.get(EntityType.PACMAN)).getDirection(); }
+    public int getPacmanPoints() { return ((Pacman) entities.get(EntityType.PACMAN)).getPoints(); }
+    public int getPacmanLives() { return ((Pacman) entities.get(EntityType.PACMAN)).getLives();}
+    public boolean getElementActive(ElementType type) {
+        return switch (type) {
+            case FRUIT -> Fruit.ACTIVE;
+            case SUPER_BALL -> SuperBall.ACTIVE;
+            default -> false;
+        };
+    }
+    public boolean getEntityActive(EntityType type) {
+        return switch (type) {
+            case PINKY -> Pinky.ACTIVE;
+            case BLINKY -> Blinky.ACTIVE;
+            case INKY -> Inky.ACTIVE;
+            case CLYDE -> Clyde.ACTIVE;
+            default -> false;
+        };
+    }
 
     //Set Methods
     public void setGhostDoor(int x, int y) { this.ghostDoor[0] = x; this.ghostDoor[1] = y; }
     public void setEntity(EntityType type, Entity entity) { entities.put(type, entity); }
     public void setEnchancedPhase(boolean state) { enchancedPhase = state; }
     public void setEnchancedTimeout(int timeout) { enchancedTimeout = timeout; }
+    public void setSuperBallInactive() { SuperBall.ACTIVE = false; }
     public void decreaseEnchancedTimeout() { enchancedTimeout--; }
     public void incrementTotalBalls() { totalBalls++; }
     public void decrementTotalBalls() {
@@ -133,7 +167,10 @@ public class Game {
         }
     }
     public void setFruit(Element fruit) { this.fruit = fruit; }
-    public void catchFruit() { ((Fruit) fruit).setVisible(false); }
+    public void catchFruit() {
+        ((Fruit) fruit).setVisible(false);
+        Fruit.ACTIVE = false;
+    }
     public void increaseCurrentLevel() { currentLevel++; }
 
     //Methods
@@ -142,6 +179,7 @@ public class Game {
         maze = new Maze(MazeManager.getYSize(levels.get(currentLevel)), MazeManager.getXSize(levels.get(currentLevel)));
     }
     public void newFruit() {
+        Fruit.ACTIVE = true;
         maze.set(fruit.getY(), fruit.getX(), fruit);
     }
 
