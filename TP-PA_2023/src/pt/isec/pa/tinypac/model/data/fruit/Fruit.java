@@ -14,6 +14,7 @@ import pt.isec.pa.tinypac.model.data.game.Game;
 public class Fruit extends Element {
     //Internal Data
     public static final char SYMBOL = 'F';
+    public static boolean ACTIVE = false;
     private boolean visible;
     private int nextFruitTimeout;
 
@@ -22,6 +23,7 @@ public class Fruit extends Element {
         super(gameData, x, y);
         this.visible = true;
         this.nextFruitTimeout = 20;
+        ACTIVE = true;
     }
 
     //Get Methods

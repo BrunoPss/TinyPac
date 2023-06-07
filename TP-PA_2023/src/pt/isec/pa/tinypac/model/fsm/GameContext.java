@@ -2,13 +2,18 @@ package pt.isec.pa.tinypac.model.fsm;
 
 import pt.isec.pa.tinypac.gameengine.IGameEngine;
 import pt.isec.pa.tinypac.gameengine.IGameEngineEvolve;
+import pt.isec.pa.tinypac.model.data.element.ElementType;
 import pt.isec.pa.tinypac.model.data.entity.Directions;
 import pt.isec.pa.tinypac.model.data.entity.EntityType;
 import pt.isec.pa.tinypac.model.data.game.Game;
 import pt.isec.pa.tinypac.model.data.pacman.Pacman;
+import pt.isec.pa.tinypac.model.data.player.Player;
 import pt.isec.pa.tinypac.ui.gui.resources.presets.ColorPreset;
 import pt.isec.pa.tinypac.ui.gui.resources.presets.EQPreset;
 import pt.isec.pa.tinypac.ui.gui.resources.presets.MusicPreset;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class GameContext {
     //Internal Data
@@ -31,7 +36,7 @@ public class GameContext {
     public GameState getState() {
         return state.getState();
     }
-    public int getPacmanPoints() { return ((Pacman) gameData.getEntity(EntityType.PACMAN)).getPoints(); }
+    public int getPacmanPoints() { return gameData.getPacmanPoints(); }
     //public String getPacmanDirection() { return entities.get(ElementType.PACMAN).getCurrentDirection(); }
     //public String getPacmanPosition() { return entities.get(ElementType.PACMAN).getCurrentPosition(); }
     public char[][] getMaze() { return gameData.getMaze().getMaze(); }
@@ -49,6 +54,12 @@ public class GameContext {
     public MusicPreset getMusicPreset() { return gameData.getMusicPreset(); }
     public EQPreset getMainEQPreset() { return gameData.getMainEQPreset(); }
     public Directions getPacmanDirection() { return gameData.getPacmanDirections(); }
+    public ArrayList<Player> getTop5List() { return gameData.getTop5List(); }
+    public int getCurrentLevel() { return gameData.getCurrentLevel(); }
+    public int getTotalBalls() { return gameData.getTotalBalls(); }
+    public int getPacmanLives() { return gameData.getPacmanLives(); }
+    public boolean getElementActive(ElementType type) { return gameData.getElementActive(type); }
+    public boolean getEntityActive(EntityType type) { return gameData.getEntityActive(type); }
 
     //Set Methods
     void changeState(IGameState newState) {

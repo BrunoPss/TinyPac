@@ -153,6 +153,7 @@ public class Pacman extends Entity {
     }
     private void superBallDetection() {
         if (gameData.getMaze().get(y,x) != null && gameData.getMaze().get(y,x).getSymbol() == 'O') {
+            gameData.setSuperBallInactive();
             gameData.getContext().enhancedPacman();
         }
     }

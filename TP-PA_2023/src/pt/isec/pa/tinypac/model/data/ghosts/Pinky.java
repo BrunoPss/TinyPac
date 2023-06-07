@@ -18,6 +18,7 @@ import java.util.Random;
 public class Pinky extends Ghost {
     //Internal Data
     public static final char SYMBOL = 'P';
+    public static boolean ACTIVE = false;
     private Corners objectiveCorner;
     private int[] objectiveCords;
     private Random rnd;
@@ -33,6 +34,7 @@ public class Pinky extends Ghost {
         this.objectiveCords = new int[] {MazeManager.getXSize(gameData.getCurrentLevelFilePath()), 0};
         this.rnd = new Random();
         this.failedAttempts = 0;
+        ACTIVE = true;
     }
 
     //Get Methods
@@ -48,6 +50,8 @@ public class Pinky extends Ghost {
     @Override
     public void evolve() {
         if (initTime == 0) {
+            ACTIVE = true;
+
             if (cave) {
                 x = gameData.getGhostDoor()[0];
                 y = gameData.getGhostDoor()[1];

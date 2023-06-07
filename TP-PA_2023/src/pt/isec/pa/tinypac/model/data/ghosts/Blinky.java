@@ -17,6 +17,7 @@ import java.util.Random;
 public class Blinky extends Ghost {
     //Internal Data
     public static final char SYMBOL = 'B';
+    public static boolean ACTIVE = false;
     private IMazeElement auxF = null;
     private IMazeElement auxA = null;
     private Random rnd;
@@ -47,6 +48,8 @@ public class Blinky extends Ghost {
     @Override
     public void evolve() {
         if (initTime == 0) {
+            ACTIVE = true;
+
             if (cave) {
                 /*
                 //Algoritmo de caminho para Y
