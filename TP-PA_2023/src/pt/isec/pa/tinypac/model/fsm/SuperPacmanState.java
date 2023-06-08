@@ -70,7 +70,7 @@ public class SuperPacmanState extends GameStateAdapter {
     @Override
     public boolean pauseGame() {
         changeState(new PausedState(context, gameData));
-        context.gameEngine.pause();
+        //context.gameEngine.pause();
         return true;
     }
     @Override

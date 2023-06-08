@@ -22,7 +22,6 @@ import java.util.List;
 public class GameContext implements Serializable {
     //Internal Data
     IGameState state;
-    IGameEngine gameEngine;
     Game gameData;
     //Maze maze;
     //Dictionary<ElementType, Element> entities;
@@ -30,10 +29,8 @@ public class GameContext implements Serializable {
     //Constructor
     public GameContext(IGameEngine gameEngine) {
         //this.maze = new Maze(MazeManager.getYSize("C:\\Projects\\TP-PA_2023\\TP-PA_2023\\src\\pt\\isec\\pa\\tinypac\\model\\data\\levels\\level01.txt"), MazeManager.getXSize("C:\\Projects\\TP-PA_2023\\TP-PA_2023\\src\\pt\\isec\\pa\\tinypac\\model\\data\\levels\\level01.txt"));
-        this.gameEngine = gameEngine;
         this.gameData = new Game(this);
         this.state = new InitState(this, gameData);
-        //gameEngine.registerClient(this);
     }
 
     //Get Methods

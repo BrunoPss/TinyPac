@@ -15,6 +15,7 @@ import pt.isec.pa.tinypac.model.GameManager;
 import pt.isec.pa.tinypac.ui.gui.ConfigMenu;
 import pt.isec.pa.tinypac.ui.gui.resources.ImageManager;
 
+import java.io.File;
 import java.net.URISyntaxException;
 import java.util.Objects;
 import java.util.Optional;
@@ -140,6 +141,20 @@ public class MainMenuUI extends BorderPane {
         });
         //Start Button ActionEvent
         btnStart.setOnAction( event -> {
+            if (gameManager.checkSavedGame()) {
+                Alert loadGameAlert = new Alert(Alert.AlertType.CONFIRMATION);
+                loadGameAlert.setTitle("Load Previous Game");
+                loadGameAlert.setHeaderText("Deseja carregar jogo salvo ?");
+                loadGameAlert.setContentText("Foi detetado um jogo anterior salvo!");
+                Optional<ButtonType> opt = loadGameAlert.showAndWait();
+                if (opt.get() == ButtonType.OK) {
+                    gameManager.loadGame();
+                }
+                else {
+                    File savedGame = new File("savedGame/saveGame.pac");
+                    savedGame.delete();
+                }
+            }
             gameManager.setMainMenuState(false);
             this.setVisible(false);
         });

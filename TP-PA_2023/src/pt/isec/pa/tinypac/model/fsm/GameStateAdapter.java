@@ -2,7 +2,9 @@ package pt.isec.pa.tinypac.model.fsm;
 
 import pt.isec.pa.tinypac.model.data.game.Game;
 
-abstract class GameStateAdapter implements IGameState {
+import java.io.Serializable;
+
+abstract class GameStateAdapter implements IGameState, Serializable {
     //Internal Data
     protected Game gameData;
     protected GameContext context;
