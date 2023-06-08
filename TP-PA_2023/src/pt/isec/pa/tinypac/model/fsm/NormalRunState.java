@@ -67,12 +67,12 @@ public class NormalRunState extends GameStateAdapter {
     @Override
     public boolean pauseGame() {
         changeState(new PausedState(context, gameData));
-        context.gameEngine.pause();
+        //context.gameEngine.pause();
         return true;
     }
     @Override
     public boolean restart() {
-        context.gameEngine.stop();
+        //context.gameEngine.stop();
         changeState(new InitState(context, gameData));
         return true;
     }

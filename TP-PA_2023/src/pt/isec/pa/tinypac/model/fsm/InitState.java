@@ -34,28 +34,28 @@ public class InitState extends GameStateAdapter {
     public boolean up() {
         ((Pacman) gameData.getEntity(EntityType.PACMAN)).setDirection(Directions.UP);
         changeState(new NormalRunState(context, gameData));
-        context.gameEngine.start(1000);
+        //context.gameEngine.start(1000);
         return true;
     }
     @Override
     public boolean down() {
         ((Pacman) gameData.getEntity(EntityType.PACMAN)).setDirection(Directions.DOWN);
         changeState(new NormalRunState(context, gameData));
-        context.gameEngine.start(1000);
+        //context.gameEngine.start(1000);
         return true;
     }
     @Override
     public boolean left() {
         ((Pacman) gameData.getEntity(EntityType.PACMAN)).setDirection(Directions.LEFT);
         changeState(new NormalRunState(context, gameData));
-        context.gameEngine.start(1000);
+        //context.gameEngine.start(1000);
         return true;
     }
     @Override
     public boolean right() {
         ((Pacman) gameData.getEntity(EntityType.PACMAN)).setDirection(Directions.RIGHT);
         changeState(new NormalRunState(context, gameData));
-        context.gameEngine.start(1000);
+        //context.gameEngine.start(1000);
         return true;
     }
     @Override

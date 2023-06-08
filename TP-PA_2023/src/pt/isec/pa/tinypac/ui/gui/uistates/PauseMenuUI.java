@@ -86,7 +86,7 @@ public class PauseMenuUI extends BorderPane {
 
         //Save Button ActionEvent
         saveBtn.setOnAction( event -> {
-            //gameManager.saveGame();
+            gameManager.saveGame();
         });
 
         //Configuration Button ActionEvent
