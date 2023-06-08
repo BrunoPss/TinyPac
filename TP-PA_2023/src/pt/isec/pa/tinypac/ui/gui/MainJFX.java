@@ -41,6 +41,11 @@ public class MainJFX extends Application {
         //newStageForTesting(new Stage(),"Game BW#clone");
     }
 
+    @Override
+    public void stop() {
+        gameManager.saveTop5();
+    }
+
 
     //Internal Functions
 

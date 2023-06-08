@@ -1,5 +1,7 @@
 package pt.isec.pa.tinypac.gameengine;
 
+import java.io.Serializable;
+
 public interface IGameEngine {
     void registerClient(IGameEngineEvolve listener);
     void unregisterClient(IGameEngineEvolve listener);

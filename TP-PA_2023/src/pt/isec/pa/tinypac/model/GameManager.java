@@ -13,17 +13,22 @@ import pt.isec.pa.tinypac.ui.gui.resources.presets.MusicPreset;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class GameManager {
     //Internal Data
-    private final GameContext fsm;
+    private GameContext fsm;
     PropertyChangeSupport pcs;
 
     //Constructor
     public GameManager(IGameEngine gameEngine) {
-        fsm = new GameContext(gameEngine);
+        File saveGame_temp = new File("savedGame/saveGame.pac");
+        if (saveGame_temp.exists())
+            loadGame();
+        else
+            fsm = new GameContext(gameEngine);
         pcs = new PropertyChangeSupport(this);
     }
 
@@ -101,6 +106,34 @@ public class GameManager {
         fsm.update();
         pcs.firePropertyChange(null, null, null);
     }
+
+    public void saveTop5() {
+        fsm.saveTop5();
+    }
+    public void loadTop5() {
+        fsm.loadTop5();
+    }
+    public void saveGame() {
+        File file = new File("savedGame/saveGame.pac");
+
+        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(file))) {
+            oos.writeObject(fsm);
+        } catch (Exception e) {
+            System.err.println("ERROR WRITING FSM");
+            e.printStackTrace();
+        }
+    }
+    public void loadGame() {
+        File file = new File("savedGame/saveGame.pac");
+
+        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(file))) {
+            fsm = (GameContext) ois.readObject();
+        } catch (Exception e) {
+            System.err.println("ERROR LOADING FSM");
+            e.printStackTrace();
+        }
+    }
+
     public void up() {
         fsm.up();
         pcs.firePropertyChange(null, null, null);
