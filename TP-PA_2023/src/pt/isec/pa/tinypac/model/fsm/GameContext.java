@@ -12,10 +12,14 @@ import pt.isec.pa.tinypac.ui.gui.resources.presets.ColorPreset;
 import pt.isec.pa.tinypac.ui.gui.resources.presets.EQPreset;
 import pt.isec.pa.tinypac.ui.gui.resources.presets.MusicPreset;
 
+import java.io.FileOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GameContext {
+public class GameContext implements Serializable {
     //Internal Data
     IGameState state;
     IGameEngine gameEngine;
@@ -39,7 +43,7 @@ public class GameContext {
     public int getPacmanPoints() { return gameData.getPacmanPoints(); }
     //public String getPacmanDirection() { return entities.get(ElementType.PACMAN).getCurrentDirection(); }
     //public String getPacmanPosition() { return entities.get(ElementType.PACMAN).getCurrentPosition(); }
-    public char[][] getMaze() { return gameData.getMaze().getMaze(); }
+    //public char[][] getMaze() { return gameData.getMaze().getMaze(); }
     public int getMazeHeight() { return gameData.getMazeHeight(); }
     public int getMazeLength() { return gameData.getMazeLength(); }
     public char getMazeElement(int x, int y) {
@@ -94,6 +98,13 @@ public class GameContext {
     public boolean restart() { return state.restart(); }
     public boolean endGame() { return state.endGame(); }
     public boolean exitGame() { return state.exitGame(); }
+
+    public void saveTop5() {
+        gameData.saveTop5();
+    }
+    public void loadTop5() {
+        gameData.loadTop5();
+    }
 
     //Overrides
     //@Override

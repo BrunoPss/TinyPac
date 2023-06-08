@@ -58,10 +58,10 @@ public class TextGameUI {
     private void initStateUI() {
         System.out.println("Init State");
         switch (PAInput.chooseOption("Tiny-PAc", "up", "down", "left", "right", "Quit")) {
-            case 1 -> fsm.up();
-            case 2 -> fsm.down();
-            case 3 -> fsm.left();
-            case 4 -> fsm.right();
+            //case 1 -> fsm.up();
+            //case 2 -> fsm.down();
+            //case 3 -> fsm.left();
+            //case 4 -> fsm.right();
             case 5 -> {finish = true;}
         }
     }
@@ -71,16 +71,17 @@ public class TextGameUI {
         //+ "\r\nCurrent Position: " + fsm.getPacmanPosition()
         //+ "\r\nMazeX: " + fsm.getMaze()[0].length + ", MazeY: " + fsm.getMaze().length);
         switch (PAInput.chooseOption("Tiny-PAc", "up", "down", "left", "right", "Pause", "Show Maze", "Quit")) {
-            case 1 -> fsm.up();
-            case 2 -> fsm.down();
-            case 3 -> fsm.left();
-            case 4 -> fsm.right();
-            case 5 -> fsm.pauseGame();
-            case 6 -> showMaze();
+            //case 1 -> fsm.up();
+            //case 2 -> fsm.down();
+            //case 3 -> fsm.left();
+            //case 4 -> fsm.right();
+            //case 5 -> fsm.pauseGame();
+            //case 6 -> showMaze();
             case 7 -> {finish = true;}
         }
     }
     private void showMaze() {
+        /*
         for (int i=0; i < fsm.getMaze().length; i++) {
             System.out.print("|");
             for (int ii=0; ii < (fsm.getMaze()[0].length * 2); ii++) {
@@ -93,6 +94,7 @@ public class TextGameUI {
             }
             System.out.print("|\r\n");
         }
+         */
     }
     private void pausedStateUI() {
         System.out.println("Paused State");

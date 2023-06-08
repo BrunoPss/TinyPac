@@ -41,6 +41,7 @@ public class CursesGameUI implements IGameEngineEvolve {
 
     //Methods
     public void show() throws IOException {
+        /*
         char[][] env = fsm.getMaze();
         for (int y=0; y < fsm.getMaze().length; y++) {
             for (int x=0; x < fsm.getMaze()[0].length; x++) {
@@ -59,6 +60,8 @@ public class CursesGameUI implements IGameEngineEvolve {
             }
         }
         screen.refresh();
+
+         */
     }
 
     //Overrides

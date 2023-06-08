@@ -21,7 +21,7 @@ import pt.isec.pa.tinypac.ui.gui.resources.presets.ColorPreset;
 import pt.isec.pa.tinypac.ui.gui.resources.presets.EQPreset;
 import pt.isec.pa.tinypac.ui.gui.resources.presets.MusicPreset;
 
-import java.io.File;
+import java.io.*;
 import java.util.*;
 
 /**
@@ -32,7 +32,7 @@ import java.util.*;
  * @ version 1.0.0
  */
 
-public class Game {
+public class Game implements Serializable {
     //Internal Data
     private Map<EntityType, Entity> entities;
     private Maze maze;
@@ -67,12 +67,18 @@ public class Game {
         this.ghostDoor = new int[2];
         this.enchancedPhase = false;
         this.currentLevel = 0;
-        this.top5List = new ArrayList<>();
-        top5List.add(new Player("Player 1", 5)); //APAGAR
-        top5List.add(new Player("Player 2", 3)); //APAGAR
-        top5List.add(new Player("Player 3", 3)); //APAGAR
-        top5List.add(new Player("Player 4", 3)); //APAGAR
-        top5List.add(new Player("Player 5", 3)); //APAGAR
+
+        File top5_temp = new File("top5/tinypac_top5.top");
+        if (top5_temp.exists())
+            loadTop5();
+        else {
+            this.top5List = new ArrayList<>();
+            top5List.add(new Player("Player 1", 5)); //APAGAR
+            top5List.add(new Player("Player 2", 3)); //APAGAR
+            //top5List.add(new Player("Player 3", 3)); //APAGAR
+            //top5List.add(new Player("Player 4", 3)); //APAGAR
+            //top5List.add(new Player("Player 5", 3)); //APAGAR
+        }
 
         //Game Configurations
         this.mainMenuState = true;
@@ -178,6 +184,28 @@ public class Game {
         System.out.println("CURRENT LEVEL " + currentLevel);
         maze = new Maze(MazeManager.getYSize(levels.get(currentLevel)), MazeManager.getXSize(levels.get(currentLevel)));
     }
+
+    public void saveTop5() {
+        File file = new File("top5/tinypac_top5.top");
+
+        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(file))) {
+            oos.writeObject(top5List);
+        } catch (Exception e) {
+            System.err.println("ERROR WRITING TOP5");
+            System.out.println(e);
+        }
+    }
+    public void loadTop5() {
+        File file = new File("top5/tinypac_top5.top");
+
+        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(file))) {
+            top5List = (ArrayList<Player>) ois.readObject();
+        } catch (Exception e) {
+            System.err.println("ERROR LOADING TOP5");
+            System.out.println(e);
+        }
+    }
+
     public void newFruit() {
         Fruit.ACTIVE = true;
         maze.set(fruit.getY(), fruit.getX(), fruit);

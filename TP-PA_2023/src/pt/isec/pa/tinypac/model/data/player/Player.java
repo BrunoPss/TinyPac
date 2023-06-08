@@ -1,6 +1,8 @@
 package pt.isec.pa.tinypac.model.data.player;
 
-public class Player {
+import java.io.Serializable;
+
+public class Player implements Serializable {
     //Internal Data
     private String userName;
     private int points;
