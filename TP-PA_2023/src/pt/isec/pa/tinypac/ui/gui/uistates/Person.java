@@ -1,6 +1,6 @@
 package pt.isec.pa.tinypac.ui.gui.uistates;
 
-public class Person {
+public class Person { //DELETE
     //Internal Data
     private String firstName;
     private String secondName;

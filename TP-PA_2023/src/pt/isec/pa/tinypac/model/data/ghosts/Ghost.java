@@ -14,7 +14,7 @@ import pt.isec.pa.tinypac.model.data.game.Game;
 
 abstract public class Ghost extends Entity {
     //Internal Data
-    protected int initTime = 2; //5
+    //protected int initTime = 2; //5
     protected Directions direction;
     protected boolean cave = true;
 

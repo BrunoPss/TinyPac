@@ -44,7 +44,7 @@ public class Pacman extends Entity {
 
     //Overrides
     @Override
-    public void evolve() {
+    public void move() {
         switch (direction) {
             case UP -> {
                 //Mudar cadeia de if's para switch
