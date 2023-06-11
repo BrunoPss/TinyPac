@@ -20,13 +20,13 @@ public class GameManager {
     //Internal Data
     private GameContext fsm;
     PropertyChangeSupport pcs;
-    IGameEngine gameEngine;
+    //IGameEngine gameEngine;
 
     //Constructor
     public GameManager(IGameEngine gameEngine) {
         fsm = new GameContext(gameEngine);
         pcs = new PropertyChangeSupport(this);
-        this.gameEngine = gameEngine;
+        //this.gameEngine = gameEngine;
     }
 
     //Get Methods
@@ -50,6 +50,7 @@ public class GameManager {
     public int getPacmanLives() { return fsm.getPacmanLives(); }
     public boolean getElementActive(ElementType type) { return fsm.getElementActive(type); }
     public boolean getEntityActive(EntityType type) { return fsm.getEntityActive(type); }
+    public int[] getEntityCord(EntityType type) { return fsm.getEntityCord(type); }
     public ArrayList<Player> getTop5List() { return fsm.getTop5List(); }
 
     //Set Methods
@@ -137,32 +138,32 @@ public class GameManager {
 
     public void up() {
         fsm.up();
-        gameEngine.start(1000);
+        //gameEngine.start(1000);
         pcs.firePropertyChange(null, null, null);
     }
     public void down() {
         fsm.down();
-        gameEngine.start(1000);
+        //gameEngine.start(1000);
         pcs.firePropertyChange(null, null, null);
     }
     public void left() {
         fsm.left();
-        gameEngine.start(1000);
+        //gameEngine.start(1000);
         pcs.firePropertyChange(null, null, null);
     }
     public void right() {
         fsm.right();
-        gameEngine.start(1000);
+        //gameEngine.start(1000);
         pcs.firePropertyChange(null, null, null);
     }
     public void pauseGame() {
         fsm.pauseGame();
-        gameEngine.pause();
+        //gameEngine.pause();
         pcs.firePropertyChange(null, null, null);
     }
     public void resumeGame() {
         fsm.resumeGame();
-        gameEngine.resume();
+        //gameEngine.resume();
         pcs.firePropertyChange(null, null, null);
     }
     public void enhancedPacman() {
@@ -175,7 +176,7 @@ public class GameManager {
     }
     public void restart() {
         fsm.restart();
-        gameEngine.stop();
+        //gameEngine.stop();
         pcs.firePropertyChange(null, null, null);
     }
     public void endGame() {

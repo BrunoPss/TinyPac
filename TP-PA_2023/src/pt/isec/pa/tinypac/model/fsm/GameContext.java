@@ -74,6 +74,7 @@ public class GameContext implements Serializable {
     public void setMainColorPreset(ColorPreset colorPreset) { gameData.setMainColorPreset(colorPreset); }
     public void setMusicPreset(MusicPreset musicPreset) { gameData.setMusicPreset(musicPreset); }
     public void setMainEQPreset(EQPreset eqPreset) { gameData.setMainEQPreset(eqPreset); }
+    public int[] getEntityCord(EntityType type) { return gameData.getEntityCord(type); }
 
     //Methods
     public boolean up() {
@@ -104,7 +105,6 @@ public class GameContext implements Serializable {
     }
 
     //Overrides
-    //@Override
     public void update() {
         state.update();  //Implementacao Correta
     }

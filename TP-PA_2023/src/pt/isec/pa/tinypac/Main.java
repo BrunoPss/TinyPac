@@ -26,6 +26,7 @@ public class Main {
         IGameEngine gameEngine = new GameEngine();
         gameManager = new GameManager(gameEngine);
         gameEngine.registerClient((g,t) -> gameManager.update());
+        gameEngine.start(1000);
     }
     public static void main(String[] args) {
         //IGameEngine gameEngine = new GameEngine();

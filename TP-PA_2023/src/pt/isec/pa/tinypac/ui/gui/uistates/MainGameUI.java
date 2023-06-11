@@ -614,30 +614,30 @@ public class MainGameUI extends BorderPane {
                         iconPos = new int[]{4, 2};
                         yield Color.BLACK;
                     }
-                    case Blinky.SYMBOL -> {
-                        icon = ImageManager.getImage("blinky.png");
-                        iconSize = new int[]{15, 15};
-                        iconPos = new int[]{3, 1};
-                        yield Color.BLACK;
-                    }
-                    case Clyde.SYMBOL -> {
-                        icon = ImageManager.getImage("clyde.png");
-                        iconSize = new int[]{15, 15};
-                        iconPos = new int[]{3, 1};
-                        yield Color.BLACK;
-                    }
-                    case Inky.SYMBOL -> {
-                        icon = ImageManager.getImage("inky.png");
-                        iconSize = new int[]{15, 15};
-                        iconPos = new int[]{3, 1};
-                        yield Color.BLACK;
-                    }
-                    case Pinky.SYMBOL -> {
-                        icon = ImageManager.getImage("pinky.png");
-                        iconSize = new int[]{15, 15};
-                        iconPos = new int[]{3, 1};
-                        yield Color.BLACK;
-                    }
+                    //case Blinky.SYMBOL -> {
+                    //    icon = ImageManager.getImage("blinky.png");
+                    //    iconSize = new int[]{15, 15};
+                    //    iconPos = new int[]{3, 1};
+                    //    yield Color.BLACK;
+                    //}
+                    //case Clyde.SYMBOL -> {
+                    //    icon = ImageManager.getImage("clyde.png");
+                    //    iconSize = new int[]{15, 15};
+                    //    iconPos = new int[]{3, 1};
+                    //    yield Color.BLACK;
+                    //}
+                    //case Inky.SYMBOL -> {
+                    //    icon = ImageManager.getImage("inky.png");
+                    //    iconSize = new int[]{15, 15};
+                    //    iconPos = new int[]{3, 1};
+                    //    yield Color.BLACK;
+                    //}
+                    //case Pinky.SYMBOL -> {
+                    //    icon = ImageManager.getImage("pinky.png");
+                    //    iconSize = new int[]{15, 15};
+                    //    iconPos = new int[]{3, 1};
+                    //    yield Color.BLACK;
+                    //}
                     //case ' ' -> Color.WHITE; //Normal Empty Path
                     default -> Color.BLACK;
                 };
@@ -645,9 +645,25 @@ public class MainGameUI extends BorderPane {
                 mazeContext.setFill(color);
                 mazeContext.fillRect(x * cellSize, y * cellSize, cellSize, cellSize);
                 mazeContext.drawImage(icon, x * cellSize + iconPos[0], y * cellSize + iconPos[1], iconSize[0], iconSize[1]);
+                drawGhosts();
             }
         }
     }
+
+    private void drawGhosts() {
+        //Draw Blinky
+        //mazeContext.drawImage(ImageManager.getImage("blinky.png"), gameManager.getEntityCord(EntityType.BLINKY)[0] * cellSize + 3, gameManager.getEntityCord(EntityType.BLINKY)[1] * cellSize + 1, 15, 15);
+
+        //Draw Pinky
+        //mazeContext.drawImage(ImageManager.getImage("pinky.png"), gameManager.getEntityCord(EntityType.PINKY)[0] * cellSize + 3, gameManager.getEntityCord(EntityType.PINKY)[1] * cellSize + 1, 15, 15);
+
+        //Draw Inky
+        //mazeContext.drawImage(ImageManager.getImage("inky.png"), gameManager.getEntityCord(EntityType.INKY)[0] * cellSize + 3, gameManager.getEntityCord(EntityType.INKY)[1] * cellSize + 1, 15, 15);
+
+        //Draw Clyde
+        mazeContext.drawImage(ImageManager.getImage("clyde.png"), gameManager.getEntityCord(EntityType.CLYDE)[0] * cellSize + 3, gameManager.getEntityCord(EntityType.CLYDE)[1] * cellSize + 1, 15, 15);
+    }
+
     //Hover Help Popup ActionEven
     private void helpPopupShow(String desc) {
         popupStage.setX(MouseInfo.getPointerInfo().getLocation().getX());

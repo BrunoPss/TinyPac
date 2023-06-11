@@ -1,6 +1,7 @@
 package pt.isec.pa.tinypac.model.data.ghosts;
 
 import pt.isec.pa.tinypac.model.data.entity.Directions;
+import pt.isec.pa.tinypac.model.data.entity.EntityType;
 import pt.isec.pa.tinypac.model.data.game.Game;
 import pt.isec.pa.tinypac.model.data.maze.IMazeElement;
 import pt.isec.pa.tinypac.model.data.maze.MazeManager;
@@ -18,12 +19,13 @@ import java.util.Random;
 public class Pinky extends Ghost {
     //Internal Data
     public static final char SYMBOL = 'P';
+    private int initTime = 4;
     public static boolean ACTIVE = false;
     private Corners objectiveCorner;
     private int[] objectiveCords;
     private Random rnd;
-    private IMazeElement auxF = null;
-    private IMazeElement auxA = null;
+    private IMazeElement auxF;
+    private IMazeElement auxA;
     private int failedAttempts;
 
     //Constructor
@@ -34,7 +36,9 @@ public class Pinky extends Ghost {
         this.objectiveCords = new int[] {MazeManager.getXSize(gameData.getCurrentLevelFilePath()), 0};
         this.rnd = new Random();
         this.failedAttempts = 0;
-        ACTIVE = true;
+
+        this.auxF = null;
+        this.auxA = gameData.getMaze().get(y,x);
     }
 
     //Get Methods
@@ -48,7 +52,7 @@ public class Pinky extends Ghost {
 
     //Overrides
     @Override
-    public void evolve() {
+    public void move() {
         if (initTime == 0) {
             ACTIVE = true;
 
@@ -80,27 +84,27 @@ public class Pinky extends Ghost {
                         //Cima livre
                         if ((gameData.getMaze().get(y-1, x) == null && y > 0) || gameData.getMaze().get(y-1, x).getSymbol() != 'x') {
                             direction = Directions.UP;
-                            auxF = gameData.getMaze().get(y-1, x);
+                            //auxF = gameData.getMaze().get(y-1, x);
                             y--;
-                            gameData.getMaze().set(y+1, x, auxA);
+                            //gameData.getMaze().set(y+1, x, auxA);
                         }
                         //Cima parede
                         else if ((gameData.getMaze().get(y-1, x) == null && y > 0) || gameData.getMaze().get(y-1, x).getSymbol() == 'x') {
                             //Direita Livre
                             if (gameData.getMaze().get(y, x+1) == null || gameData.getMaze().get(y, x+1).getSymbol() != 'x') {
                                 direction = Directions.RIGHT;
-                                auxF = gameData.getMaze().get(y, x+1);
+                                //auxF = gameData.getMaze().get(y, x+1);
                                 x++;
-                                gameData.getMaze().set(y, x-1, auxA);
+                                //gameData.getMaze().set(y, x-1, auxA);
                             }
                             else if (gameData.getMaze().get(y, x+1) == null || gameData.getMaze().get(y, x+1).getSymbol() == 'x') {
                                 //Esquerda
                                 if (rnd.nextBoolean()) {
                                     if ((gameData.getMaze().get(y, x-1) == null && x > 0) || gameData.getMaze().get(y, x-1).getSymbol() != 'x') {
                                         direction = Directions.LEFT;
-                                        auxF = gameData.getMaze().get(y, x-1);
+                                        //auxF = gameData.getMaze().get(y, x-1);
                                         x--;
-                                        gameData.getMaze().set(y, x+1, auxA);
+                                        //gameData.getMaze().set(y, x+1, auxA);
 
                                         failedAttempts++;
                                     }
@@ -109,9 +113,9 @@ public class Pinky extends Ghost {
                                 else {
                                     if (gameData.getMaze().get(y+1, x) == null || gameData.getMaze().get(y+1, x).getSymbol() != 'x') {
                                         direction = Directions.DOWN;
-                                        auxF = gameData.getMaze().get(y+1, x);
+                                        //auxF = gameData.getMaze().get(y+1, x);
                                         y++;
-                                        gameData.getMaze().set(y-1, x, auxA);
+                                        //gameData.getMaze().set(y-1, x, auxA);
 
                                         failedAttempts++;
                                     }
@@ -124,27 +128,27 @@ public class Pinky extends Ghost {
                         //Direita livre
                         if (gameData.getMaze().get(y, x+1) == null || gameData.getMaze().get(y, x+1).getSymbol() != 'x') {
                             direction = Directions.RIGHT;
-                            auxF = gameData.getMaze().get(y, x+1);
+                            //auxF = gameData.getMaze().get(y, x+1);
                             x++;
-                            gameData.getMaze().set(y, x-1, auxA);
+                            //gameData.getMaze().set(y, x-1, auxA);
                         }
                         //Direita parede
                         else if ((gameData.getMaze().get(y, x+1) == null && y > 0) || gameData.getMaze().get(y, x+1).getSymbol() == 'x') {
                             //Cima Livre
                             if (gameData.getMaze().get(y-1, x) == null || gameData.getMaze().get(y-1, x).getSymbol() != 'x') {
                                 direction = Directions.UP;
-                                auxF = gameData.getMaze().get(y-1, x);
+                                //auxF = gameData.getMaze().get(y-1, x);
                                 y--;
-                                gameData.getMaze().set(y+1, x, auxA);
+                                //gameData.getMaze().set(y+1, x, auxA);
                             }
                             else if (gameData.getMaze().get(y-1, x) == null || gameData.getMaze().get(y-1, x).getSymbol() == 'x') {
                                 //Esquerda
                                 if (rnd.nextBoolean()) {
                                     if ((gameData.getMaze().get(y, x-1) == null && x > 0) || gameData.getMaze().get(y, x-1).getSymbol() != 'x') {
                                         direction = Directions.LEFT;
-                                        auxF = gameData.getMaze().get(y, x-1);
+                                        //auxF = gameData.getMaze().get(y, x-1);
                                         x--;
-                                        gameData.getMaze().set(y, x+1, auxA);
+                                        //gameData.getMaze().set(y, x+1, auxA);
 
                                         failedAttempts++;
                                     }
@@ -153,9 +157,9 @@ public class Pinky extends Ghost {
                                 else {
                                     if (gameData.getMaze().get(y+1, x) == null || gameData.getMaze().get(y+1, x).getSymbol() != 'x') {
                                         direction = Directions.DOWN;
-                                        auxF = gameData.getMaze().get(y+1, x);
+                                        //auxF = gameData.getMaze().get(y+1, x);
                                         y++;
-                                        gameData.getMaze().set(y-1, x, auxA);
+                                        //gameData.getMaze().set(y-1, x, auxA);
 
                                         failedAttempts++;
                                     }
@@ -169,9 +173,9 @@ public class Pinky extends Ghost {
                         if (rnd.nextBoolean()) {
                             if (gameData.getMaze().get(y, x-1) == null || gameData.getMaze().get(y, x-1).getSymbol() != 'x') {
                                 direction = Directions.LEFT;
-                                auxF = gameData.getMaze().get(y, x-1);
+                                //auxF = gameData.getMaze().get(y, x-1);
                                 x--;
-                                gameData.getMaze().set(y, x+1, auxA);
+                                //gameData.getMaze().set(y, x+1, auxA);
 
                                 failedAttempts++;
                             }
@@ -180,17 +184,17 @@ public class Pinky extends Ghost {
                         else {
                             if (gameData.getMaze().get(y+1, x) == null || gameData.getMaze().get(y+1, x).getSymbol() != 'x') {
                                 direction = Directions.DOWN;
-                                auxF = gameData.getMaze().get(y+1, x);
+                                //auxF = gameData.getMaze().get(y+1, x);
                                 y++;
-                                gameData.getMaze().set(y-1, x, auxA);
+                                //gameData.getMaze().set(y-1, x, auxA);
 
                                 failedAttempts++;
                             }
                         }
                     }
 
-                    gameData.getMaze().set(y, x, this);
-                    auxA = auxF;
+                    //gameData.getMaze().set(y, x, this);
+                    //auxA = auxF;
                 }
                 case BOTTOM_RIGHT -> {
                     //Movimentos -> DOWN & RIGHT
@@ -214,27 +218,27 @@ public class Pinky extends Ghost {
                         //Baixo livre
                         if ((gameData.getMaze().get(y+1, x) == null) || gameData.getMaze().get(y+1, x).getSymbol() != 'x') {
                             direction = Directions.DOWN;
-                            auxF = gameData.getMaze().get(y+1, x);
+                            //auxF = gameData.getMaze().get(y+1, x);
                             y++;
-                            gameData.getMaze().set(y-1, x, auxA);
+                            //gameData.getMaze().set(y-1, x, auxA);
                         }
                         //Baixo parede
                         else if (gameData.getMaze().get(y+1, x) == null || gameData.getMaze().get(y+1, x).getSymbol() == 'x') {
                             //Direita Livre
                             if (gameData.getMaze().get(y, x+1) == null || gameData.getMaze().get(y, x+1).getSymbol() != 'x') {
                                 direction = Directions.RIGHT;
-                                auxF = gameData.getMaze().get(y, x+1);
+                                //auxF = gameData.getMaze().get(y, x+1);
                                 x++;
-                                gameData.getMaze().set(y, x-1, auxA);
+                                //gameData.getMaze().set(y, x-1, auxA);
                             }
                             else if (gameData.getMaze().get(y, x+1) == null || gameData.getMaze().get(y, x+1).getSymbol() == 'x') {
                                 //Esquerda
                                 if (rnd.nextBoolean()) {
                                     if ((gameData.getMaze().get(y, x-1) == null && x > 0) || gameData.getMaze().get(y, x-1).getSymbol() != 'x') {
                                         direction = Directions.LEFT;
-                                        auxF = gameData.getMaze().get(y, x-1);
+                                        //auxF = gameData.getMaze().get(y, x-1);
                                         x--;
-                                        gameData.getMaze().set(y, x+1, auxA);
+                                        //gameData.getMaze().set(y, x+1, auxA);
 
                                         failedAttempts++;
                                     }
@@ -243,9 +247,9 @@ public class Pinky extends Ghost {
                                 else {
                                     if (gameData.getMaze().get(y-1, x) == null || gameData.getMaze().get(y-1, x).getSymbol() != 'x') {
                                         direction = Directions.UP;
-                                        auxF = gameData.getMaze().get(y-1, x);
+                                        //auxF = gameData.getMaze().get(y-1, x);
                                         y--;
-                                        gameData.getMaze().set(y+1, x, auxA);
+                                        //gameData.getMaze().set(y+1, x, auxA);
 
                                         failedAttempts++;
                                     }
@@ -258,18 +262,18 @@ public class Pinky extends Ghost {
                         //Direita livre
                         if (gameData.getMaze().get(y, x+1) == null || gameData.getMaze().get(y, x+1).getSymbol() != 'x') {
                             direction = Directions.RIGHT;
-                            auxF = gameData.getMaze().get(y, x+1);
+                            //auxF = gameData.getMaze().get(y, x+1);
                             x++;
-                            gameData.getMaze().set(y, x-1, auxA);
+                            //gameData.getMaze().set(y, x-1, auxA);
                         }
                         //Direita parede
                         else if ((gameData.getMaze().get(y, x+1) == null && y > 0) || gameData.getMaze().get(y, x+1).getSymbol() == 'x') {
                             //Baixo Livre
                             if (gameData.getMaze().get(y+1, x) == null || gameData.getMaze().get(y+1, x).getSymbol() != 'x') {
                                 direction = Directions.DOWN;
-                                auxF = gameData.getMaze().get(y+1, x);
+                                //auxF = gameData.getMaze().get(y+1, x);
                                 y++;
-                                gameData.getMaze().set(y-1, x, auxA);
+                                //gameData.getMaze().set(y-1, x, auxA);
                             }
                             //Baixo parede
                             else if (gameData.getMaze().get(y+1, x) == null || gameData.getMaze().get(y+1, x).getSymbol() == 'x') {
@@ -277,9 +281,9 @@ public class Pinky extends Ghost {
                                 if (rnd.nextBoolean()) {
                                     if ((gameData.getMaze().get(y, x-1) == null && x > 0) || gameData.getMaze().get(y, x-1).getSymbol() != 'x') {
                                         direction = Directions.LEFT;
-                                        auxF = gameData.getMaze().get(y, x-1);
+                                        //auxF = gameData.getMaze().get(y, x-1);
                                         x--;
-                                        gameData.getMaze().set(y, x+1, auxA);
+                                        //gameData.getMaze().set(y, x+1, auxA);
 
                                         failedAttempts++;
                                     }
@@ -288,9 +292,9 @@ public class Pinky extends Ghost {
                                 else {
                                     if (gameData.getMaze().get(y-1, x) == null || gameData.getMaze().get(y-1, x).getSymbol() != 'x') {
                                         direction = Directions.UP;
-                                        auxF = gameData.getMaze().get(y-1, x);
+                                        //auxF = gameData.getMaze().get(y-1, x);
                                         y--;
-                                        gameData.getMaze().set(y+1, x, auxA);
+                                        //gameData.getMaze().set(y+1, x, auxA);
 
                                         failedAttempts++;
                                     }
@@ -304,9 +308,9 @@ public class Pinky extends Ghost {
                         if (rnd.nextBoolean()) {
                             if ((gameData.getMaze().get(y-1, x) == null && y > 0) || gameData.getMaze().get(y-1, x).getSymbol() != 'x') {
                                 direction = Directions.UP;
-                                auxF = gameData.getMaze().get(y - 1, x);
+                                //auxF = gameData.getMaze().get(y - 1, x);
                                 y--;
-                                gameData.getMaze().set(y + 1, x, auxA);
+                                //gameData.getMaze().set(y + 1, x, auxA);
 
                                 failedAttempts++;
                             }
@@ -315,17 +319,17 @@ public class Pinky extends Ghost {
                         else {
                             if (gameData.getMaze().get(y, x-1) == null || gameData.getMaze().get(y, x-1).getSymbol() != 'x') {
                                 direction = Directions.LEFT;
-                                auxF = gameData.getMaze().get(y, x-1);
+                                //auxF = gameData.getMaze().get(y, x-1);
                                 x--;
-                                gameData.getMaze().set(y, x+1, auxA);
+                                //gameData.getMaze().set(y, x+1, auxA);
 
                                 failedAttempts++;
                             }
                         }
                     }
 
-                    gameData.getMaze().set(y, x, this);
-                    auxA = auxF;
+                    //gameData.getMaze().set(y, x, this);
+                    //auxA = auxF;
                 }
                 case UPPER_LEFT -> {
                     //Movimentos -> UP & LEFT
@@ -349,18 +353,18 @@ public class Pinky extends Ghost {
                         //Cima livre
                         if ((gameData.getMaze().get(y-1, x) == null && y > 0) || gameData.getMaze().get(y-1, x).getSymbol() != 'x') {
                             direction = Directions.UP;
-                            auxF = gameData.getMaze().get(y-1, x);
+                            //auxF = gameData.getMaze().get(y-1, x);
                             y--;
-                            gameData.getMaze().set(y+1, x, auxA);
+                            //gameData.getMaze().set(y+1, x, auxA);
                         }
                         //Cima parede
                         else if ((gameData.getMaze().get(y-1, x) == null && y > 0) || gameData.getMaze().get(y-1, x).getSymbol() == 'x') {
                             //Esquerda livre
                             if (gameData.getMaze().get(y, x-1) == null || gameData.getMaze().get(y, x-1).getSymbol() != 'x') {
                                 direction = Directions.LEFT;
-                                auxF = gameData.getMaze().get(y, x-1);
+                                //auxF = gameData.getMaze().get(y, x-1);
                                 x--;
-                                gameData.getMaze().set(y, x+1, auxA);
+                                //gameData.getMaze().set(y, x+1, auxA);
                             }
                             //Esquerda parede
                             else if (gameData.getMaze().get(y, x-1) == null || gameData.getMaze().get(y, x-1).getSymbol() == 'x') {
@@ -368,9 +372,9 @@ public class Pinky extends Ghost {
                                 if (rnd.nextBoolean()) {
                                     if (gameData.getMaze().get(y, x+1) == null || gameData.getMaze().get(y, x+1).getSymbol() != 'x') {
                                         direction = Directions.RIGHT;
-                                        auxF = gameData.getMaze().get(y, x+1);
+                                        //auxF = gameData.getMaze().get(y, x+1);
                                         x++;
-                                        gameData.getMaze().set(y, x-1, auxA);
+                                        //gameData.getMaze().set(y, x-1, auxA);
 
                                         failedAttempts++;
                                     }
@@ -379,9 +383,9 @@ public class Pinky extends Ghost {
                                 else {
                                     if (gameData.getMaze().get(y+1, x) == null || gameData.getMaze().get(y+1, x).getSymbol() != 'x') {
                                         direction = Directions.DOWN;
-                                        auxF = gameData.getMaze().get(y+1, x);
+                                        //auxF = gameData.getMaze().get(y+1, x);
                                         y++;
-                                        gameData.getMaze().set(y-1, x, auxA);
+                                        //gameData.getMaze().set(y-1, x, auxA);
 
                                         failedAttempts++;
                                     }
@@ -394,18 +398,18 @@ public class Pinky extends Ghost {
                         //Esquerda livre
                         if (gameData.getMaze().get(y, x-1) == null || gameData.getMaze().get(y, x-1).getSymbol() != 'x') {
                             direction = Directions.LEFT;
-                            auxF = gameData.getMaze().get(y, x-1);
+                            //auxF = gameData.getMaze().get(y, x-1);
                             x--;
-                            gameData.getMaze().set(y, x+1, auxA);
+                            //gameData.getMaze().set(y, x+1, auxA);
                         }
                         //Esquerda parede
                         else if ((gameData.getMaze().get(y, x-1) == null && x > 0) || gameData.getMaze().get(y, x-1).getSymbol() == 'x') {
                             //Cima Livre
                             if (gameData.getMaze().get(y-1, x) == null || gameData.getMaze().get(y-1, x).getSymbol() != 'x') {
                                 direction = Directions.UP;
-                                auxF = gameData.getMaze().get(y-1, x);
+                                //auxF = gameData.getMaze().get(y-1, x);
                                 y--;
-                                gameData.getMaze().set(y+1, x, auxA);
+                                //gameData.getMaze().set(y+1, x, auxA);
                             }
                             //Cima parede
                             else if (gameData.getMaze().get(y-1, x) == null || gameData.getMaze().get(y-1, x).getSymbol() == 'x') {
@@ -413,9 +417,9 @@ public class Pinky extends Ghost {
                                 if (rnd.nextBoolean()) {
                                     if (gameData.getMaze().get(y, x+1) == null || gameData.getMaze().get(y, x+1).getSymbol() != 'x') {
                                         direction = Directions.RIGHT;
-                                        auxF = gameData.getMaze().get(y, x+1);
+                                        //auxF = gameData.getMaze().get(y, x+1);
                                         x++;
-                                        gameData.getMaze().set(y, x-1, auxA);
+                                        //gameData.getMaze().set(y, x-1, auxA);
 
                                         failedAttempts++;
                                     }
@@ -424,9 +428,9 @@ public class Pinky extends Ghost {
                                 else {
                                     if (gameData.getMaze().get(y+1, x) == null || gameData.getMaze().get(y+1, x).getSymbol() != 'x') {
                                         direction = Directions.DOWN;
-                                        auxF = gameData.getMaze().get(y+1, x);
+                                        //auxF = gameData.getMaze().get(y+1, x);
                                         y++;
-                                        gameData.getMaze().set(y-1, x, auxA);
+                                        //gameData.getMaze().set(y-1, x, auxA);
 
                                         failedAttempts++;
                                     }
@@ -440,9 +444,9 @@ public class Pinky extends Ghost {
                         if (rnd.nextBoolean()) {
                             if (gameData.getMaze().get(y, x+1) == null || gameData.getMaze().get(y, x+1).getSymbol() != 'x') {
                                 direction = Directions.RIGHT;
-                                auxF = gameData.getMaze().get(y, x+1);
+                                //auxF = gameData.getMaze().get(y, x+1);
                                 x++;
-                                gameData.getMaze().set(y, x-1, auxA);
+                                //gameData.getMaze().set(y, x-1, auxA);
 
                                 failedAttempts++;
                             }
@@ -451,17 +455,17 @@ public class Pinky extends Ghost {
                         else {
                             if (gameData.getMaze().get(y+1, x) == null || gameData.getMaze().get(y+1, x).getSymbol() != 'x') {
                                 direction = Directions.DOWN;
-                                auxF = gameData.getMaze().get(y+1, x);
+                                //auxF = gameData.getMaze().get(y+1, x);
                                 y++;
-                                gameData.getMaze().set(y-1, x, auxA);
+                                //gameData.getMaze().set(y-1, x, auxA);
 
                                 failedAttempts++;
                             }
                         }
                     }
 
-                    gameData.getMaze().set(y, x, this);
-                    auxA = auxF;
+                    //gameData.getMaze().set(y, x, this);
+                    //auxA = auxF;
                 }
                 case BOTTOM_LEFT -> {
                     //Movimentos -> DOWN & LEFT
@@ -485,18 +489,18 @@ public class Pinky extends Ghost {
                         //Baixo livre
                         if ((gameData.getMaze().get(y+1, x) == null) || gameData.getMaze().get(y+1, x).getSymbol() != 'x') {
                             direction = Directions.DOWN;
-                            auxF = gameData.getMaze().get(y+1, x);
+                            //auxF = gameData.getMaze().get(y+1, x);
                             y++;
-                            gameData.getMaze().set(y-1, x, auxA);
+                            //gameData.getMaze().set(y-1, x, auxA);
                         }
                         //Baixo parede
                         else if (gameData.getMaze().get(y+1, x) == null || gameData.getMaze().get(y+1, x).getSymbol() == 'x') {
                             //Esquerda Livre
                             if (gameData.getMaze().get(y, x-1) == null || gameData.getMaze().get(y, x-1).getSymbol() != 'x') {
                                 direction = Directions.LEFT;
-                                auxF = gameData.getMaze().get(y, x-1);
+                                //auxF = gameData.getMaze().get(y, x-1);
                                 x--;
-                                gameData.getMaze().set(y, x+1, auxA);
+                                //gameData.getMaze().set(y, x+1, auxA);
                             }
                             //Esquerda parede
                             else if (gameData.getMaze().get(y, x-1) == null || gameData.getMaze().get(y, x-1).getSymbol() == 'x') {
@@ -504,9 +508,9 @@ public class Pinky extends Ghost {
                                 if (rnd.nextBoolean()) {
                                     if (gameData.getMaze().get(y, x+1) == null || gameData.getMaze().get(y, x+1).getSymbol() != 'x') {
                                         direction = Directions.RIGHT;
-                                        auxF = gameData.getMaze().get(y, x+1);
+                                        //auxF = gameData.getMaze().get(y, x+1);
                                         x++;
-                                        gameData.getMaze().set(y, x-1, auxA);
+                                        //gameData.getMaze().set(y, x-1, auxA);
 
                                         failedAttempts++;
                                     }
@@ -515,9 +519,9 @@ public class Pinky extends Ghost {
                                 else {
                                     if (gameData.getMaze().get(y-1, x) == null || gameData.getMaze().get(y-1, x).getSymbol() != 'x') {
                                         direction = Directions.UP;
-                                        auxF = gameData.getMaze().get(y-1, x);
+                                        //auxF = gameData.getMaze().get(y-1, x);
                                         y--;
-                                        gameData.getMaze().set(y+1, x, auxA);
+                                        //gameData.getMaze().set(y+1, x, auxA);
 
                                         failedAttempts++;
                                     }
@@ -530,18 +534,18 @@ public class Pinky extends Ghost {
                         //Esquerda livre
                         if (gameData.getMaze().get(y, x-1) == null || gameData.getMaze().get(y, x-1).getSymbol() != 'x') {
                             direction = Directions.LEFT;
-                            auxF = gameData.getMaze().get(y, x-1);
+                            //auxF = gameData.getMaze().get(y, x-1);
                             x--;
-                            gameData.getMaze().set(y, x+1, auxA);
+                            //gameData.getMaze().set(y, x+1, auxA);
                         }
                         //Esquerda parede
                         else if ((gameData.getMaze().get(y, x-1) == null && x > 0) || gameData.getMaze().get(y, x-1).getSymbol() == 'x') {
                             //Baixo Livre
                             if (gameData.getMaze().get(y+1, x) == null || gameData.getMaze().get(y+1, x).getSymbol() != 'x') {
                                 direction = Directions.DOWN;
-                                auxF = gameData.getMaze().get(y+1, x);
+                                //auxF = gameData.getMaze().get(y+1, x);
                                 y++;
-                                gameData.getMaze().set(y-1, x, auxA);
+                                //gameData.getMaze().set(y-1, x, auxA);
                             }
                             //Baixo parede
                             else if (gameData.getMaze().get(y+1, x) == null || gameData.getMaze().get(y+1, x).getSymbol() == 'x') {
@@ -549,9 +553,9 @@ public class Pinky extends Ghost {
                                 if (rnd.nextBoolean()) {
                                     if (gameData.getMaze().get(y, x+1) == null || gameData.getMaze().get(y, x+1).getSymbol() != 'x') {
                                         direction = Directions.RIGHT;
-                                        auxF = gameData.getMaze().get(y, x+1);
+                                        //auxF = gameData.getMaze().get(y, x+1);
                                         x++;
-                                        gameData.getMaze().set(y, x-1, auxA);
+                                        //gameData.getMaze().set(y, x-1, auxA);
 
                                         failedAttempts++;
                                     }
@@ -560,9 +564,9 @@ public class Pinky extends Ghost {
                                 else {
                                     if (gameData.getMaze().get(y-1, x) == null || gameData.getMaze().get(y-1, x).getSymbol() != 'x') {
                                         direction = Directions.UP;
-                                        auxF = gameData.getMaze().get(y-1, x);
+                                        //auxF = gameData.getMaze().get(y-1, x);
                                         y--;
-                                        gameData.getMaze().set(y+1, x, auxA);
+                                        //gameData.getMaze().set(y+1, x, auxA);
 
                                         failedAttempts++;
                                     }
@@ -576,9 +580,9 @@ public class Pinky extends Ghost {
                         if (rnd.nextBoolean()) {
                             if ((gameData.getMaze().get(y-1, x) == null && y > 0) || gameData.getMaze().get(y-1, x).getSymbol() != 'x') {
                                 direction = Directions.UP;
-                                auxF = gameData.getMaze().get(y - 1, x);
+                                //auxF = gameData.getMaze().get(y - 1, x);
                                 y--;
-                                gameData.getMaze().set(y + 1, x, auxA);
+                                //gameData.getMaze().set(y + 1, x, auxA);
 
                                 failedAttempts++;
                             }
@@ -587,17 +591,17 @@ public class Pinky extends Ghost {
                         else {
                             if (gameData.getMaze().get(y, x+1) == null || gameData.getMaze().get(y, x+1).getSymbol() != 'x') {
                                 direction = Directions.RIGHT;
-                                auxF = gameData.getMaze().get(y, x+1);
+                                //auxF = gameData.getMaze().get(y, x+1);
                                 x++;
-                                gameData.getMaze().set(y, x-1, auxA);
+                                //gameData.getMaze().set(y, x-1, auxA);
 
                                 failedAttempts++;
                             }
                         }
                     }
 
-                    gameData.getMaze().set(y, x, this);
-                    auxA = auxF;
+                    //gameData.getMaze().set(y, x, this);
+                    //auxA = auxF;
                 }
             }
         }

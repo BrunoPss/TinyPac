@@ -19,7 +19,7 @@ public abstract class Entity extends Element {
 
 
     //Methods
-    abstract public void evolve();
+    abstract public void move();
 
     //Overrides
 

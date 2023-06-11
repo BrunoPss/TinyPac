@@ -140,7 +140,10 @@ public class Game implements Serializable {
     public int getCurrentLevel() { return currentLevel; }
     public Directions getPacmanDirections() { return ((Pacman) entities.get(EntityType.PACMAN)).getDirection(); }
     public int getPacmanPoints() { return ((Pacman) entities.get(EntityType.PACMAN)).getPoints(); }
-    public int getPacmanLives() { return ((Pacman) entities.get(EntityType.PACMAN)).getLives();}
+    public int getPacmanLives() { return ((Pacman) entities.get(EntityType.PACMAN)).getLives(); }
+    public int[] getEntityCord(EntityType type) {
+        return new int[]{entities.get(type).getX(), entities.get(type).getY()};
+    }
     public boolean getElementActive(ElementType type) {
         return switch (type) {
             case FRUIT -> Fruit.ACTIVE;
@@ -242,7 +245,7 @@ public class Game implements Serializable {
     }
     public void evolveEntities() {
         //Entities Evolve
-        entities.forEach((ElementType, Element) -> Element.evolve());
+        entities.forEach((ElementType, Element) -> Element.move());
     }
 
     //Overrides
