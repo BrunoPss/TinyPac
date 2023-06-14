@@ -4,11 +4,12 @@ import pt.isec.pa.tinypac.model.data.game.Game;
 
 public class PausedState extends GameStateAdapter {
     //Internal Data
-
+    GameState previousState;
 
     //Constructor
-    PausedState(GameContext context, Game gameData) {
+    PausedState(GameContext context, Game gameData, GameState previousState) {
         super(context, gameData);
+        this.previousState = previousState;
         System.out.println("PAUSED STATE");
     }
 
@@ -24,7 +25,10 @@ public class PausedState extends GameStateAdapter {
     //Overrides
     @Override
     public boolean resumeGame() {
-        changeState(new NormalRunState(context, gameData));
+        if (previousState == GameState.NORMALRUNSTATE)
+            changeState(new NormalRunState(context, gameData));
+        else if (previousState == GameState.SUPERPACMANSTATE)
+            changeState(new SuperPacmanState(context, gameData));
         //context.gameEngine.resume();
         return true;
     }
