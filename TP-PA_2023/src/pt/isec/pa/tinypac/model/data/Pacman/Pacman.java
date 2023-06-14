@@ -154,11 +154,13 @@ public class Pacman extends Entity {
     private void superBallDetection() {
         if (gameData.getMaze().get(y,x) != null && gameData.getMaze().get(y,x).getSymbol() == 'O') {
             gameData.setSuperBallInactive();
+            points += 10;
             gameData.getContext().enhancedPacman();
         }
     }
     private void fruitDetection() {
         if (gameData.getMaze().get(y,x) != null && gameData.getMaze().get(y,x).getSymbol() == 'F') {
+            points += (gameData.getCurrentLevel()+1) * 25;
             gameData.catchFruit();
         }
     }

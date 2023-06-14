@@ -521,7 +521,6 @@ public class MainGameUI extends BorderPane {
         else
             iconFruit.setEffect(null);
         //Super Ball Icon
-        System.out.println(gameManager.getElementActive(ElementType.SUPER_BALL));
         if (!gameManager.getElementActive(ElementType.SUPER_BALL))
             iconSuperBall.setEffect(removeColor);
         else
@@ -652,13 +651,13 @@ public class MainGameUI extends BorderPane {
 
     private void drawGhosts() {
         //Draw Blinky
-        //mazeContext.drawImage(ImageManager.getImage("blinky.png"), gameManager.getEntityCord(EntityType.BLINKY)[0] * cellSize + 3, gameManager.getEntityCord(EntityType.BLINKY)[1] * cellSize + 1, 15, 15);
+        mazeContext.drawImage(ImageManager.getImage("blinky.png"), gameManager.getEntityCord(EntityType.BLINKY)[0] * cellSize + 3, gameManager.getEntityCord(EntityType.BLINKY)[1] * cellSize + 1, 15, 15);
 
         //Draw Pinky
-        //mazeContext.drawImage(ImageManager.getImage("pinky.png"), gameManager.getEntityCord(EntityType.PINKY)[0] * cellSize + 3, gameManager.getEntityCord(EntityType.PINKY)[1] * cellSize + 1, 15, 15);
+        mazeContext.drawImage(ImageManager.getImage("pinky.png"), gameManager.getEntityCord(EntityType.PINKY)[0] * cellSize + 3, gameManager.getEntityCord(EntityType.PINKY)[1] * cellSize + 1, 15, 15);
 
         //Draw Inky
-        //mazeContext.drawImage(ImageManager.getImage("inky.png"), gameManager.getEntityCord(EntityType.INKY)[0] * cellSize + 3, gameManager.getEntityCord(EntityType.INKY)[1] * cellSize + 1, 15, 15);
+        mazeContext.drawImage(ImageManager.getImage("inky.png"), gameManager.getEntityCord(EntityType.INKY)[0] * cellSize + 3, gameManager.getEntityCord(EntityType.INKY)[1] * cellSize + 1, 15, 15);
 
         //Draw Clyde
         mazeContext.drawImage(ImageManager.getImage("clyde.png"), gameManager.getEntityCord(EntityType.CLYDE)[0] * cellSize + 3, gameManager.getEntityCord(EntityType.CLYDE)[1] * cellSize + 1, 15, 15);

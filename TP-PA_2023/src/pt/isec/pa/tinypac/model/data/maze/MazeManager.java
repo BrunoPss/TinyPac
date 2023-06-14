@@ -56,7 +56,7 @@ public class MazeManager {
                         switch (f) {
                             case 1 -> {
                                 //DESCOMENTAR
-                                //gameData.setEntity(EntityType.BLINKY, EntityFactory.createEntity(EntityType.BLINKY, gameData, x, y));
+                                gameData.setEntity(EntityType.BLINKY, EntityFactory.createEntity(EntityType.BLINKY, gameData, x, y));
                                 //gameData.getMaze().set(y,x, gameData.getEntity(EntityType.BLINKY));
                             }
                             case 2 -> {
@@ -64,11 +64,11 @@ public class MazeManager {
                                 //gameData.getMaze().set(y,x, gameData.getEntity(EntityType.CLYDE));
                             }
                             case 3 -> {
-                                //gameData.setEntity(EntityType.INKY, EntityFactory.createEntity(EntityType.INKY, gameData, x, y));
+                                gameData.setEntity(EntityType.INKY, EntityFactory.createEntity(EntityType.INKY, gameData, x, y));
                                 //gameData.getMaze().set(y,x, gameData.getEntity(EntityType.INKY));
                             }
                             case 4 -> {
-                                //gameData.setEntity(EntityType.PINKY, EntityFactory.createEntity(EntityType.PINKY, gameData, x, y));
+                                gameData.setEntity(EntityType.PINKY, EntityFactory.createEntity(EntityType.PINKY, gameData, x, y));
                                 //gameData.getMaze().set(y,x, gameData.getEntity(EntityType.PINKY));
                             }
                         }
