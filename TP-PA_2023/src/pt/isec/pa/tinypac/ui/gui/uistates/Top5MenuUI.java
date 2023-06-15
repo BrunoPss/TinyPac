@@ -51,6 +51,7 @@ public class Top5MenuUI extends BorderPane {
         contentTable.setMaxWidth(500);
         //Columns
         TableColumn<Player, String> numberColumn = new TableColumn<>("#");
+        numberColumn.setCellValueFactory(new PropertyValueFactory<>("place"));
         TableColumn<Player, String> firstName = new TableColumn<>("User Name");
         firstName.setCellValueFactory(new PropertyValueFactory<>("userName"));
         TableColumn<Player, String> points = new TableColumn<>("Points");

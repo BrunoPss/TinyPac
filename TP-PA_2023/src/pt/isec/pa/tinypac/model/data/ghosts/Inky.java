@@ -59,230 +59,178 @@ public class Inky extends Ghost {
     //Overrides
     @Override
     public void move() {
-        if (initTime == 0) {
-            ACTIVE = true;
+        if (gameData.findValidInstantsGhosts().contains(gameData.getEvolveInstantsGhosts())) {
 
-            if (cave) {
-                x = gameData.getGhostDoor()[0];
-                y = gameData.getGhostDoor()[1];
-                cave = false;
-            }
-
-            if (gameData.getEnchancedPhase()) {
-                if (movementIterator.hasPrevious()) {
-                    int[] aux;
-                    aux = movementIterator.previous();
-                    x = aux[0];
-                    y = aux[1];
+            if (initTime == 0) {
+                if (cave) {
+                    x = gameData.getGhostDoor()[0];
+                    y = gameData.getGhostDoor()[1];
+                    cave = false;
+                    ACTIVE = true;
                 }
-            }
-            else {
-                switch (objectiveCorner) {
-                    case UPPER_RIGHT -> {
-                        //Movimentos -> UP & RIGHT
-                        //Objective Change (With 15 attempts the objective changes because it reaches a realtive hill)
-                        if (Math.sqrt(Math.pow(objectiveCords[0] - x, 2) + Math.pow(objectiveCords[1] - y, 2)) <= 0.15 * (MazeManager.getXSize(gameData.getCurrentLevelFilePath()))
-                                || failedAttempts >= 10) {
-                            System.out.println("CHANGE");
-                            objectiveCorner = Corners.UPPER_LEFT;
-                            failedAttempts = 0;
-                        }
 
-                        //Distancia Diagonal
-                        //UP
-                        double distance1 = Math.sqrt(Math.pow(objectiveCords[0] - x, 2) + Math.pow(objectiveCords[1] - (y - 1), 2));
-                        //RIGHT
-                        double distance2 = Math.sqrt(Math.pow(objectiveCords[0] - (x + 1), 2) + Math.pow(objectiveCords[1] - y, 2));
-                        //System.out.println("UP: " + distance1 + "\nRIGHT: " + distance2);
-
-                        //Direction UP
-                        if (distance1 < distance2) {
-                            //Cima livre
-                            if ((gameData.getMaze().get(y - 1, x) == null && y > 0) || gameData.getMaze().get(y - 1, x).getSymbol() != 'x') {
-                                direction = Directions.UP;
-                                //auxF = gameData.getMaze().get(y-1, x);
-                                y--;
-                                //gameData.getMaze().set(y+1, x, auxA);
+                if (gameData.getEnchancedPhase()) {
+                    if (movementIterator.hasPrevious()) {
+                        int[] aux;
+                        aux = movementIterator.previous();
+                        x = aux[0];
+                        y = aux[1];
+                    }
+                } else {
+                    switch (objectiveCorner) {
+                        case UPPER_RIGHT -> {
+                            //Movimentos -> UP & RIGHT
+                            //Objective Change (With 15 attempts the objective changes because it reaches a realtive hill)
+                            if (Math.sqrt(Math.pow(objectiveCords[0] - x, 2) + Math.pow(objectiveCords[1] - y, 2)) <= 0.15 * (MazeManager.getXSize(gameData.getCurrentLevelFilePath()))
+                                    || failedAttempts >= 10) {
+                                System.out.println("CHANGE");
+                                objectiveCorner = Corners.UPPER_LEFT;
+                                failedAttempts = 0;
                             }
-                            //Cima parede
-                            else if ((gameData.getMaze().get(y - 1, x) == null && y > 0) || gameData.getMaze().get(y - 1, x).getSymbol() == 'x') {
-                                //Direita Livre
-                                if (gameData.getMaze().get(y, x + 1) == null || gameData.getMaze().get(y, x + 1).getSymbol() != 'x') {
-                                    direction = Directions.RIGHT;
-                                    //auxF = gameData.getMaze().get(y, x+1);
-                                    x++;
-                                    //gameData.getMaze().set(y, x-1, auxA);
-                                } else if (gameData.getMaze().get(y, x + 1) == null || gameData.getMaze().get(y, x + 1).getSymbol() == 'x') {
-                                    //Esquerda
-                                    if (rnd.nextBoolean()) {
-                                        if ((gameData.getMaze().get(y, x - 1) == null && x > 0) || gameData.getMaze().get(y, x - 1).getSymbol() != 'x') {
-                                            direction = Directions.LEFT;
-                                            //auxF = gameData.getMaze().get(y, x-1);
-                                            x--;
-                                            //gameData.getMaze().set(y, x+1, auxA);
 
-                                            failedAttempts++;
-                                        }
-                                    }
-                                    //Baixo
-                                    else {
-                                        if (gameData.getMaze().get(y + 1, x) == null || gameData.getMaze().get(y + 1, x).getSymbol() != 'x') {
-                                            direction = Directions.DOWN;
-                                            //auxF = gameData.getMaze().get(y+1, x);
-                                            y++;
-                                            //gameData.getMaze().set(y-1, x, auxA);
+                            //Distancia Diagonal
+                            //UP
+                            double distance1 = Math.sqrt(Math.pow(objectiveCords[0] - x, 2) + Math.pow(objectiveCords[1] - (y - 1), 2));
+                            //RIGHT
+                            double distance2 = Math.sqrt(Math.pow(objectiveCords[0] - (x + 1), 2) + Math.pow(objectiveCords[1] - y, 2));
+                            //System.out.println("UP: " + distance1 + "\nRIGHT: " + distance2);
 
-                                            failedAttempts++;
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                        //Direction RIGHT
-                        else if (distance1 > distance2) {
-                            //Direita livre
-                            if (gameData.getMaze().get(y, x + 1) == null || gameData.getMaze().get(y, x + 1).getSymbol() != 'x') {
-                                direction = Directions.RIGHT;
-                                //auxF = gameData.getMaze().get(y, x+1);
-                                x++;
-                                //gameData.getMaze().set(y, x-1, auxA);
-                            }
-                            //Direita parede
-                            else if ((gameData.getMaze().get(y, x + 1) == null && y > 0) || gameData.getMaze().get(y, x + 1).getSymbol() == 'x') {
-                                //Cima Livre
-                                if (gameData.getMaze().get(y - 1, x) == null || gameData.getMaze().get(y - 1, x).getSymbol() != 'x') {
+                            //Direction UP
+                            if (distance1 < distance2) {
+                                //Cima livre
+                                if ((gameData.getMaze().get(y - 1, x) == null && y > 0) || gameData.getMaze().get(y - 1, x).getSymbol() != 'x') {
                                     direction = Directions.UP;
                                     //auxF = gameData.getMaze().get(y-1, x);
                                     y--;
                                     //gameData.getMaze().set(y+1, x, auxA);
-                                } else if (gameData.getMaze().get(y - 1, x) == null || gameData.getMaze().get(y - 1, x).getSymbol() == 'x') {
-                                    //Esquerda
-                                    if (rnd.nextBoolean()) {
-                                        if ((gameData.getMaze().get(y, x - 1) == null && x > 0) || gameData.getMaze().get(y, x - 1).getSymbol() != 'x') {
-                                            direction = Directions.LEFT;
-                                            //auxF = gameData.getMaze().get(y, x-1);
-                                            x--;
-                                            //gameData.getMaze().set(y, x+1, auxA);
+                                }
+                                //Cima parede
+                                else if ((gameData.getMaze().get(y - 1, x) == null && y > 0) || gameData.getMaze().get(y - 1, x).getSymbol() == 'x') {
+                                    //Direita Livre
+                                    if (gameData.getMaze().get(y, x + 1) == null || gameData.getMaze().get(y, x + 1).getSymbol() != 'x') {
+                                        direction = Directions.RIGHT;
+                                        //auxF = gameData.getMaze().get(y, x+1);
+                                        x++;
+                                        //gameData.getMaze().set(y, x-1, auxA);
+                                    } else if (gameData.getMaze().get(y, x + 1) == null || gameData.getMaze().get(y, x + 1).getSymbol() == 'x') {
+                                        //Esquerda
+                                        if (rnd.nextBoolean()) {
+                                            if ((gameData.getMaze().get(y, x - 1) == null && x > 0) || gameData.getMaze().get(y, x - 1).getSymbol() != 'x') {
+                                                direction = Directions.LEFT;
+                                                //auxF = gameData.getMaze().get(y, x-1);
+                                                x--;
+                                                //gameData.getMaze().set(y, x+1, auxA);
 
-                                            failedAttempts++;
+                                                failedAttempts++;
+                                            }
+                                        }
+                                        //Baixo
+                                        else {
+                                            if (gameData.getMaze().get(y + 1, x) == null || gameData.getMaze().get(y + 1, x).getSymbol() != 'x') {
+                                                direction = Directions.DOWN;
+                                                //auxF = gameData.getMaze().get(y+1, x);
+                                                y++;
+                                                //gameData.getMaze().set(y-1, x, auxA);
+
+                                                failedAttempts++;
+                                            }
                                         }
                                     }
-                                    //Baixo
-                                    else {
-                                        if (gameData.getMaze().get(y + 1, x) == null || gameData.getMaze().get(y + 1, x).getSymbol() != 'x') {
-                                            direction = Directions.DOWN;
-                                            //auxF = gameData.getMaze().get(y+1, x);
-                                            y++;
-                                            //gameData.getMaze().set(y-1, x, auxA);
-
-                                            failedAttempts++;
-                                        }
-                                    }
                                 }
                             }
-                        }
-                        //Random Direction
-                        else {
-                            //Esquerda
-                            if (rnd.nextBoolean()) {
-                                if (gameData.getMaze().get(y, x - 1) == null || gameData.getMaze().get(y, x - 1).getSymbol() != 'x') {
-                                    direction = Directions.LEFT;
-                                    //auxF = gameData.getMaze().get(y, x-1);
-                                    x--;
-                                    //gameData.getMaze().set(y, x+1, auxA);
-
-                                    failedAttempts++;
-                                }
-                            }
-                            //Baixo
-                            else {
-                                if (gameData.getMaze().get(y + 1, x) == null || gameData.getMaze().get(y + 1, x).getSymbol() != 'x') {
-                                    direction = Directions.DOWN;
-                                    //auxF = gameData.getMaze().get(y+1, x);
-                                    y++;
-                                    //gameData.getMaze().set(y-1, x, auxA);
-
-                                    failedAttempts++;
-                                }
-                            }
-                        }
-
-                        //gameData.getMaze().set(y, x, this);
-                        //auxA = auxF;
-                    }
-                    case BOTTOM_RIGHT -> {
-                        //Movimentos -> DOWN & RIGHT
-                        //Objective Change (With 15 attempts the objective changes because it reaches a realtive hill)
-                        if (Math.sqrt(Math.pow(objectiveCords[0] - x, 2) + Math.pow(objectiveCords[1] - y, 2)) <= 0.15 * (MazeManager.getXSize(gameData.getCurrentLevelFilePath()))
-                                || failedAttempts >= 10) {
-                            System.out.println("CHANGE");
-                            objectiveCorner = Corners.BOTTOM_LEFT;
-                            failedAttempts = 0;
-                        }
-
-                        //Distancia Diagonal
-                        //DOWN
-                        double distance1 = Math.sqrt(Math.pow(objectiveCords[0] - x, 2) + Math.pow(objectiveCords[1] - (y + 1), 2));
-                        //RIGHT
-                        double distance2 = Math.sqrt(Math.pow(objectiveCords[0] - (x + 1), 2) + Math.pow(objectiveCords[1] - y, 2));
-                        //System.out.println("DOWN: " + distance1 + "\nRIGHT: " + distance2);
-
-                        //Direction DOWN
-                        if (distance1 < distance2) {
-                            //Baixo livre
-                            if ((gameData.getMaze().get(y + 1, x) == null) || gameData.getMaze().get(y + 1, x).getSymbol() != 'x') {
-                                direction = Directions.DOWN;
-                                //auxF = gameData.getMaze().get(y+1, x);
-                                y++;
-                                //gameData.getMaze().set(y-1, x, auxA);
-                            }
-                            //Baixo parede
-                            else if (gameData.getMaze().get(y + 1, x) == null || gameData.getMaze().get(y + 1, x).getSymbol() == 'x') {
-                                //Direita Livre
+                            //Direction RIGHT
+                            else if (distance1 > distance2) {
+                                //Direita livre
                                 if (gameData.getMaze().get(y, x + 1) == null || gameData.getMaze().get(y, x + 1).getSymbol() != 'x') {
                                     direction = Directions.RIGHT;
                                     //auxF = gameData.getMaze().get(y, x+1);
                                     x++;
                                     //gameData.getMaze().set(y, x-1, auxA);
-                                } else if (gameData.getMaze().get(y, x + 1) == null || gameData.getMaze().get(y, x + 1).getSymbol() == 'x') {
-                                    //Esquerda
-                                    if (rnd.nextBoolean()) {
-                                        if ((gameData.getMaze().get(y, x - 1) == null && x > 0) || gameData.getMaze().get(y, x - 1).getSymbol() != 'x') {
-                                            direction = Directions.LEFT;
-                                            //auxF = gameData.getMaze().get(y, x-1);
-                                            x--;
-                                            //gameData.getMaze().set(y, x+1, auxA);
+                                }
+                                //Direita parede
+                                else if ((gameData.getMaze().get(y, x + 1) == null && y > 0) || gameData.getMaze().get(y, x + 1).getSymbol() == 'x') {
+                                    //Cima Livre
+                                    if (gameData.getMaze().get(y - 1, x) == null || gameData.getMaze().get(y - 1, x).getSymbol() != 'x') {
+                                        direction = Directions.UP;
+                                        //auxF = gameData.getMaze().get(y-1, x);
+                                        y--;
+                                        //gameData.getMaze().set(y+1, x, auxA);
+                                    } else if (gameData.getMaze().get(y - 1, x) == null || gameData.getMaze().get(y - 1, x).getSymbol() == 'x') {
+                                        //Esquerda
+                                        if (rnd.nextBoolean()) {
+                                            if ((gameData.getMaze().get(y, x - 1) == null && x > 0) || gameData.getMaze().get(y, x - 1).getSymbol() != 'x') {
+                                                direction = Directions.LEFT;
+                                                //auxF = gameData.getMaze().get(y, x-1);
+                                                x--;
+                                                //gameData.getMaze().set(y, x+1, auxA);
 
-                                            failedAttempts++;
+                                                failedAttempts++;
+                                            }
                                         }
-                                    }
-                                    //Cima
-                                    else {
-                                        if (gameData.getMaze().get(y - 1, x) == null || gameData.getMaze().get(y - 1, x).getSymbol() != 'x') {
-                                            direction = Directions.UP;
-                                            //auxF = gameData.getMaze().get(y-1, x);
-                                            y--;
-                                            //gameData.getMaze().set(y+1, x, auxA);
+                                        //Baixo
+                                        else {
+                                            if (gameData.getMaze().get(y + 1, x) == null || gameData.getMaze().get(y + 1, x).getSymbol() != 'x') {
+                                                direction = Directions.DOWN;
+                                                //auxF = gameData.getMaze().get(y+1, x);
+                                                y++;
+                                                //gameData.getMaze().set(y-1, x, auxA);
 
-                                            failedAttempts++;
+                                                failedAttempts++;
+                                            }
                                         }
                                     }
                                 }
                             }
-                        }
-                        //Direction RIGHT
-                        else if (distance1 > distance2) {
-                            //Direita livre
-                            if (gameData.getMaze().get(y, x + 1) == null || gameData.getMaze().get(y, x + 1).getSymbol() != 'x') {
-                                direction = Directions.RIGHT;
-                                //auxF = gameData.getMaze().get(y, x+1);
-                                x++;
-                                //gameData.getMaze().set(y, x-1, auxA);
+                            //Random Direction
+                            else {
+                                //Esquerda
+                                if (rnd.nextBoolean()) {
+                                    if (gameData.getMaze().get(y, x - 1) == null || gameData.getMaze().get(y, x - 1).getSymbol() != 'x') {
+                                        direction = Directions.LEFT;
+                                        //auxF = gameData.getMaze().get(y, x-1);
+                                        x--;
+                                        //gameData.getMaze().set(y, x+1, auxA);
+
+                                        failedAttempts++;
+                                    }
+                                }
+                                //Baixo
+                                else {
+                                    if (gameData.getMaze().get(y + 1, x) == null || gameData.getMaze().get(y + 1, x).getSymbol() != 'x') {
+                                        direction = Directions.DOWN;
+                                        //auxF = gameData.getMaze().get(y+1, x);
+                                        y++;
+                                        //gameData.getMaze().set(y-1, x, auxA);
+
+                                        failedAttempts++;
+                                    }
+                                }
                             }
-                            //Direita parede
-                            else if ((gameData.getMaze().get(y, x + 1) == null && y > 0) || gameData.getMaze().get(y, x + 1).getSymbol() == 'x') {
-                                //Baixo Livre
-                                if (gameData.getMaze().get(y + 1, x) == null || gameData.getMaze().get(y + 1, x).getSymbol() != 'x') {
+
+                            //gameData.getMaze().set(y, x, this);
+                            //auxA = auxF;
+                        }
+                        case BOTTOM_RIGHT -> {
+                            //Movimentos -> DOWN & RIGHT
+                            //Objective Change (With 15 attempts the objective changes because it reaches a realtive hill)
+                            if (Math.sqrt(Math.pow(objectiveCords[0] - x, 2) + Math.pow(objectiveCords[1] - y, 2)) <= 0.15 * (MazeManager.getXSize(gameData.getCurrentLevelFilePath()))
+                                    || failedAttempts >= 10) {
+                                System.out.println("CHANGE");
+                                objectiveCorner = Corners.BOTTOM_LEFT;
+                                failedAttempts = 0;
+                            }
+
+                            //Distancia Diagonal
+                            //DOWN
+                            double distance1 = Math.sqrt(Math.pow(objectiveCords[0] - x, 2) + Math.pow(objectiveCords[1] - (y + 1), 2));
+                            //RIGHT
+                            double distance2 = Math.sqrt(Math.pow(objectiveCords[0] - (x + 1), 2) + Math.pow(objectiveCords[1] - y, 2));
+                            //System.out.println("DOWN: " + distance1 + "\nRIGHT: " + distance2);
+
+                            //Direction DOWN
+                            if (distance1 < distance2) {
+                                //Baixo livre
+                                if ((gameData.getMaze().get(y + 1, x) == null) || gameData.getMaze().get(y + 1, x).getSymbol() != 'x') {
                                     direction = Directions.DOWN;
                                     //auxF = gameData.getMaze().get(y+1, x);
                                     y++;
@@ -290,88 +238,176 @@ public class Inky extends Ghost {
                                 }
                                 //Baixo parede
                                 else if (gameData.getMaze().get(y + 1, x) == null || gameData.getMaze().get(y + 1, x).getSymbol() == 'x') {
-                                    //Esquerda
-                                    if (rnd.nextBoolean()) {
-                                        if ((gameData.getMaze().get(y, x - 1) == null && x > 0) || gameData.getMaze().get(y, x - 1).getSymbol() != 'x') {
-                                            direction = Directions.LEFT;
-                                            //auxF = gameData.getMaze().get(y, x-1);
-                                            x--;
-                                            //gameData.getMaze().set(y, x+1, auxA);
+                                    //Direita Livre
+                                    if (gameData.getMaze().get(y, x + 1) == null || gameData.getMaze().get(y, x + 1).getSymbol() != 'x') {
+                                        direction = Directions.RIGHT;
+                                        //auxF = gameData.getMaze().get(y, x+1);
+                                        x++;
+                                        //gameData.getMaze().set(y, x-1, auxA);
+                                    } else if (gameData.getMaze().get(y, x + 1) == null || gameData.getMaze().get(y, x + 1).getSymbol() == 'x') {
+                                        //Esquerda
+                                        if (rnd.nextBoolean()) {
+                                            if ((gameData.getMaze().get(y, x - 1) == null && x > 0) || gameData.getMaze().get(y, x - 1).getSymbol() != 'x') {
+                                                direction = Directions.LEFT;
+                                                //auxF = gameData.getMaze().get(y, x-1);
+                                                x--;
+                                                //gameData.getMaze().set(y, x+1, auxA);
 
-                                            failedAttempts++;
+                                                failedAttempts++;
+                                            }
                                         }
-                                    }
-                                    //Cima
-                                    else {
-                                        if (gameData.getMaze().get(y - 1, x) == null || gameData.getMaze().get(y - 1, x).getSymbol() != 'x') {
-                                            direction = Directions.UP;
-                                            //auxF = gameData.getMaze().get(y-1, x);
-                                            y--;
-                                            //gameData.getMaze().set(y+1, x, auxA);
+                                        //Cima
+                                        else {
+                                            if (gameData.getMaze().get(y - 1, x) == null || gameData.getMaze().get(y - 1, x).getSymbol() != 'x') {
+                                                direction = Directions.UP;
+                                                //auxF = gameData.getMaze().get(y-1, x);
+                                                y--;
+                                                //gameData.getMaze().set(y+1, x, auxA);
 
-                                            failedAttempts++;
+                                                failedAttempts++;
+                                            }
                                         }
                                     }
                                 }
                             }
+                            //Direction RIGHT
+                            else if (distance1 > distance2) {
+                                //Direita livre
+                                if (gameData.getMaze().get(y, x + 1) == null || gameData.getMaze().get(y, x + 1).getSymbol() != 'x') {
+                                    direction = Directions.RIGHT;
+                                    //auxF = gameData.getMaze().get(y, x+1);
+                                    x++;
+                                    //gameData.getMaze().set(y, x-1, auxA);
+                                }
+                                //Direita parede
+                                else if ((gameData.getMaze().get(y, x + 1) == null && y > 0) || gameData.getMaze().get(y, x + 1).getSymbol() == 'x') {
+                                    //Baixo Livre
+                                    if (gameData.getMaze().get(y + 1, x) == null || gameData.getMaze().get(y + 1, x).getSymbol() != 'x') {
+                                        direction = Directions.DOWN;
+                                        //auxF = gameData.getMaze().get(y+1, x);
+                                        y++;
+                                        //gameData.getMaze().set(y-1, x, auxA);
+                                    }
+                                    //Baixo parede
+                                    else if (gameData.getMaze().get(y + 1, x) == null || gameData.getMaze().get(y + 1, x).getSymbol() == 'x') {
+                                        //Esquerda
+                                        if (rnd.nextBoolean()) {
+                                            if ((gameData.getMaze().get(y, x - 1) == null && x > 0) || gameData.getMaze().get(y, x - 1).getSymbol() != 'x') {
+                                                direction = Directions.LEFT;
+                                                //auxF = gameData.getMaze().get(y, x-1);
+                                                x--;
+                                                //gameData.getMaze().set(y, x+1, auxA);
+
+                                                failedAttempts++;
+                                            }
+                                        }
+                                        //Cima
+                                        else {
+                                            if (gameData.getMaze().get(y - 1, x) == null || gameData.getMaze().get(y - 1, x).getSymbol() != 'x') {
+                                                direction = Directions.UP;
+                                                //auxF = gameData.getMaze().get(y-1, x);
+                                                y--;
+                                                //gameData.getMaze().set(y+1, x, auxA);
+
+                                                failedAttempts++;
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                            //Random Direction
+                            else {
+                                //Cima
+                                if (rnd.nextBoolean()) {
+                                    if ((gameData.getMaze().get(y - 1, x) == null && y > 0) || gameData.getMaze().get(y - 1, x).getSymbol() != 'x') {
+                                        direction = Directions.UP;
+                                        //auxF = gameData.getMaze().get(y - 1, x);
+                                        y--;
+                                        //gameData.getMaze().set(y + 1, x, auxA);
+
+                                        failedAttempts++;
+                                    }
+                                }
+                                //Esquerda
+                                else {
+                                    if (gameData.getMaze().get(y, x - 1) == null || gameData.getMaze().get(y, x - 1).getSymbol() != 'x') {
+                                        direction = Directions.LEFT;
+                                        //auxF = gameData.getMaze().get(y, x-1);
+                                        x--;
+                                        //gameData.getMaze().set(y, x+1, auxA);
+
+                                        failedAttempts++;
+                                    }
+                                }
+                            }
+
+                            //gameData.getMaze().set(y, x, this);
+                            //auxA = auxF;
                         }
-                        //Random Direction
-                        else {
-                            //Cima
-                            if (rnd.nextBoolean()) {
+                        case UPPER_LEFT -> {
+                            //Movimentos -> UP & LEFT
+                            //Objective Change (With 15 attempts the objective changes because it reaches a realtive hill)
+                            if (Math.sqrt(Math.pow(objectiveCords[0] - x, 2) + Math.pow(objectiveCords[1] - y, 2)) <= 0.15 * (MazeManager.getXSize(gameData.getCurrentLevelFilePath()))
+                                    || failedAttempts >= 10) {
+                                System.out.println("CHANGE");
+                                objectiveCorner = Corners.BOTTOM_RIGHT;
+                                failedAttempts = 0;
+                            }
+
+                            //Distancia Diagonal
+                            //UP
+                            double distance1 = Math.sqrt(Math.pow(objectiveCords[0] - x, 2) + Math.pow(objectiveCords[1] - (y - 1), 2));
+                            //LEFT
+                            double distance2 = Math.sqrt(Math.pow(objectiveCords[0] - (x - 1), 2) + Math.pow(objectiveCords[1] - y, 2));
+                            //System.out.println("UP: " + distance1 + "\nLEFT: " + distance2);
+
+                            //Direction UP
+                            if (distance1 < distance2) {
+                                //Cima livre
                                 if ((gameData.getMaze().get(y - 1, x) == null && y > 0) || gameData.getMaze().get(y - 1, x).getSymbol() != 'x') {
                                     direction = Directions.UP;
-                                    //auxF = gameData.getMaze().get(y - 1, x);
+                                    //auxF = gameData.getMaze().get(y-1, x);
                                     y--;
-                                    //gameData.getMaze().set(y + 1, x, auxA);
+                                    //gameData.getMaze().set(y+1, x, auxA);
+                                }
+                                //Cima parede
+                                else if ((gameData.getMaze().get(y - 1, x) == null && y > 0) || gameData.getMaze().get(y - 1, x).getSymbol() == 'x') {
+                                    //Esquerda livre
+                                    if (gameData.getMaze().get(y, x - 1) == null || gameData.getMaze().get(y, x - 1).getSymbol() != 'x') {
+                                        direction = Directions.LEFT;
+                                        //auxF = gameData.getMaze().get(y, x-1);
+                                        x--;
+                                        //gameData.getMaze().set(y, x+1, auxA);
+                                    }
+                                    //Esquerda parede
+                                    else if (gameData.getMaze().get(y, x - 1) == null || gameData.getMaze().get(y, x - 1).getSymbol() == 'x') {
+                                        //Direita
+                                        if (rnd.nextBoolean()) {
+                                            if (gameData.getMaze().get(y, x + 1) == null || gameData.getMaze().get(y, x + 1).getSymbol() != 'x') {
+                                                direction = Directions.RIGHT;
+                                                //auxF = gameData.getMaze().get(y, x+1);
+                                                x++;
+                                                //gameData.getMaze().set(y, x-1, auxA);
 
-                                    failedAttempts++;
+                                                failedAttempts++;
+                                            }
+                                        }
+                                        //Baixo
+                                        else {
+                                            if (gameData.getMaze().get(y + 1, x) == null || gameData.getMaze().get(y + 1, x).getSymbol() != 'x') {
+                                                direction = Directions.DOWN;
+                                                //auxF = gameData.getMaze().get(y+1, x);
+                                                y++;
+                                                //gameData.getMaze().set(y-1, x, auxA);
+
+                                                failedAttempts++;
+                                            }
+                                        }
+                                    }
                                 }
                             }
-                            //Esquerda
-                            else {
-                                if (gameData.getMaze().get(y, x - 1) == null || gameData.getMaze().get(y, x - 1).getSymbol() != 'x') {
-                                    direction = Directions.LEFT;
-                                    //auxF = gameData.getMaze().get(y, x-1);
-                                    x--;
-                                    //gameData.getMaze().set(y, x+1, auxA);
-
-                                    failedAttempts++;
-                                }
-                            }
-                        }
-
-                        //gameData.getMaze().set(y, x, this);
-                        //auxA = auxF;
-                    }
-                    case UPPER_LEFT -> {
-                        //Movimentos -> UP & LEFT
-                        //Objective Change (With 15 attempts the objective changes because it reaches a realtive hill)
-                        if (Math.sqrt(Math.pow(objectiveCords[0] - x, 2) + Math.pow(objectiveCords[1] - y, 2)) <= 0.15 * (MazeManager.getXSize(gameData.getCurrentLevelFilePath()))
-                                || failedAttempts >= 10) {
-                            System.out.println("CHANGE");
-                            objectiveCorner = Corners.BOTTOM_RIGHT;
-                            failedAttempts = 0;
-                        }
-
-                        //Distancia Diagonal
-                        //UP
-                        double distance1 = Math.sqrt(Math.pow(objectiveCords[0] - x, 2) + Math.pow(objectiveCords[1] - (y - 1), 2));
-                        //LEFT
-                        double distance2 = Math.sqrt(Math.pow(objectiveCords[0] - (x - 1), 2) + Math.pow(objectiveCords[1] - y, 2));
-                        //System.out.println("UP: " + distance1 + "\nLEFT: " + distance2);
-
-                        //Direction UP
-                        if (distance1 < distance2) {
-                            //Cima livre
-                            if ((gameData.getMaze().get(y - 1, x) == null && y > 0) || gameData.getMaze().get(y - 1, x).getSymbol() != 'x') {
-                                direction = Directions.UP;
-                                //auxF = gameData.getMaze().get(y-1, x);
-                                y--;
-                                //gameData.getMaze().set(y+1, x, auxA);
-                            }
-                            //Cima parede
-                            else if ((gameData.getMaze().get(y - 1, x) == null && y > 0) || gameData.getMaze().get(y - 1, x).getSymbol() == 'x') {
+                            //Direction LEFT
+                            else if (distance1 > distance2) {
                                 //Esquerda livre
                                 if (gameData.getMaze().get(y, x - 1) == null || gameData.getMaze().get(y, x - 1).getSymbol() != 'x') {
                                     direction = Directions.LEFT;
@@ -380,181 +416,91 @@ public class Inky extends Ghost {
                                     //gameData.getMaze().set(y, x+1, auxA);
                                 }
                                 //Esquerda parede
-                                else if (gameData.getMaze().get(y, x - 1) == null || gameData.getMaze().get(y, x - 1).getSymbol() == 'x') {
-                                    //Direita
-                                    if (rnd.nextBoolean()) {
-                                        if (gameData.getMaze().get(y, x + 1) == null || gameData.getMaze().get(y, x + 1).getSymbol() != 'x') {
-                                            direction = Directions.RIGHT;
-                                            //auxF = gameData.getMaze().get(y, x+1);
-                                            x++;
-                                            //gameData.getMaze().set(y, x-1, auxA);
-
-                                            failedAttempts++;
-                                        }
+                                else if ((gameData.getMaze().get(y, x - 1) == null && x > 0) || gameData.getMaze().get(y, x - 1).getSymbol() == 'x') {
+                                    //Cima Livre
+                                    if (gameData.getMaze().get(y - 1, x) == null || gameData.getMaze().get(y - 1, x).getSymbol() != 'x') {
+                                        direction = Directions.UP;
+                                        //auxF = gameData.getMaze().get(y-1, x);
+                                        y--;
+                                        //gameData.getMaze().set(y+1, x, auxA);
                                     }
-                                    //Baixo
-                                    else {
-                                        if (gameData.getMaze().get(y + 1, x) == null || gameData.getMaze().get(y + 1, x).getSymbol() != 'x') {
-                                            direction = Directions.DOWN;
-                                            //auxF = gameData.getMaze().get(y+1, x);
-                                            y++;
-                                            //gameData.getMaze().set(y-1, x, auxA);
+                                    //Cima parede
+                                    else if (gameData.getMaze().get(y - 1, x) == null || gameData.getMaze().get(y - 1, x).getSymbol() == 'x') {
+                                        //Direita
+                                        if (rnd.nextBoolean()) {
+                                            if (gameData.getMaze().get(y, x + 1) == null || gameData.getMaze().get(y, x + 1).getSymbol() != 'x') {
+                                                direction = Directions.RIGHT;
+                                                //auxF = gameData.getMaze().get(y, x+1);
+                                                x++;
+                                                //gameData.getMaze().set(y, x-1, auxA);
 
-                                            failedAttempts++;
+                                                failedAttempts++;
+                                            }
                                         }
-                                    }
-                                }
-                            }
-                        }
-                        //Direction LEFT
-                        else if (distance1 > distance2) {
-                            //Esquerda livre
-                            if (gameData.getMaze().get(y, x - 1) == null || gameData.getMaze().get(y, x - 1).getSymbol() != 'x') {
-                                direction = Directions.LEFT;
-                                //auxF = gameData.getMaze().get(y, x-1);
-                                x--;
-                                //gameData.getMaze().set(y, x+1, auxA);
-                            }
-                            //Esquerda parede
-                            else if ((gameData.getMaze().get(y, x - 1) == null && x > 0) || gameData.getMaze().get(y, x - 1).getSymbol() == 'x') {
-                                //Cima Livre
-                                if (gameData.getMaze().get(y - 1, x) == null || gameData.getMaze().get(y - 1, x).getSymbol() != 'x') {
-                                    direction = Directions.UP;
-                                    //auxF = gameData.getMaze().get(y-1, x);
-                                    y--;
-                                    //gameData.getMaze().set(y+1, x, auxA);
-                                }
-                                //Cima parede
-                                else if (gameData.getMaze().get(y - 1, x) == null || gameData.getMaze().get(y - 1, x).getSymbol() == 'x') {
-                                    //Direita
-                                    if (rnd.nextBoolean()) {
-                                        if (gameData.getMaze().get(y, x + 1) == null || gameData.getMaze().get(y, x + 1).getSymbol() != 'x') {
-                                            direction = Directions.RIGHT;
-                                            //auxF = gameData.getMaze().get(y, x+1);
-                                            x++;
-                                            //gameData.getMaze().set(y, x-1, auxA);
+                                        //Baixo
+                                        else {
+                                            if (gameData.getMaze().get(y + 1, x) == null || gameData.getMaze().get(y + 1, x).getSymbol() != 'x') {
+                                                direction = Directions.DOWN;
+                                                //auxF = gameData.getMaze().get(y+1, x);
+                                                y++;
+                                                //gameData.getMaze().set(y-1, x, auxA);
 
-                                            failedAttempts++;
-                                        }
-                                    }
-                                    //Baixo
-                                    else {
-                                        if (gameData.getMaze().get(y + 1, x) == null || gameData.getMaze().get(y + 1, x).getSymbol() != 'x') {
-                                            direction = Directions.DOWN;
-                                            //auxF = gameData.getMaze().get(y+1, x);
-                                            y++;
-                                            //gameData.getMaze().set(y-1, x, auxA);
-
-                                            failedAttempts++;
+                                                failedAttempts++;
+                                            }
                                         }
                                     }
                                 }
                             }
-                        }
-                        //Random Direction
-                        else {
-                            //Direita
-                            if (rnd.nextBoolean()) {
-                                if (gameData.getMaze().get(y, x + 1) == null || gameData.getMaze().get(y, x + 1).getSymbol() != 'x') {
-                                    direction = Directions.RIGHT;
-                                    //auxF = gameData.getMaze().get(y, x+1);
-                                    x++;
-                                    //gameData.getMaze().set(y, x-1, auxA);
-
-                                    failedAttempts++;
-                                }
-                            }
-                            //Baixo
+                            //Random Direction
                             else {
-                                if (gameData.getMaze().get(y + 1, x) == null || gameData.getMaze().get(y + 1, x).getSymbol() != 'x') {
-                                    direction = Directions.DOWN;
-                                    //auxF = gameData.getMaze().get(y+1, x);
-                                    y++;
-                                    //gameData.getMaze().set(y-1, x, auxA);
+                                //Direita
+                                if (rnd.nextBoolean()) {
+                                    if (gameData.getMaze().get(y, x + 1) == null || gameData.getMaze().get(y, x + 1).getSymbol() != 'x') {
+                                        direction = Directions.RIGHT;
+                                        //auxF = gameData.getMaze().get(y, x+1);
+                                        x++;
+                                        //gameData.getMaze().set(y, x-1, auxA);
 
-                                    failedAttempts++;
-                                }
-                            }
-                        }
-
-                        //gameData.getMaze().set(y, x, this);
-                        //auxA = auxF;
-                    }
-                    case BOTTOM_LEFT -> {
-                        //Movimentos -> DOWN & LEFT
-                        //Objective Change (With 15 attempts the objective changes because it reaches a realtive hill)
-                        if (Math.sqrt(Math.pow(objectiveCords[0] - x, 2) + Math.pow(objectiveCords[1] - y, 2)) <= 0.15 * (MazeManager.getXSize(gameData.getCurrentLevelFilePath()))
-                                || failedAttempts >= 10) {
-                            System.out.println("CHANGE");
-                            objectiveCorner = Corners.UPPER_RIGHT;
-                            failedAttempts = 0;
-                        }
-
-                        //Distancia Diagonal
-                        //DOWN
-                        double distance1 = Math.sqrt(Math.pow(objectiveCords[0] - x, 2) + Math.pow(objectiveCords[1] - (y + 1), 2));
-                        //LEFT
-                        double distance2 = Math.sqrt(Math.pow(objectiveCords[0] - (x - 1), 2) + Math.pow(objectiveCords[1] - y, 2));
-                        //System.out.println("DOWN: " + distance1 + "\nLEFT: " + distance2);
-
-                        //Direction DOWN
-                        if (distance1 < distance2) {
-                            //Baixo livre
-                            if ((gameData.getMaze().get(y + 1, x) == null) || gameData.getMaze().get(y + 1, x).getSymbol() != 'x') {
-                                direction = Directions.DOWN;
-                                //auxF = gameData.getMaze().get(y+1, x);
-                                y++;
-                                //gameData.getMaze().set(y-1, x, auxA);
-                            }
-                            //Baixo parede
-                            else if (gameData.getMaze().get(y + 1, x) == null || gameData.getMaze().get(y + 1, x).getSymbol() == 'x') {
-                                //Esquerda Livre
-                                if (gameData.getMaze().get(y, x - 1) == null || gameData.getMaze().get(y, x - 1).getSymbol() != 'x') {
-                                    direction = Directions.LEFT;
-                                    //auxF = gameData.getMaze().get(y, x-1);
-                                    x--;
-                                    //gameData.getMaze().set(y, x+1, auxA);
-                                }
-                                //Esquerda parede
-                                else if (gameData.getMaze().get(y, x - 1) == null || gameData.getMaze().get(y, x - 1).getSymbol() == 'x') {
-                                    //Direita
-                                    if (rnd.nextBoolean()) {
-                                        if (gameData.getMaze().get(y, x + 1) == null || gameData.getMaze().get(y, x + 1).getSymbol() != 'x') {
-                                            direction = Directions.RIGHT;
-                                            //auxF = gameData.getMaze().get(y, x+1);
-                                            x++;
-                                            //gameData.getMaze().set(y, x-1, auxA);
-
-                                            failedAttempts++;
-                                        }
+                                        failedAttempts++;
                                     }
-                                    //Cima
-                                    else {
-                                        if (gameData.getMaze().get(y - 1, x) == null || gameData.getMaze().get(y - 1, x).getSymbol() != 'x') {
-                                            direction = Directions.UP;
-                                            //auxF = gameData.getMaze().get(y-1, x);
-                                            y--;
-                                            //gameData.getMaze().set(y+1, x, auxA);
+                                }
+                                //Baixo
+                                else {
+                                    if (gameData.getMaze().get(y + 1, x) == null || gameData.getMaze().get(y + 1, x).getSymbol() != 'x') {
+                                        direction = Directions.DOWN;
+                                        //auxF = gameData.getMaze().get(y+1, x);
+                                        y++;
+                                        //gameData.getMaze().set(y-1, x, auxA);
 
-                                            failedAttempts++;
-                                        }
+                                        failedAttempts++;
                                     }
                                 }
                             }
+
+                            //gameData.getMaze().set(y, x, this);
+                            //auxA = auxF;
                         }
-                        //Direction LEFT
-                        else if (distance1 > distance2) {
-                            //Esquerda livre
-                            if (gameData.getMaze().get(y, x - 1) == null || gameData.getMaze().get(y, x - 1).getSymbol() != 'x') {
-                                direction = Directions.LEFT;
-                                //auxF = gameData.getMaze().get(y, x-1);
-                                x--;
-                                //gameData.getMaze().set(y, x+1, auxA);
+                        case BOTTOM_LEFT -> {
+                            //Movimentos -> DOWN & LEFT
+                            //Objective Change (With 15 attempts the objective changes because it reaches a realtive hill)
+                            if (Math.sqrt(Math.pow(objectiveCords[0] - x, 2) + Math.pow(objectiveCords[1] - y, 2)) <= 0.15 * (MazeManager.getXSize(gameData.getCurrentLevelFilePath()))
+                                    || failedAttempts >= 10) {
+                                System.out.println("CHANGE");
+                                objectiveCorner = Corners.UPPER_RIGHT;
+                                failedAttempts = 0;
                             }
-                            //Esquerda parede
-                            else if ((gameData.getMaze().get(y, x - 1) == null && x > 0) || gameData.getMaze().get(y, x - 1).getSymbol() == 'x') {
-                                //Baixo Livre
-                                if (gameData.getMaze().get(y + 1, x) == null || gameData.getMaze().get(y + 1, x).getSymbol() != 'x') {
+
+                            //Distancia Diagonal
+                            //DOWN
+                            double distance1 = Math.sqrt(Math.pow(objectiveCords[0] - x, 2) + Math.pow(objectiveCords[1] - (y + 1), 2));
+                            //LEFT
+                            double distance2 = Math.sqrt(Math.pow(objectiveCords[0] - (x - 1), 2) + Math.pow(objectiveCords[1] - y, 2));
+                            //System.out.println("DOWN: " + distance1 + "\nLEFT: " + distance2);
+
+                            //Direction DOWN
+                            if (distance1 < distance2) {
+                                //Baixo livre
+                                if ((gameData.getMaze().get(y + 1, x) == null) || gameData.getMaze().get(y + 1, x).getSymbol() != 'x') {
                                     direction = Directions.DOWN;
                                     //auxF = gameData.getMaze().get(y+1, x);
                                     y++;
@@ -562,67 +508,122 @@ public class Inky extends Ghost {
                                 }
                                 //Baixo parede
                                 else if (gameData.getMaze().get(y + 1, x) == null || gameData.getMaze().get(y + 1, x).getSymbol() == 'x') {
-                                    //Direita
-                                    if (rnd.nextBoolean()) {
-                                        if (gameData.getMaze().get(y, x + 1) == null || gameData.getMaze().get(y, x + 1).getSymbol() != 'x') {
-                                            direction = Directions.RIGHT;
-                                            //auxF = gameData.getMaze().get(y, x+1);
-                                            x++;
-                                            //gameData.getMaze().set(y, x-1, auxA);
-
-                                            failedAttempts++;
-                                        }
+                                    //Esquerda Livre
+                                    if (gameData.getMaze().get(y, x - 1) == null || gameData.getMaze().get(y, x - 1).getSymbol() != 'x') {
+                                        direction = Directions.LEFT;
+                                        //auxF = gameData.getMaze().get(y, x-1);
+                                        x--;
+                                        //gameData.getMaze().set(y, x+1, auxA);
                                     }
-                                    //Cima
-                                    else {
-                                        if (gameData.getMaze().get(y - 1, x) == null || gameData.getMaze().get(y - 1, x).getSymbol() != 'x') {
-                                            direction = Directions.UP;
-                                            //auxF = gameData.getMaze().get(y-1, x);
-                                            y--;
-                                            //gameData.getMaze().set(y+1, x, auxA);
+                                    //Esquerda parede
+                                    else if (gameData.getMaze().get(y, x - 1) == null || gameData.getMaze().get(y, x - 1).getSymbol() == 'x') {
+                                        //Direita
+                                        if (rnd.nextBoolean()) {
+                                            if (gameData.getMaze().get(y, x + 1) == null || gameData.getMaze().get(y, x + 1).getSymbol() != 'x') {
+                                                direction = Directions.RIGHT;
+                                                //auxF = gameData.getMaze().get(y, x+1);
+                                                x++;
+                                                //gameData.getMaze().set(y, x-1, auxA);
 
-                                            failedAttempts++;
+                                                failedAttempts++;
+                                            }
+                                        }
+                                        //Cima
+                                        else {
+                                            if (gameData.getMaze().get(y - 1, x) == null || gameData.getMaze().get(y - 1, x).getSymbol() != 'x') {
+                                                direction = Directions.UP;
+                                                //auxF = gameData.getMaze().get(y-1, x);
+                                                y--;
+                                                //gameData.getMaze().set(y+1, x, auxA);
+
+                                                failedAttempts++;
+                                            }
                                         }
                                     }
                                 }
                             }
-                        }
-                        //Random Direction
-                        else {
-                            //Cima
-                            if (rnd.nextBoolean()) {
-                                if ((gameData.getMaze().get(y - 1, x) == null && y > 0) || gameData.getMaze().get(y - 1, x).getSymbol() != 'x') {
-                                    direction = Directions.UP;
-                                    //auxF = gameData.getMaze().get(y - 1, x);
-                                    y--;
-                                    //gameData.getMaze().set(y + 1, x, auxA);
+                            //Direction LEFT
+                            else if (distance1 > distance2) {
+                                //Esquerda livre
+                                if (gameData.getMaze().get(y, x - 1) == null || gameData.getMaze().get(y, x - 1).getSymbol() != 'x') {
+                                    direction = Directions.LEFT;
+                                    //auxF = gameData.getMaze().get(y, x-1);
+                                    x--;
+                                    //gameData.getMaze().set(y, x+1, auxA);
+                                }
+                                //Esquerda parede
+                                else if ((gameData.getMaze().get(y, x - 1) == null && x > 0) || gameData.getMaze().get(y, x - 1).getSymbol() == 'x') {
+                                    //Baixo Livre
+                                    if (gameData.getMaze().get(y + 1, x) == null || gameData.getMaze().get(y + 1, x).getSymbol() != 'x') {
+                                        direction = Directions.DOWN;
+                                        //auxF = gameData.getMaze().get(y+1, x);
+                                        y++;
+                                        //gameData.getMaze().set(y-1, x, auxA);
+                                    }
+                                    //Baixo parede
+                                    else if (gameData.getMaze().get(y + 1, x) == null || gameData.getMaze().get(y + 1, x).getSymbol() == 'x') {
+                                        //Direita
+                                        if (rnd.nextBoolean()) {
+                                            if (gameData.getMaze().get(y, x + 1) == null || gameData.getMaze().get(y, x + 1).getSymbol() != 'x') {
+                                                direction = Directions.RIGHT;
+                                                //auxF = gameData.getMaze().get(y, x+1);
+                                                x++;
+                                                //gameData.getMaze().set(y, x-1, auxA);
 
-                                    failedAttempts++;
+                                                failedAttempts++;
+                                            }
+                                        }
+                                        //Cima
+                                        else {
+                                            if (gameData.getMaze().get(y - 1, x) == null || gameData.getMaze().get(y - 1, x).getSymbol() != 'x') {
+                                                direction = Directions.UP;
+                                                //auxF = gameData.getMaze().get(y-1, x);
+                                                y--;
+                                                //gameData.getMaze().set(y+1, x, auxA);
+
+                                                failedAttempts++;
+                                            }
+                                        }
+                                    }
                                 }
                             }
-                            //Direia
+                            //Random Direction
                             else {
-                                if (gameData.getMaze().get(y, x + 1) == null || gameData.getMaze().get(y, x + 1).getSymbol() != 'x') {
-                                    direction = Directions.RIGHT;
-                                    //auxF = gameData.getMaze().get(y, x+1);
-                                    x++;
-                                    //gameData.getMaze().set(y, x-1, auxA);
+                                //Cima
+                                if (rnd.nextBoolean()) {
+                                    if ((gameData.getMaze().get(y - 1, x) == null && y > 0) || gameData.getMaze().get(y - 1, x).getSymbol() != 'x') {
+                                        direction = Directions.UP;
+                                        //auxF = gameData.getMaze().get(y - 1, x);
+                                        y--;
+                                        //gameData.getMaze().set(y + 1, x, auxA);
 
-                                    failedAttempts++;
+                                        failedAttempts++;
+                                    }
+                                }
+                                //Direia
+                                else {
+                                    if (gameData.getMaze().get(y, x + 1) == null || gameData.getMaze().get(y, x + 1).getSymbol() != 'x') {
+                                        direction = Directions.RIGHT;
+                                        //auxF = gameData.getMaze().get(y, x+1);
+                                        x++;
+                                        //gameData.getMaze().set(y, x-1, auxA);
+
+                                        failedAttempts++;
+                                    }
                                 }
                             }
-                        }
 
-                        //gameData.getMaze().set(y, x, this);
-                        //auxA = auxF;
+                            //gameData.getMaze().set(y, x, this);
+                            //auxA = auxF;
+                        }
                     }
+                    movementLog.add(new int[]{x, y});
+                    this.movementIterator = movementLog.listIterator(movementLog.size());
                 }
-                movementLog.add(new int[]{x, y});
-                this.movementIterator = movementLog.listIterator(movementLog.size());
-            }
+            } else
+                initTime--;
+
         }
-        else
-            initTime--;
     }
 
     @Override

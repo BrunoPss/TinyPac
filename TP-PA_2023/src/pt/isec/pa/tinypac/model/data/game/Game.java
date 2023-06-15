@@ -38,9 +38,13 @@ public class Game implements Serializable {
     private Maze maze;
     private GameContext context;
     private int[] ghostDoor;
+    private int evolveInstantsPacman = 0;
+    private int evolveInstantsGhosts = 0;
+    private List<Integer> validInstants;
     private boolean enchancedPhase;
     private int enchancedTimeout;
     private int totalBalls;
+    private int pacmanLives;
     private List<String> levels;
     private int currentLevel;
     private Element fruit;
@@ -67,14 +71,15 @@ public class Game implements Serializable {
         this.ghostDoor = new int[2];
         this.enchancedPhase = false;
         this.currentLevel = 0;
+        this.pacmanLives = 3;
 
         File top5_temp = new File("top5/tinypac_top5.top");
         if (top5_temp.exists())
             loadTop5();
         else {
             this.top5List = new ArrayList<>();
-            top5List.add(new Player("Player 1", 5)); //APAGAR
-            top5List.add(new Player("Player 2", 3)); //APAGAR
+            //top5List.add(new Player("Player 1", 5)); //APAGAR
+            //top5List.add(new Player("Player 2", 3)); //APAGAR
             //top5List.add(new Player("Player 3", 3)); //APAGAR
             //top5List.add(new Player("Player 4", 3)); //APAGAR
             //top5List.add(new Player("Player 5", 3)); //APAGAR
@@ -120,7 +125,9 @@ public class Game implements Serializable {
     //Get Methods
     public Entity getEntity(EntityType type) { return entities.get(type); } //ELIMINAR (FAZER SET CONTROLADO DA DIRECTION)
     public int[] getGhostDoor() { return ghostDoor; }
-    public GameContext getContext() { return context; }
+    public void fsmEnchance() { context.enhancedPacman(); }
+    public int getEvolveInstantsPacman() { return evolveInstantsPacman; }
+    public int getEvolveInstantsGhosts() { return evolveInstantsGhosts; }
     public String getCurrentLevelFilePath() { return levels.get(currentLevel); }
     public Maze getMaze() { return maze; }
     public int getMazeHeight() { return maze.getMaze().length; }
@@ -140,7 +147,7 @@ public class Game implements Serializable {
     public int getCurrentLevel() { return currentLevel; }
     public Directions getPacmanDirections() { return ((Pacman) entities.get(EntityType.PACMAN)).getDirection(); }
     public int getPacmanPoints() { return ((Pacman) entities.get(EntityType.PACMAN)).getPoints(); }
-    public int getPacmanLives() { return ((Pacman) entities.get(EntityType.PACMAN)).getLives(); }
+    public int getPacmanLives() { return pacmanLives; }
     public int[] getEntityCord(EntityType type) {
         return new int[]{entities.get(type).getX(), entities.get(type).getY()};
     }
@@ -160,6 +167,14 @@ public class Game implements Serializable {
             default -> false;
         };
     }
+    public void setEntityActive(EntityType type, boolean value) {
+        switch (type) {
+            case PINKY -> Pinky.ACTIVE = value;
+            case BLINKY -> Blinky.ACTIVE = value;
+            case INKY -> Inky.ACTIVE = value;
+            case CLYDE -> Clyde.ACTIVE = value;
+        };
+    }
 
     //Set Methods
     public void setGhostDoor(int x, int y) { this.ghostDoor[0] = x; this.ghostDoor[1] = y; }
@@ -169,6 +184,11 @@ public class Game implements Serializable {
     public void setSuperBallInactive() { SuperBall.ACTIVE = false; }
     public void decreaseEnchancedTimeout() { enchancedTimeout--; }
     public void incrementTotalBalls() { totalBalls++; }
+    public void initTotalBalls() { totalBalls = 0; }
+    public void insertPlayerTop5(String name) {
+        //Place = 0 alterar
+        top5List.add(0, new Player(0, name, getPacmanPoints()));
+    }
     public void decrementTotalBalls() {
         totalBalls--;
         if (!((Fruit) fruit).getVisible()) {
@@ -180,11 +200,18 @@ public class Game implements Serializable {
         ((Fruit) fruit).setVisible(false);
         Fruit.ACTIVE = false;
     }
+    public void pacmanDead() {
+
+        checkGameEnd();
+        pacmanLives--;
+        context.restart();
+    }
     public void increaseCurrentLevel() { currentLevel++; }
 
     //Methods
     public void initMaze() {
         System.out.println("CURRENT LEVEL " + currentLevel);
+        System.out.println(entities);
         maze = new Maze(MazeManager.getYSize(levels.get(currentLevel)), MazeManager.getXSize(levels.get(currentLevel)));
     }
 
@@ -239,13 +266,61 @@ public class Game implements Serializable {
     }
     public void checkGameEnd() {
         //End Game
-        if (((Pacman) entities.get(EntityType.PACMAN)).getLives() == 0) {
+        if (pacmanLives <= 1) {
             context.endGame();
         }
     }
     public void evolveEntities() {
         //Entities Evolve
         entities.forEach((ElementType, Element) -> Element.move());
+    }
+    public void initializeEvolveInstantsPacman() {
+        evolveInstantsPacman = 1;
+        evolveInstantsGhosts = 1;
+        validInstants = findValidInstantsPacman();
+    }
+    public void initializeEvolveInstantsGhosts() {
+        evolveInstantsPacman = 1;
+        evolveInstantsGhosts = 1;
+        validInstants = findValidInstantsGhosts();
+    }
+    public void incrementEvolveInstantsPacman() {
+        if (evolveInstantsPacman < 20)
+            evolveInstantsPacman++;
+        else
+            evolveInstantsPacman = 1;
+    }
+    public void incrementEvolveInstantsGhosts() {
+        if (evolveInstantsGhosts < 20)
+            evolveInstantsGhosts++;
+        else
+            evolveInstantsGhosts = 1;
+    }
+    public List<Integer> findValidInstantsPacman() {
+        int range = 20;
+        int partSize = range / 2;
+        List<Integer> pontos = new ArrayList<>();
+
+        pontos.add(1);
+
+        for (int i = 1; i < 2; i++) {
+            int turningPoint = i * partSize;
+            pontos.add(turningPoint);
+        }
+        return pontos;
+    }
+    public List<Integer> findValidInstantsGhosts() {
+        int range = 20;
+        int partSize = range / (currentLevel+2);
+        List<Integer> pontos = new ArrayList<>();
+
+        pontos.add(1);
+
+        for (int i = 1; i < (currentLevel+2); i++) {
+            int turningPoint = i * partSize;
+            pontos.add(turningPoint);
+        }
+        return pontos;
     }
 
     //Overrides

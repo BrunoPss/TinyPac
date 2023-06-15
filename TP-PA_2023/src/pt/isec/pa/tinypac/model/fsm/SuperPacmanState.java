@@ -12,7 +12,7 @@ public class SuperPacmanState extends GameStateAdapter {
     //Constructor
     SuperPacmanState(GameContext context, Game gameData) {
         super(context, gameData);
-        System.out.println("SUPER");
+        System.out.println("SUPER PACMAN STATE");
         gameData.setEnchancedTimeout(15);
         gameData.setEnchancedPhase(true);
     }
@@ -29,11 +29,13 @@ public class SuperPacmanState extends GameStateAdapter {
     //Overrides
     @Override
     public boolean update() {
-        gameData.checkEnchancedMode();
-        gameData.checkLevelChange();
-        gameData.checkGameEnd();
-        gameData.evolveEntities();
-        //System.out.println("Super Pacman State Update");
+        //if (gameData.findValidInstants().contains(gameData.getEvolveInstants())) {
+            gameData.checkEnchancedMode();
+            gameData.checkLevelChange();
+            //gameData.checkGameEnd();
+            gameData.evolveEntities();
+        //}
+        //gameData.incrementEvolveInstants();
         return true;
     }
 

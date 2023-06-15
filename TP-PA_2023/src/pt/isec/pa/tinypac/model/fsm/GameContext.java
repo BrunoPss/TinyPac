@@ -103,6 +103,7 @@ public class GameContext implements Serializable {
     public void loadTop5() {
         gameData.loadTop5();
     }
+    public void insertPlayerTop5(String name) { gameData.insertPlayerTop5(name); }
 
     //Overrides
     public void update() {

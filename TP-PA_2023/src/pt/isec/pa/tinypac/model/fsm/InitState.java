@@ -15,8 +15,11 @@ public class InitState extends GameStateAdapter {
     //Constructor
     InitState(GameContext context, Game gameData) {
         super(context, gameData);
-        System.out.println("INIT");
+        System.out.println("INIT STATE");
         gameData.initMaze();
+        gameData.initializeEvolveInstantsPacman();
+        gameData.initializeEvolveInstantsGhosts();
+        gameData.initTotalBalls();
         MazeManager.loadLevel(gameData, gameData.getCurrentLevelFilePath());
     }
 

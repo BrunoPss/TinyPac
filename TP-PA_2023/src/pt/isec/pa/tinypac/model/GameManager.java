@@ -115,6 +115,7 @@ public class GameManager {
     public void loadTop5() {
         fsm.loadTop5();
     }
+    public void insertPlayerTop5(String name) { fsm.insertPlayerTop5(name); }
     public void saveGame() {
         File file = new File("savedGame/saveGame.pac");
 
