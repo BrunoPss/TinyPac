@@ -129,7 +129,8 @@ public class Game implements Serializable {
     public int getEvolveInstantsPacman() { return evolveInstantsPacman; }
     public int getEvolveInstantsGhosts() { return evolveInstantsGhosts; }
     public String getCurrentLevelFilePath() { return levels.get(currentLevel); }
-    public Maze getMaze() { return maze; }
+    public IMazeElement getIMazeElement(int y, int x) { return maze.get(y,x); }
+    public void setIMazeElement(int y, int x, IMazeElement element) { maze.set(y,x,element); }
     public int getMazeHeight() { return maze.getMaze().length; }
     public int getMazeLength() { return maze.getMaze()[0].length; }
     public char getMazeElement(int x, int y) {
@@ -188,6 +189,11 @@ public class Game implements Serializable {
     public void insertPlayerTop5(String name) {
         //Place = 0 alterar
         top5List.add(0, new Player(0, name, getPacmanPoints()));
+        Collections.sort(top5List);
+        top5List.forEach( (p) -> p.setPlace(top5List.indexOf(p)+1));
+        if (top5List.size() > 5) {
+            top5List.remove(top5List.size()-1);
+        }
     }
     public void decrementTotalBalls() {
         totalBalls--;
@@ -201,7 +207,6 @@ public class Game implements Serializable {
         Fruit.ACTIVE = false;
     }
     public void pacmanDead() {
-
         checkGameEnd();
         pacmanLives--;
         context.restart();
@@ -236,6 +241,10 @@ public class Game implements Serializable {
         }
     }
 
+    public boolean isTopPlayer() {
+        return checkPlayerPointsTop5(getPacmanPoints());
+    }
+
     public void newFruit() {
         Fruit.ACTIVE = true;
         maze.set(fruit.getY(), fruit.getX(), fruit);
@@ -243,11 +252,18 @@ public class Game implements Serializable {
 
     public void checkEnchancedMode() {
         //Enchanced Mode
-        if (enchancedPhase) {
-            if (enchancedTimeout > 0) {
-                enchancedTimeout--;
+        if (findValidInstantsPacman().contains(getEvolveInstantsPacman())) {
+            if (enchancedPhase) {
+                if (enchancedTimeout > 0) {
+                    enchancedTimeout--;
+                } else {
+                    context.disableEnhancedPacman();
+                }
             }
-            else {
+            if (entities.get(EntityType.BLINKY).getX() == ghostDoor[0] && entities.get(EntityType.BLINKY).getY()+1 == ghostDoor[1]
+            &&  entities.get(EntityType.CLYDE).getX() == ghostDoor[0] && entities.get(EntityType.CLYDE).getY()+1 == ghostDoor[1]
+            &&  entities.get(EntityType.INKY).getX() == ghostDoor[0] && entities.get(EntityType.INKY).getY()+1 == ghostDoor[1]
+            &&  entities.get(EntityType.PINKY).getX() == ghostDoor[0] && entities.get(EntityType.PINKY).getY()+1 == ghostDoor[1]) {
                 context.disableEnhancedPacman();
             }
         }
@@ -327,6 +343,12 @@ public class Game implements Serializable {
 
 
     //Internal Functions
+    private boolean checkPlayerPointsTop5(int num) {
+        if (top5List.isEmpty())
+            return true;
+
+        return num > top5List.stream().max(Comparator.comparing(Player::getPoints)).get().getPoints();
+    }
     private void levelMap() {
         File[] files = new File("src/pt/isec/pa/tinypac/model/data/levels/").listFiles();
 

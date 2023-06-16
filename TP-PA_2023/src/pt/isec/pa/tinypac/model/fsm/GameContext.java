@@ -27,7 +27,7 @@ public class GameContext implements Serializable {
     //Dictionary<ElementType, Element> entities;
 
     //Constructor
-    public GameContext(IGameEngine gameEngine) {
+    public GameContext() {
         //this.maze = new Maze(MazeManager.getYSize("C:\\Projects\\TP-PA_2023\\TP-PA_2023\\src\\pt\\isec\\pa\\tinypac\\model\\data\\levels\\level01.txt"), MazeManager.getXSize("C:\\Projects\\TP-PA_2023\\TP-PA_2023\\src\\pt\\isec\\pa\\tinypac\\model\\data\\levels\\level01.txt"));
         this.gameData = new Game(this);
         this.state = new InitState(this, gameData);
@@ -61,6 +61,7 @@ public class GameContext implements Serializable {
     public int getPacmanLives() { return gameData.getPacmanLives(); }
     public boolean getElementActive(ElementType type) { return gameData.getElementActive(type); }
     public boolean getEntityActive(EntityType type) { return gameData.getEntityActive(type); }
+    public boolean getEnchancedPhase() { return gameData.getEnchancedPhase(); }
 
     //Set Methods
     void changeState(IGameState newState) {
@@ -75,6 +76,7 @@ public class GameContext implements Serializable {
     public void setMusicPreset(MusicPreset musicPreset) { gameData.setMusicPreset(musicPreset); }
     public void setMainEQPreset(EQPreset eqPreset) { gameData.setMainEQPreset(eqPreset); }
     public int[] getEntityCord(EntityType type) { return gameData.getEntityCord(type); }
+    public boolean isTopPlayer() { return gameData.isTopPlayer(); }
 
     //Methods
     public boolean up() {

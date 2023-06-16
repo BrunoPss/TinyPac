@@ -24,7 +24,7 @@ public class Main {
     public static GameManager gameManager;
     static {
         IGameEngine gameEngine = new GameEngine();
-        gameManager = new GameManager(gameEngine);
+        gameManager = new GameManager();
         gameEngine.registerClient((g,t) -> gameManager.update());
         gameEngine.start(100);
     }

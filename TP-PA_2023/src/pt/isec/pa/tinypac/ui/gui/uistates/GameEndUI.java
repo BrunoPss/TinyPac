@@ -17,6 +17,7 @@ public class GameEndUI extends BorderPane {
     private final GameManager gameManager;
     private Button submitButton, exitBtn;
     TextField nomeTextField;
+    VBox addTop5Pane;
 
     //Constructor
     public GameEndUI(GameManager gameManager) {
@@ -52,7 +53,7 @@ public class GameEndUI extends BorderPane {
         infoPane.getChildren().addAll(info1, info2, info3);
 
         //Top5 Add Pane
-        VBox addTop5Pane = new VBox();
+        addTop5Pane = new VBox();
         addTop5Pane.setAlignment(Pos.CENTER);
         addTop5Pane.setSpacing(20);
         addTop5Pane.setPadding(new Insets(20));
@@ -99,6 +100,10 @@ public class GameEndUI extends BorderPane {
     }
 
     private void update() {
+        //Top Player Update
+        addTop5Pane.setVisible(gameManager.isTopPlayer());
+
+
         if (gameManager.getState() != GameState.GAME_ENDSTATE ||
                 gameManager.getMainMenuState()) {
             this.setVisible(false);

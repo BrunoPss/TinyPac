@@ -1,6 +1,5 @@
 package pt.isec.pa.tinypac.model;
 
-import pt.isec.pa.tinypac.gameengine.IGameEngine;
 import pt.isec.pa.tinypac.model.data.element.ElementType;
 import pt.isec.pa.tinypac.model.data.entity.Directions;
 import pt.isec.pa.tinypac.model.data.entity.EntityType;
@@ -23,10 +22,9 @@ public class GameManager {
     //IGameEngine gameEngine;
 
     //Constructor
-    public GameManager(IGameEngine gameEngine) {
-        fsm = new GameContext(gameEngine);
+    public GameManager() {
+        fsm = new GameContext();
         pcs = new PropertyChangeSupport(this);
-        //this.gameEngine = gameEngine;
     }
 
     //Get Methods
@@ -52,6 +50,8 @@ public class GameManager {
     public boolean getEntityActive(EntityType type) { return fsm.getEntityActive(type); }
     public int[] getEntityCord(EntityType type) { return fsm.getEntityCord(type); }
     public ArrayList<Player> getTop5List() { return fsm.getTop5List(); }
+    public boolean getEnchancedPhase() { return fsm.getEnchancedPhase(); }
+    public boolean isTopPlayer() { return fsm.isTopPlayer(); }
 
     //Set Methods
     public void setMainMenuState(boolean value) {

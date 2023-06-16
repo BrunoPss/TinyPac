@@ -33,7 +33,6 @@ public class Pacman extends Entity {
     public int getPoints() {
         return this.points;
     }
-    //public int getLives() { return this.lives; }
     public Directions getDirection() { return this.direction; };
 
     //Set Methods
@@ -54,8 +53,8 @@ public class Pacman extends Entity {
                 case UP -> {
                     //Mudar cadeia de if's para switch
                     //Detecao Paredes
-                    if ((gameData.getMaze().get(y - 1, x) == null && y > 0) || gameData.getMaze().get(y - 1, x).getSymbol() != 'x') {
-                        gameData.getMaze().set(y, x, null);
+                    if ((gameData.getIMazeElement(y - 1, x) == null && y > 0) || gameData.getIMazeElement(y - 1, x).getSymbol() != 'x') {
+                        gameData.setIMazeElement(y, x, null);
                         y--;
                     }
 
@@ -73,8 +72,8 @@ public class Pacman extends Entity {
                 }
                 case DOWN -> {
                     //Detecao Paredes
-                    if ((gameData.getMaze().get(y + 1, x) == null && y < gameData.getMaze().getMaze().length - 1) || gameData.getMaze().get(y + 1, x).getSymbol() != 'x') {
-                        gameData.getMaze().set(y, x, null);
+                    if ((gameData.getIMazeElement(y + 1, x) == null && y < gameData.getMazeLength() + 1) || gameData.getIMazeElement(y + 1, x).getSymbol() != 'x') {
+                        gameData.setIMazeElement(y, x, null);
                         y++;
                     }
 
@@ -92,8 +91,8 @@ public class Pacman extends Entity {
                 }
                 case LEFT -> {
                     //Detecao Paredes
-                    if ((gameData.getMaze().get(y, x - 1) == null && x > 0) || gameData.getMaze().get(y, x - 1).getSymbol() != 'x') {
-                        gameData.getMaze().set(y, x, null);
+                    if ((gameData.getIMazeElement(y, x - 1) == null && x > 0) || gameData.getIMazeElement(y, x - 1).getSymbol() != 'x') {
+                        gameData.setIMazeElement(y, x, null);
                         x--;
                     }
 
@@ -111,8 +110,8 @@ public class Pacman extends Entity {
                 }
                 case RIGHT -> {
                     //Detecao Paredes
-                    if ((gameData.getMaze().get(y, x + 1) == null && x < gameData.getMaze().getMaze()[0].length - 1) || gameData.getMaze().get(y, x + 1).getSymbol() != 'x') {
-                        gameData.getMaze().set(y, x, null);
+                    if ((gameData.getIMazeElement(y, x + 1) == null && x < gameData.getMazeHeight() - 3) || gameData.getIMazeElement(y, x + 1).getSymbol() != 'x') {
+                        gameData.setIMazeElement(y, x, null);
                         x++;
                     }
 
@@ -132,7 +131,7 @@ public class Pacman extends Entity {
                     ghostDetection();
                 }
             }
-            gameData.getMaze().set(y, x, this);
+            gameData.setIMazeElement(y, x, this);
         }
         gameData.incrementEvolveInstantsPacman();
     }
@@ -148,28 +147,28 @@ public class Pacman extends Entity {
 
     //Internal Functions
     private void warpDetection() {
-        if (gameData.getMaze().get(y,x) != null && gameData.getMaze().get(y,x).getSymbol() == 'W') {
-            Element warp = (Element) gameData.getMaze().get(y,x);
-            gameData.getMaze().set(((Warp) warp).getComplementWarp().getY(), ((Warp) warp).getComplementWarp().getX(), this);
+        if (gameData.getIMazeElement(y,x) != null && gameData.getIMazeElement(y,x).getSymbol() == 'W') {
+            Element warp = (Element) gameData.getIMazeElement(y,x);
+            gameData.setIMazeElement(((Warp) warp).getComplementWarp().getY(), ((Warp) warp).getComplementWarp().getX(), this);
             this.x = ((Warp) warp).getComplementWarp().getX();
             this.y = ((Warp) warp).getComplementWarp().getY();
         }
     }
     private void ballDetection() {
-        if (gameData.getMaze().get(y,x) != null && gameData.getMaze().get(y,x).getSymbol() == 'o') {
+        if (gameData.getIMazeElement(y,x) != null && gameData.getIMazeElement(y,x).getSymbol() == 'o') {
             this.points++;
             gameData.decrementTotalBalls();
         }
     }
     private void superBallDetection() {
-        if (gameData.getMaze().get(y,x) != null && gameData.getMaze().get(y,x).getSymbol() == 'O') {
+        if (gameData.getIMazeElement(y,x) != null && gameData.getIMazeElement(y,x).getSymbol() == 'O') {
             gameData.setSuperBallInactive();
             points += 10;
             gameData.fsmEnchance();
         }
     }
     private void fruitDetection() {
-        if (gameData.getMaze().get(y,x) != null && gameData.getMaze().get(y,x).getSymbol() == 'F') {
+        if (gameData.getIMazeElement(y,x) != null && gameData.getIMazeElement(y,x).getSymbol() == 'F') {
             points += (gameData.getCurrentLevel()+1) * 25;
             gameData.catchFruit();
         }

@@ -2,7 +2,7 @@ package pt.isec.pa.tinypac.model.data.player;
 
 import java.io.Serializable;
 
-public class Player implements Serializable {
+public class Player implements Serializable, Comparable<Player> {
     //Internal Data
     private int place;
     private String userName;
@@ -21,13 +21,17 @@ public class Player implements Serializable {
     public int getPoints() { return this.points; }
 
     //Set Methods
-
+    public void setPlace(int place) { this.place = place; }
 
     //Methods
 
 
     //Overrides
-
+    @Override
+    public int compareTo(Player o) {
+        int comparePoints = ((Player)o).getPoints();
+        return comparePoints - this.points;
+    }
 
     //Internal Functions
 
