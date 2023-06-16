@@ -56,10 +56,15 @@ public class MainGameUI extends BorderPane {
     private Label popupMSG;
     private Label scoreInfo, levelInfo, ballsInfo, livesInfo;
     private ImageView iconFruit, iconSuperBall, iconBlinky, iconInky, iconPinky, iconClyde;
+    private String blinkyIMGName, clydeIMGName, inkyIMGName, pinkyIMGName;
 
     //Constructor
     public MainGameUI(GameManager gameManager) {
         this.gameManager = gameManager;
+        this.blinkyIMGName = "blinky.png";
+        this.clydeIMGName = "clyde.png";
+        this.inkyIMGName = "inky.png";
+        this.pinkyIMGName = "pinky.png";
 
         createViews();
         registerHandlers();
@@ -504,10 +509,24 @@ public class MainGameUI extends BorderPane {
 
     private void update() {
         //Pause Button Update
-        pauseBtn.setDisable(gameManager.getState() != GameState.NORMALRUNSTATE);
+        pauseBtn.setDisable(gameManager.getState() != GameState.NORMALRUNSTATE && gameManager.getState() != GameState.SUPERPACMANSTATE);
 
         //Mute Button Update
         muteButton.setSelected(gameManager.getMuted());
+
+        //Enchanced State Ghost Image Update
+        if (gameManager.getEnchancedPhase()) {
+            blinkyIMGName = "vulnerableGhost.png";
+            clydeIMGName = "vulnerableGhost.png";
+            inkyIMGName = "vulnerableGhost.png";
+            pinkyIMGName = "vulnerableGhost.png";
+        }
+        else {
+            blinkyIMGName = "blinky.png";
+            clydeIMGName = "clyde.png";
+            inkyIMGName = "inky.png";
+            pinkyIMGName = "pinky.png";
+        }
 
         //Maze Update
         drawMaze();
@@ -550,7 +569,7 @@ public class MainGameUI extends BorderPane {
         //Score Update
         scoreInfo.setText(Integer.toString(gameManager.getPacmanPoints()));
         //Level Update
-        levelInfo.setText(Integer.toString(gameManager.getCurrentLevel()));
+        levelInfo.setText(Integer.toString(gameManager.getCurrentLevel()+1));
         //Balls Remaining Update
         ballsInfo.setText(Integer.toString(gameManager.getTotalBalls()));
         //Pacman Lives Update
@@ -559,7 +578,8 @@ public class MainGameUI extends BorderPane {
         //State Change Update
         if ((gameManager.getState() != GameState.INITSTATE &&
                 gameManager.getState() != GameState.NORMALRUNSTATE &&
-                gameManager.getState() != GameState.PAUSEDSTATE) ||
+                gameManager.getState() != GameState.PAUSEDSTATE) &&
+                gameManager.getState() != GameState.SUPERPACMANSTATE ||
                 gameManager.getMainMenuState()) {
             this.setVisible(false);
             return;
@@ -651,16 +671,20 @@ public class MainGameUI extends BorderPane {
 
     private void drawGhosts() {
         //Draw Blinky
-        mazeContext.drawImage(ImageManager.getImage("blinky.png"), gameManager.getEntityCord(EntityType.BLINKY)[0] * cellSize + 3, gameManager.getEntityCord(EntityType.BLINKY)[1] * cellSize + 1, 15, 15);
+        if (gameManager.getEntityActive(EntityType.BLINKY))
+            mazeContext.drawImage(ImageManager.getImage(blinkyIMGName), gameManager.getEntityCord(EntityType.BLINKY)[0] * cellSize + 3, gameManager.getEntityCord(EntityType.BLINKY)[1] * cellSize + 1, 15, 15);
 
         //Draw Pinky
-        mazeContext.drawImage(ImageManager.getImage("pinky.png"), gameManager.getEntityCord(EntityType.PINKY)[0] * cellSize + 3, gameManager.getEntityCord(EntityType.PINKY)[1] * cellSize + 1, 15, 15);
+        if (gameManager.getEntityActive(EntityType.PINKY))
+            mazeContext.drawImage(ImageManager.getImage(pinkyIMGName), gameManager.getEntityCord(EntityType.PINKY)[0] * cellSize + 3, gameManager.getEntityCord(EntityType.PINKY)[1] * cellSize + 1, 15, 15);
 
         //Draw Inky
-        mazeContext.drawImage(ImageManager.getImage("inky.png"), gameManager.getEntityCord(EntityType.INKY)[0] * cellSize + 3, gameManager.getEntityCord(EntityType.INKY)[1] * cellSize + 1, 15, 15);
+        if (gameManager.getEntityActive(EntityType.INKY))
+            mazeContext.drawImage(ImageManager.getImage(inkyIMGName), gameManager.getEntityCord(EntityType.INKY)[0] * cellSize + 3, gameManager.getEntityCord(EntityType.INKY)[1] * cellSize + 1, 15, 15);
 
         //Draw Clyde
-        mazeContext.drawImage(ImageManager.getImage("clyde.png"), gameManager.getEntityCord(EntityType.CLYDE)[0] * cellSize + 3, gameManager.getEntityCord(EntityType.CLYDE)[1] * cellSize + 1, 15, 15);
+        if (gameManager.getEntityActive(EntityType.CLYDE))
+            mazeContext.drawImage(ImageManager.getImage(clydeIMGName), gameManager.getEntityCord(EntityType.CLYDE)[0] * cellSize + 3, gameManager.getEntityCord(EntityType.CLYDE)[1] * cellSize + 1, 15, 15);
     }
 
     //Hover Help Popup ActionEven

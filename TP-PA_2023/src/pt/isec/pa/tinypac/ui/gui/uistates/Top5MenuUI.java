@@ -50,7 +50,8 @@ public class Top5MenuUI extends BorderPane {
         contentTable.setMaxHeight(300);
         contentTable.setMaxWidth(500);
         //Columns
-        TableColumn<Player, String> numberColumn = new TableColumn<>("#");
+        TableColumn<Player, String> numberColumn = new TableColumn<>("Place");
+        numberColumn.setCellValueFactory(new PropertyValueFactory<>("place"));
         TableColumn<Player, String> firstName = new TableColumn<>("User Name");
         firstName.setCellValueFactory(new PropertyValueFactory<>("userName"));
         TableColumn<Player, String> points = new TableColumn<>("Points");
@@ -65,9 +66,6 @@ public class Top5MenuUI extends BorderPane {
 
         this.setTop(title);
         this.setCenter(contentTable);
-        Button change = new Button("change");
-        this.setBottom(change);
-        change.setOnAction(evt -> {contentTable.refresh();});
     }
 
     private void registerHandlers() {

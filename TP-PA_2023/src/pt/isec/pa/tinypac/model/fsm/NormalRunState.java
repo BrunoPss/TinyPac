@@ -5,6 +5,9 @@ import pt.isec.pa.tinypac.model.data.entity.EntityType;
 import pt.isec.pa.tinypac.model.data.game.Game;
 import pt.isec.pa.tinypac.model.data.pacman.Pacman;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class NormalRunState extends GameStateAdapter {
     //Internal Data
 
@@ -27,10 +30,13 @@ public class NormalRunState extends GameStateAdapter {
     //Overrides
     @Override
     public boolean update() {
-        gameData.checkEnchancedMode();
-        gameData.checkLevelChange();
-        gameData.checkGameEnd();
-        gameData.evolveEntities();
+        //if (gameData.findValidInstants().contains(gameData.getEvolveInstants())) {
+            gameData.checkEnchancedMode();
+            gameData.checkLevelChange();
+            //gameData.checkGameEnd();
+            gameData.evolveEntities();
+        //}
+        //gameData.incrementEvolveInstants();
         return true;
     }
 
@@ -86,6 +92,5 @@ public class NormalRunState extends GameStateAdapter {
     }
 
     //Internal Functions
-
 
 }

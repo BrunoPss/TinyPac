@@ -40,7 +40,7 @@ public class MazeManager {
             int content;
             while ((content = fr.read()) != -1) {
                 switch ((char) content) {
-                    case 'x' -> gameData.getMaze().set(y,x, ElementFactory.createElement(ElementType.WALL, gameData, x, y));
+                    case 'x' -> gameData.setIMazeElement(y,x, ElementFactory.createElement(ElementType.WALL, gameData, x, y));
                     case 'W' -> {
                         if (auxWarp == null)
                             auxWarp = ElementFactory.createElement(ElementType.WARP, gameData, x, y);
@@ -50,7 +50,7 @@ public class MazeManager {
                             ((Warp) auxWarp).setComplementWarp(aux2Warp);
                             auxWarp = aux2Warp;
                         }
-                        gameData.getMaze().set(y,x, auxWarp);
+                        gameData.setIMazeElement(y,x, auxWarp);
                     }
                     case 'y' -> {
                         switch (f) {
@@ -73,29 +73,29 @@ public class MazeManager {
                             }
                         }
                         f++;
-                        gameData.getMaze().set(y,x, ElementFactory.createElement(ElementType.WALL, gameData, x, y));
+                        gameData.setIMazeElement(y,x, ElementFactory.createElement(ElementType.WALL, gameData, x, y));
                         //System.out.println("WALL: " + x + " " + y);
                         //System.out.println(gameData.getMazeElement(x,y));
                     }
                     case 'Y' -> {
                         gameData.setGhostDoor(x,y);
-                        gameData.getMaze().set(y,x, ElementFactory.createElement(ElementType.WALL, gameData, x, y));
+                        gameData.setIMazeElement(y,x, ElementFactory.createElement(ElementType.WALL, gameData, x, y));
                     }
                     case 'o' -> {
-                        gameData.getMaze().set(y,x, ElementFactory.createElement(ElementType.BALL, gameData, x, y));
+                        gameData.setIMazeElement(y,x, ElementFactory.createElement(ElementType.BALL, gameData, x, y));
                         gameData.incrementTotalBalls();
                     }
                     case 'F' -> {
                         Element fruit = ElementFactory.createElement(ElementType.FRUIT, gameData, x, y);
                         gameData.setFruit(fruit);
-                        gameData.getMaze().set(y,x, fruit);
+                        gameData.setIMazeElement(y,x, fruit);
                     }
                     case 'M' -> {
                         gameData.setEntity(EntityType.PACMAN, EntityFactory.createEntity(EntityType.PACMAN, gameData, x, y));
-                        gameData.getMaze().set(y,x, gameData.getEntity(EntityType.PACMAN));
+                        gameData.setIMazeElement(y,x, gameData.getEntity(EntityType.PACMAN));
                         //System.out.println(gameData.getEntity(EntityType.PACMAN));
                     }
-                    case 'O' -> gameData.getMaze().set(y,x, ElementFactory.createElement(ElementType.SUPER_BALL, gameData, x, y));
+                    case 'O' -> gameData.setIMazeElement(y,x, ElementFactory.createElement(ElementType.SUPER_BALL, gameData, x, y));
                     //case 'Y' -> maze.set(y,x, ElementFactory.createElement(ElementType.PORTAL, maze, x, y));
                     //case 'y' -> maze.set(y,x, ElementFactory.createElement(ElementType.CAVE, maze, x, y));
                 }
