@@ -135,6 +135,8 @@ public class GameManager {
             System.err.println("ERROR LOADING FSM");
             e.printStackTrace();
         }
+
+        fsm.setEntitysActive();
     }
 
     public void up() {

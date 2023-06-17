@@ -27,7 +27,8 @@ public class Clyde extends Ghost {
     private Directions pacmanDirection;
     private Random rnd;
     private ArrayList<int[]> movementLog;
-    ListIterator<int[]> movementIterator;
+    private int movementIterator = 0;
+    //private ListIterator<int[]> movementIterator;
 
     private enum corridor {
         HORIZONTAL, VERTICAL
@@ -87,12 +88,18 @@ public class Clyde extends Ghost {
                 }
 
                 if (gameData.getEnchancedPhase()) {
-                    if (movementIterator.hasPrevious()) {
-                        int[] aux;
-                        aux = movementIterator.previous();
-                        x = aux[0];
-                        y = aux[1];
+                    if (movementIterator-1 >= 0) {
+                        x = movementLog.get(movementIterator-1)[0];
+                        y = movementLog.get(movementIterator-1)[1];
+                        movementIterator--;
                     }
+
+                    //if (movementIterator.hasPrevious()) {
+                    //    int[] aux;
+                    //    aux = movementIterator.previous();
+                    //    x = aux[0];
+                    //    y = aux[1];
+                    //}
                 } else {
                     switch (direction) {
                         case UP -> {
@@ -784,7 +791,8 @@ public class Clyde extends Ghost {
                         }
                     }
                     movementLog.add(new int[]{x, y});
-                    this.movementIterator = movementLog.listIterator(movementLog.size());
+                    this.movementIterator = movementLog.size();
+                    //this.movementIterator = movementLog.listIterator(movementLog.size());
                 }
             } else
                 initTime--;

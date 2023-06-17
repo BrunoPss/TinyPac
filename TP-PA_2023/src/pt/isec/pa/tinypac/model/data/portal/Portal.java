@@ -19,14 +19,8 @@ public class Portal extends Element {
     public static final char SYMBOL = 'Y';
 
     //Constructor
-    /**
-     * Constructor
-     * @param gameData Game Data Model
-     * @param x Initial Position (x cord.)
-     * @param y Initial Position (y cord.)
-     */
-    public Portal(Game gameData, int x, int y) {
-        super(gameData, x, y);
+    public Portal(Game gameData) {
+        super(gameData);
     }
 
     //Get Methods

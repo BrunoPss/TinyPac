@@ -126,9 +126,6 @@ public class Pacman extends Entity {
 
                     //Detecao Super Ball
                     superBallDetection();
-
-                    //Detetao Fantasmas
-                    ghostDetection();
                 }
             }
             gameData.setIMazeElement(y, x, this);
@@ -185,15 +182,23 @@ public class Pacman extends Entity {
         else {
             if (gameData.getEntityCord(EntityType.BLINKY)[0] == x && gameData.getEntityCord(EntityType.BLINKY)[1] == y) {
                 gameData.setEntityActive(EntityType.BLINKY, false);
+                points += 50 * gameData.getPacmanGhostsEaten();
+                gameData.incPacmanGhostsEaten();
             }
             if (gameData.getEntityCord(EntityType.CLYDE)[0] == x && gameData.getEntityCord(EntityType.CLYDE)[1] == y) {
                 gameData.setEntityActive(EntityType.CLYDE, false);
+                points += 50 * gameData.getPacmanGhostsEaten();
+                gameData.incPacmanGhostsEaten();
             }
             if (gameData.getEntityCord(EntityType.INKY)[0] == x && gameData.getEntityCord(EntityType.INKY)[1] == y) {
                 gameData.setEntityActive(EntityType.INKY, false);
+                points += 50 * gameData.getPacmanGhostsEaten();
+                gameData.incPacmanGhostsEaten();
             }
             if (gameData.getEntityCord(EntityType.PINKY)[0] == x && gameData.getEntityCord(EntityType.PINKY)[1] == y) {
                 gameData.setEntityActive(EntityType.PINKY, false);
+                points += 50 * gameData.getPacmanGhostsEaten();
+                gameData.incPacmanGhostsEaten();
             }
         }
     }

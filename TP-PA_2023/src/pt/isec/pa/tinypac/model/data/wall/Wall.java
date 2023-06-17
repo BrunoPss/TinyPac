@@ -25,8 +25,8 @@ public class Wall extends Element {
      * @param x Initial Position (x cord.)
      * @param y Initial Position (y cord.)
      */
-    public Wall(Game gameData, int x, int y) {
-        super(gameData, x, y);
+    public Wall(Game gameData) {
+        super(gameData);
     }
 
     //Get Methods

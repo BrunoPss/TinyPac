@@ -42,25 +42,25 @@ public class NormalRunState extends GameStateAdapter {
 
     @Override
     public boolean up() {
-        ((Pacman) gameData.getEntity(EntityType.PACMAN)).setDirection(Directions.UP);
+        gameData.setPacmanDirection(Directions.UP);
         //changeState(new NormalRunState(context, gameData));
         return true;
     }
     @Override
     public boolean down() {
-        ((Pacman) gameData.getEntity(EntityType.PACMAN)).setDirection(Directions.DOWN);
+        gameData.setPacmanDirection(Directions.DOWN);
         //changeState(new NormalRunState(context, gameData));
         return true;
     }
     @Override
     public boolean left() {
-        ((Pacman) gameData.getEntity(EntityType.PACMAN)).setDirection(Directions.LEFT);
+        gameData.setPacmanDirection(Directions.LEFT);
         //changeState(new NormalRunState(context, gameData));
         return true;
     }
     @Override
     public boolean right() {
-        ((Pacman) gameData.getEntity(EntityType.PACMAN)).setDirection(Directions.RIGHT);
+        gameData.setPacmanDirection(Directions.RIGHT);
         //changeState(new NormalRunState(context, gameData));
         return true;
     }

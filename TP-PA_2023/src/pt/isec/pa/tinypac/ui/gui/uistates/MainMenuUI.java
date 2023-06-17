@@ -108,7 +108,8 @@ public class MainMenuUI extends BorderPane {
     }
     private void registerHandlers() {
         //Property ChangeListener
-        gameManager.addPropertyChangeListener( evt -> { update();});
+        //gameManager.addPropertyChangeListener( evt -> { update();});
+        gameManager.addPropertyChangeListener(evt -> Platform.runLater(this::update));
 
         //Config Menu Item ActionEvent
         configItem.setOnAction( event -> {
@@ -156,12 +157,12 @@ public class MainMenuUI extends BorderPane {
                 }
             }
             gameManager.setMainMenuState(false);
-            this.setVisible(false);
+            //this.setVisible(false);
         });
         //Top 5 Button ActionEvent
         btnTop5.setOnAction( event -> {
             gameManager.setTop5MenuState(true);
-            this.setVisible(false);
+            //this.setVisible(false);
         });
         //Configurations Button ActionEvent
         btnConfig.setOnAction( event -> {
@@ -179,6 +180,10 @@ public class MainMenuUI extends BorderPane {
         });
     }
     private void update() {
-
+        if (gameManager.getMainMenuState() || !gameManager.getTop5MenuState()) {
+            this.setVisible(true);
+        }
+        if (!gameManager.getMainMenuState() || gameManager.getTop5MenuState())
+            this.setVisible(false);
     }
 }

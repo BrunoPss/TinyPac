@@ -68,7 +68,7 @@ public class PauseMenuUI extends BorderPane {
         //Configurations Button
         configBtn = new Button("Configuracoes");
         //Exit Button
-        exitBtn = new Button("Sair");
+        exitBtn = new Button("Terminar Jogo");
 
         //Group Add
         menuPanel.getChildren().addAll(resumeBtn, saveBtn, configBtn, exitBtn);

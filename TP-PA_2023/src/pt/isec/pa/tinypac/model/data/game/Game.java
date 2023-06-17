@@ -45,6 +45,7 @@ public class Game implements Serializable {
     private int enchancedTimeout;
     private int totalBalls;
     private int pacmanLives;
+    private int pacmanGhostsEaten = 0;
     private List<String> levels;
     private int currentLevel;
     private Element fruit;
@@ -78,11 +79,6 @@ public class Game implements Serializable {
             loadTop5();
         else {
             this.top5List = new ArrayList<>();
-            //top5List.add(new Player("Player 1", 5)); //APAGAR
-            //top5List.add(new Player("Player 2", 3)); //APAGAR
-            //top5List.add(new Player("Player 3", 3)); //APAGAR
-            //top5List.add(new Player("Player 4", 3)); //APAGAR
-            //top5List.add(new Player("Player 5", 3)); //APAGAR
         }
 
         //Game Configurations
@@ -92,7 +88,7 @@ public class Game implements Serializable {
         this.musicPlayStatus = true;
         this.muted = false;
         this.mainColorPreset = ColorPreset.COLOR_PRESET1;
-        this.musicPreset = MusicPreset.ELECTRONIC;
+        this.musicPreset = MusicPreset.CALM;
         this.mainEQPreset = EQPreset.NONE;
     }
 
@@ -129,6 +125,13 @@ public class Game implements Serializable {
     public int getEvolveInstantsPacman() { return evolveInstantsPacman; }
     public int getEvolveInstantsGhosts() { return evolveInstantsGhosts; }
     public String getCurrentLevelFilePath() { return levels.get(currentLevel); }
+    public int getPacmanGhostsEaten() { return pacmanGhostsEaten; }
+    public void incPacmanGhostsEaten() {
+        if (pacmanGhostsEaten < 4)
+            pacmanGhostsEaten++;
+        else
+            pacmanGhostsEaten = 0;
+    }
     public IMazeElement getIMazeElement(int y, int x) { return maze.get(y,x); }
     public void setIMazeElement(int y, int x, IMazeElement element) { maze.set(y,x,element); }
     public int getMazeHeight() { return maze.getMaze().length; }
@@ -146,6 +149,7 @@ public class Game implements Serializable {
     public int getEnchancedTimeout() { return enchancedTimeout; }
     public int getTotalBalls() { return totalBalls; }
     public int getCurrentLevel() { return currentLevel; }
+    public void setPacmanDirection(Directions direction) { ((Pacman)entities.get(EntityType.PACMAN)).setDirection(direction); }
     public Directions getPacmanDirections() { return ((Pacman) entities.get(EntityType.PACMAN)).getDirection(); }
     public int getPacmanPoints() { return ((Pacman) entities.get(EntityType.PACMAN)).getPoints(); }
     public int getPacmanLives() { return pacmanLives; }
@@ -175,6 +179,12 @@ public class Game implements Serializable {
             case INKY -> Inky.ACTIVE = value;
             case CLYDE -> Clyde.ACTIVE = value;
         };
+    }
+    public void setEntitiesActive() {
+        setEntityActive(EntityType.BLINKY, true);
+        setEntityActive(EntityType.CLYDE, true);
+        setEntityActive(EntityType.INKY, true);
+        setEntityActive(EntityType.PINKY, true);
     }
 
     //Set Methods
@@ -216,7 +226,6 @@ public class Game implements Serializable {
     //Methods
     public void initMaze() {
         System.out.println("CURRENT LEVEL " + currentLevel);
-        System.out.println(entities);
         maze = new Maze(MazeManager.getYSize(levels.get(currentLevel)), MazeManager.getXSize(levels.get(currentLevel)));
     }
 
@@ -247,7 +256,7 @@ public class Game implements Serializable {
 
     public void newFruit() {
         Fruit.ACTIVE = true;
-        maze.set(fruit.getY(), fruit.getX(), fruit);
+        maze.set(((Fruit)fruit).getY(), ((Fruit)fruit).getX(), fruit);
     }
 
     public void checkEnchancedMode() {

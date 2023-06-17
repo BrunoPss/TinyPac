@@ -20,13 +20,14 @@ import java.util.Random;
 public class Blinky extends Ghost {
     //Internal Data
     public static final char SYMBOL = 'B';
-    private int initTime = 2;
+    private int initTime = 4;
     public static boolean ACTIVE = false;
     private IMazeElement auxF;
     private IMazeElement auxA;
     private Random rnd;
     private ArrayList<int[]> movementLog;
-    ListIterator<int[]> movementIterator;
+    private int movementIterator = 0;
+    //private ListIterator<int[]> movementIterator;
 
     //Constructor
     /**
@@ -88,16 +89,19 @@ public class Blinky extends Ghost {
                 }
 
                 if (gameData.getEnchancedPhase()) {
-                    if (movementIterator.hasPrevious()) {
-                        int[] aux;
-                        aux = movementIterator.previous();
-                        x = aux[0];
-                        y = aux[1];
+                    if (movementIterator-1 >= 0) {
+                        x = movementLog.get(movementIterator-1)[0];
+                        y = movementLog.get(movementIterator-1)[1];
+                        movementIterator--;
                     }
-                    //Blinky chegou aao destino
-                    if (x == gameData.getGhostDoor()[0] && y == gameData.getGhostDoor()[1]) {
 
-                    }
+                    //if (movementIterator.hasPrevious()) {
+                    //    int[] aux;
+                    //    aux = movementIterator.previous();
+                    //    x = aux[0];
+                    //    y = aux[1];
+                    //}
+                    //Blinky chegou aao destino
                 } else {
                     //Logica Movimentacao Normal Blinky
                     switch (direction) {
@@ -654,7 +658,8 @@ public class Blinky extends Ghost {
                         }
                     }
                     movementLog.add(new int[]{x, y});
-                    this.movementIterator = movementLog.listIterator(movementLog.size());
+                    this.movementIterator = movementLog.size();
+                    //this.movementIterator = movementLog.listIterator(movementLog.size());
                 }
             } else
                 initTime--;

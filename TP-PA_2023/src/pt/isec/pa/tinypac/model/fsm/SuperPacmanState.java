@@ -13,7 +13,7 @@ public class SuperPacmanState extends GameStateAdapter {
     SuperPacmanState(GameContext context, Game gameData) {
         super(context, gameData);
         System.out.println("SUPER PACMAN STATE");
-        gameData.setEnchancedTimeout(15);
+        gameData.setEnchancedTimeout(20 - gameData.getCurrentLevel());
         gameData.setEnchancedPhase(true);
     }
 
@@ -41,22 +41,22 @@ public class SuperPacmanState extends GameStateAdapter {
 
     @Override
     public boolean up() {
-        ((Pacman) gameData.getEntity(EntityType.PACMAN)).setDirection(Directions.UP);
+        gameData.setPacmanDirection(Directions.UP);
         return true;
     }
     @Override
     public boolean down() {
-        ((Pacman) gameData.getEntity(EntityType.PACMAN)).setDirection(Directions.DOWN);
+        gameData.setPacmanDirection(Directions.DOWN);
         return true;
     }
     @Override
     public boolean left() {
-        ((Pacman) gameData.getEntity(EntityType.PACMAN)).setDirection(Directions.LEFT);
+        gameData.setPacmanDirection(Directions.LEFT);
         return true;
     }
     @Override
     public boolean right() {
-        ((Pacman) gameData.getEntity(EntityType.PACMAN)).setDirection(Directions.RIGHT);
+        gameData.setPacmanDirection(Directions.RIGHT);
         return true;
     }
     @Override
@@ -71,6 +71,12 @@ public class SuperPacmanState extends GameStateAdapter {
         //context.gameEngine.pause();
         return true;
     }
+    @Override
+    public boolean endGame() {
+        changeState(new GameEndState(context, gameData));
+        return true;
+    }
+
     @Override
     public GameState getState() {
         return GameState.SUPERPACMANSTATE;

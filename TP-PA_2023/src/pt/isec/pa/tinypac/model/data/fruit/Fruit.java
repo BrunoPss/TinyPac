@@ -17,10 +17,13 @@ public class Fruit extends Element {
     public static boolean ACTIVE = false;
     private boolean visible;
     private int nextFruitTimeout;
+    private int x,y;
 
     //Constructor
     public Fruit(Game gameData, int x, int y) {
-        super(gameData, x, y);
+        super(gameData);
+        this.x = x;
+        this.y = y;
         this.visible = true;
         this.nextFruitTimeout = 20;
         ACTIVE = true;
@@ -28,6 +31,8 @@ public class Fruit extends Element {
 
     //Get Methods
     public boolean getVisible() { return visible; }
+    public int getX() { return x; }
+    public int getY() { return y; }
 
     //Set Methods
     public void setVisible(boolean state) { this.visible = state; }
@@ -36,10 +41,9 @@ public class Fruit extends Element {
     public void decrementNextFruitTimeout() {
         if (nextFruitTimeout > 0) {
             nextFruitTimeout--;
-            System.out.println("DECREMENT");
         }
         else {
-            System.out.println("CREATE");
+            System.out.println("CREATE FRUIT");
             gameData.newFruit();
             nextFruitTimeout = 20;
         }
