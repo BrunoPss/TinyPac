@@ -19,14 +19,8 @@ public class Cave extends Element {
     public static final char SYMBOL = 'y';
 
     //Constructor
-    /**
-     * Constructor
-     * @param gameData Game Data Model
-     * @param x Initial Position (x cord.)
-     * @param y Initial Position (y cord.)
-     */
-    public Cave(Game gameData, int x, int y) {
-        super(gameData, x, y);
+    public Cave(Game gameData) {
+        super(gameData);
     }
 
     //Get Methods

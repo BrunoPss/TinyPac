@@ -77,6 +77,7 @@ public class GameContext implements Serializable {
     public void setMainEQPreset(EQPreset eqPreset) { gameData.setMainEQPreset(eqPreset); }
     public int[] getEntityCord(EntityType type) { return gameData.getEntityCord(type); }
     public boolean isTopPlayer() { return gameData.isTopPlayer(); }
+    public void setEntitysActive() { gameData.setEntitiesActive(); }
 
     //Methods
     public boolean up() {

@@ -31,7 +31,8 @@ public class Inky extends Ghost {
     private IMazeElement auxA;
     private int failedAttempts;
     private ArrayList<int[]> movementLog;
-    ListIterator<int[]> movementIterator;
+    private int movementIterator = 0;
+    //private ListIterator<int[]> movementIterator;
 
     //Constructor
     public Inky(Game gameData, int x, int y) {
@@ -70,12 +71,18 @@ public class Inky extends Ghost {
                 }
 
                 if (gameData.getEnchancedPhase()) {
-                    if (movementIterator.hasPrevious()) {
-                        int[] aux;
-                        aux = movementIterator.previous();
-                        x = aux[0];
-                        y = aux[1];
+                    if (movementIterator-1 >= 0) {
+                        x = movementLog.get(movementIterator-1)[0];
+                        y = movementLog.get(movementIterator-1)[1];
+                        movementIterator--;
                     }
+
+                    // if (movementIterator.hasPrevious()) {
+                    //     int[] aux;
+                    //     aux = movementIterator.previous();
+                    //     x = aux[0];
+                    //     y = aux[1];
+                    //}
                 } else {
                     switch (objectiveCorner) {
                         case UPPER_RIGHT -> {
@@ -618,7 +625,8 @@ public class Inky extends Ghost {
                         }
                     }
                     movementLog.add(new int[]{x, y});
-                    this.movementIterator = movementLog.listIterator(movementLog.size());
+                    this.movementIterator = movementLog.size();
+                    //this.movementIterator = movementLog.listIterator(movementLog.size());
                 }
             } else
                 initTime--;

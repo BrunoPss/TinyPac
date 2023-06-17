@@ -21,6 +21,7 @@ public class Warp extends Element {
      * Reference to the complementary Warp Element
      */
     private Warp complementWarp = null;
+    private int x,y;
 
     //Constructor
     /**
@@ -30,11 +31,14 @@ public class Warp extends Element {
      * @param y Initial Position (y cord.)
      */
     public Warp(Game gameData, int x, int y) {
-        super(gameData, x, y);
+        super(gameData);
+        this.x = x;
+        this.y = y;
     }
 
     //Get Methods
-
+    public int getX() { return x; }
+    public int getY() { return y; }
     /**
      * Gets the complementary Warp Element
      * @return Reference to the complementary Warp Element

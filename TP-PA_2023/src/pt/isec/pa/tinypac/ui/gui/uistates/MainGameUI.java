@@ -408,7 +408,6 @@ public class MainGameUI extends BorderPane {
         //Keyboard Key Press ActionEvent
         this.setOnKeyPressed( event -> {
             KeyCode key = event.getCode();
-            System.out.println(key);
             switch (key) {
                 case W -> gameManager.up();
                 case S -> gameManager.down();

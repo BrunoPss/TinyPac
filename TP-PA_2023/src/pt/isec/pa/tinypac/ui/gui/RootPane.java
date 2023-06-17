@@ -71,7 +71,6 @@ public class RootPane extends BorderPane {
         mPlayer.setOnEndOfMedia( this::nextSong );
     }
     private void nextSong() {
-        System.out.println("END SONG");
         MediaManager.nextSong(gameManager.getMusicPreset());
         mPlayer = new MediaPlayer(Objects.requireNonNull(MediaManager.getMedia(gameManager.getMusicPreset())));
         equalizer = mPlayer.getAudioEqualizer();
@@ -86,7 +85,6 @@ public class RootPane extends BorderPane {
         StringBuilder currentMediaSource = new StringBuilder(mPlayer.getMedia().getSource());
         StringBuilder mediaFolder = new StringBuilder(currentMediaSource.substring(currentMediaSource.lastIndexOf("/", currentMediaSource.lastIndexOf("/") - 1) + 1, currentMediaSource.lastIndexOf("/")));
         if (!mediaFolder.toString().equals(gameManager.getMusicPreset().toString())) {
-            System.out.println("STOP");
             mPlayer.stop();
             MediaManager.loadPlaylist(gameManager.getMusicPreset());
             mPlayer = new MediaPlayer(Objects.requireNonNull(MediaManager.getMedia(gameManager.getMusicPreset())));

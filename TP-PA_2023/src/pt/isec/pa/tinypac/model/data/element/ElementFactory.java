@@ -46,13 +46,13 @@ public class ElementFactory {
      */
     public static Element createElement(ElementType type, Game gameData, int x, int y) {
         return switch (type) {
-            case WALL -> new Wall(gameData, x, y);
+            case WALL -> new Wall(gameData);
             case WARP -> new Warp(gameData, x, y);
-            case BALL -> new Ball(gameData, x, y);
+            case BALL -> new Ball(gameData);
             case FRUIT -> new Fruit(gameData, x, y);
-            case SUPER_BALL -> new SuperBall(gameData, x, y);
-            case PORTAL -> new Portal(gameData, x, y);
-            case CAVE -> new Cave(gameData, x, y);
+            case SUPER_BALL -> new SuperBall(gameData);
+            case PORTAL -> new Portal(gameData);
+            case CAVE -> new Cave(gameData);
         };
     }
 

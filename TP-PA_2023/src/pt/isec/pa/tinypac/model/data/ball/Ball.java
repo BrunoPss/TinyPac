@@ -19,14 +19,8 @@ public class Ball extends Element {
     public static final char SYMBOL = 'o';
 
     //Constructor
-    /**
-     * Constructor
-     * @param gameData Game Data Model
-     * @param x Initial Position (x cord.)
-     * @param y Initial Position (y cord.)
-     */
-    public Ball(Game gameData, int x, int y) {
-        super(gameData, x, y);
+    public Ball(Game gameData) {
+        super(gameData);
     }
 
     //Get Methods

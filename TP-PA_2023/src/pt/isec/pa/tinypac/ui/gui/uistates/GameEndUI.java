@@ -4,11 +4,14 @@ import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
 import pt.isec.pa.tinypac.model.GameManager;
 import pt.isec.pa.tinypac.model.fsm.GameState;
+import pt.isec.pa.tinypac.ui.gui.resources.ImageManager;
 
 import java.util.Optional;
 
@@ -16,8 +19,9 @@ public class GameEndUI extends BorderPane {
     //Internal Data
     private final GameManager gameManager;
     private Button submitButton, exitBtn;
-    TextField nomeTextField;
-    VBox addTop5Pane;
+    private TextField nomeTextField;
+    private VBox addTop5Pane;
+    private Label levelInfo, scoreInfo, lifesInfo;
 
     //Constructor
     public GameEndUI(GameManager gameManager) {
@@ -42,45 +46,99 @@ public class GameEndUI extends BorderPane {
 
     //Internal Functions
     private void createViews() {
+        //Title Box
+        VBox titleBox = new VBox();
+        titleBox.setAlignment(Pos.CENTER);
+        //Title
+        Label title = new Label("Game End");
+        title.setAlignment(Pos.CENTER);
+        title.setPadding(new Insets(15));
+        title.setStyle("-fx-font-size: 30; -fx-font-weight: bold");
+        titleBox.getChildren().addAll(title);
+
         //Info Pane
         VBox infoPane = new VBox();
+        infoPane.setSpacing(40);
         infoPane.setAlignment(Pos.CENTER);
-        infoPane.setSpacing(20);
-        infoPane.setPadding(new Insets(20));
-        Label info1 = new Label("Info 1");
-        Label info2 = new Label("Info 2");
-        Label info3 = new Label("Info 3");
-        infoPane.getChildren().addAll(info1, info2, info3);
+        //Info Title
+        Label infoTitle = new Label("Game Informations");
+        infoTitle.setStyle("-fx-font-size: 20; -fx-font-weight: bold");
+        //Info Block
+        TilePane infoBlock = new TilePane();
+        infoBlock.setHgap(40);
+        infoBlock.setVgap(40);
+        infoBlock.setAlignment(Pos.CENTER);
+        //Level Block
+        VBox levelBox = new VBox();
+        levelBox.setStyle("-fx-border-width: 1; -fx-border-color: black;");
+        levelBox.setAlignment(Pos.CENTER);
+        levelBox.setPadding(new Insets(5));
+        Label levelLabel = new Label("Level");
+        levelInfo = new Label();
+        levelBox.getChildren().addAll(levelLabel, levelInfo);
+
+        //Score Block
+        VBox scoreBox = new VBox();
+        scoreBox.setStyle("-fx-border-width: 1; -fx-border-color: black;");
+        scoreBox.setAlignment(Pos.CENTER);
+        scoreBox.setPadding(new Insets(5));
+        Label scoreLabel = new Label("Score");
+        scoreInfo = new Label();
+        scoreBox.getChildren().addAll(scoreLabel, scoreInfo);
+
+        //Lifes Block
+        VBox lifesBox = new VBox();
+        lifesBox.setStyle("-fx-border-width: 1; -fx-border-color: black;");
+        lifesBox.setAlignment(Pos.CENTER);
+        lifesBox.setPadding(new Insets(5));
+        Label lifesLabel = new Label("Vidas");
+        lifesInfo = new Label();
+        lifesBox.getChildren().addAll(lifesLabel, lifesInfo);
+
+        infoBlock.getChildren().addAll(levelBox, scoreBox, lifesBox);
+        infoPane.getChildren().addAll(infoTitle, infoBlock);
 
         //Top5 Add Pane
         addTop5Pane = new VBox();
         addTop5Pane.setAlignment(Pos.CENTER);
         addTop5Pane.setSpacing(20);
         addTop5Pane.setPadding(new Insets(20));
-        Label addTop5Title = new Label("Parabens");
-        Label addTop5SubTitle = new Label("Entrou no Top 5");
+        addTop5Pane.setStyle("-fx-border-width: 1; -fx-border-color: black");
+        Label addTop5Title = new Label("Top 5");
+        addTop5Title.setStyle("-fx-font-size: 20; -fx-font-weight: bold");
+        Label addTop5SubTitle = new Label("Insira o seu nome");
         //Campo Nome
         HBox nomeField = new HBox();
         nomeField.setSpacing(10);
         nomeField.setAlignment(Pos.CENTER);
         Label nomeLabel = new Label("Nome");
         nomeTextField = new TextField();
+
         submitButton = new Button("Submeter");
 
+        //Exit Button Box
+        VBox exitBtnBox = new VBox();
+        exitBtnBox.setAlignment(Pos.CENTER);
+        exitBtnBox.setPadding(new Insets(20));
+        exitBtnBox.setSpacing(10);
         //Exit Button
         exitBtn = new Button("Exit");
+        exitBtn.setAlignment(Pos.CENTER);
+        exitBtnBox.getChildren().addAll(exitBtn);
 
-        nomeField.getChildren().addAll(nomeLabel, nomeTextField, submitButton);
-        addTop5Pane.getChildren().addAll(addTop5Title, addTop5SubTitle, nomeField);
+        nomeField.getChildren().addAll(nomeLabel, nomeTextField);
+        addTop5Pane.getChildren().addAll(addTop5Title, addTop5SubTitle, nomeField, submitButton);
 
-        this.setLeft(infoPane);
+        this.setTop(titleBox);
+        this.setCenter(infoPane);
         this.setRight(addTop5Pane);
-        this.setBottom(exitBtn);
+        this.setBottom(exitBtnBox);
     }
 
     private void registerHandlers() {
         //Property Change Listener
-        gameManager.addPropertyChangeListener( evt -> { update();});
+        //gameManager.addPropertyChangeListener( evt -> { update();});
+        gameManager.addPropertyChangeListener(evt -> Platform.runLater(this::update));
 
         //Submit Button ActionEvent
         submitButton.setOnAction( event -> {
@@ -101,8 +159,16 @@ public class GameEndUI extends BorderPane {
 
     private void update() {
         //Top Player Update
-        addTop5Pane.setVisible(gameManager.isTopPlayer());
+        addTop5Pane.setDisable(!gameManager.isTopPlayer());
 
+        //Level Info Update
+        levelInfo.setText(Integer.toString(gameManager.getCurrentLevel()+1));
+
+        //Score Info Update
+        scoreInfo.setText(Integer.toString(gameManager.getPacmanPoints()));
+
+        //Lifes Info Update
+        lifesInfo.setText(Integer.toString(gameManager.getPacmanLives()));
 
         if (gameManager.getState() != GameState.GAME_ENDSTATE ||
                 gameManager.getMainMenuState()) {

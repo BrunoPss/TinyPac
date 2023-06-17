@@ -38,10 +38,8 @@ public class MediaManager {
             playList.add(file.getName());
         }
         Collections.shuffle(playList, rand);
-        System.out.println(playList);
     }
     public static Media getMedia(MusicPreset musicPreset) {
-        System.out.println(playList.get(currentSong));
         Media media = medias.get(playList.get(currentSong));
 
         if (media == null) {

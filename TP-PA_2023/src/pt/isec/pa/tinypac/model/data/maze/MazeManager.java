@@ -55,27 +55,20 @@ public class MazeManager {
                     case 'y' -> {
                         switch (f) {
                             case 1 -> {
-                                //DESCOMENTAR
                                 gameData.setEntity(EntityType.BLINKY, EntityFactory.createEntity(EntityType.BLINKY, gameData, x, y));
-                                //gameData.getMaze().set(y,x, gameData.getEntity(EntityType.BLINKY));
                             }
                             case 2 -> {
                                 gameData.setEntity(EntityType.CLYDE, EntityFactory.createEntity(EntityType.CLYDE, gameData, x, y));
-                                //gameData.getMaze().set(y,x, gameData.getEntity(EntityType.CLYDE));
                             }
                             case 3 -> {
                                 gameData.setEntity(EntityType.INKY, EntityFactory.createEntity(EntityType.INKY, gameData, x, y));
-                                //gameData.getMaze().set(y,x, gameData.getEntity(EntityType.INKY));
                             }
                             case 4 -> {
                                 gameData.setEntity(EntityType.PINKY, EntityFactory.createEntity(EntityType.PINKY, gameData, x, y));
-                                //gameData.getMaze().set(y,x, gameData.getEntity(EntityType.PINKY));
                             }
                         }
                         f++;
                         gameData.setIMazeElement(y,x, ElementFactory.createElement(ElementType.WALL, gameData, x, y));
-                        //System.out.println("WALL: " + x + " " + y);
-                        //System.out.println(gameData.getMazeElement(x,y));
                     }
                     case 'Y' -> {
                         gameData.setGhostDoor(x,y);
@@ -93,11 +86,8 @@ public class MazeManager {
                     case 'M' -> {
                         gameData.setEntity(EntityType.PACMAN, EntityFactory.createEntity(EntityType.PACMAN, gameData, x, y));
                         gameData.setIMazeElement(y,x, gameData.getEntity(EntityType.PACMAN));
-                        //System.out.println(gameData.getEntity(EntityType.PACMAN));
                     }
                     case 'O' -> gameData.setIMazeElement(y,x, ElementFactory.createElement(ElementType.SUPER_BALL, gameData, x, y));
-                    //case 'Y' -> maze.set(y,x, ElementFactory.createElement(ElementType.PORTAL, maze, x, y));
-                    //case 'y' -> maze.set(y,x, ElementFactory.createElement(ElementType.CAVE, maze, x, y));
                 }
                 //Condicao apenas com \n porque na mudanca de linha do ficheiro contem \n\r
                 if ((char) content == '\n') {

@@ -20,14 +20,8 @@ public class SuperBall extends Element {
     public static boolean ACTIVE = false;
 
     //Constructor
-    /**
-     * Constructor
-     * @param gameData Game Data Model
-     * @param x Initial Position (x cord.)
-     * @param y Initial Position (y cord.)
-     */
-    public SuperBall(Game gameData, int x, int y) {
-        super(gameData, x, y);
+    public SuperBall(Game gameData) {
+        super(gameData);
         ACTIVE = true;
     }
 

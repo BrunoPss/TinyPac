@@ -5,15 +5,18 @@ import pt.isec.pa.tinypac.model.data.game.Game;
 
 public abstract class Entity extends Element {
     //Internal Data
-
+    protected int x, y;
 
     //Constructor
     public Entity(Game gameData, int x, int y) {
-        super(gameData, x, y);
+        super(gameData);
+        this.x = x;
+        this.y = y;
     }
 
     //Get Methods
-
+    public int getX() { return x; }
+    public int getY() { return y; }
 
     //Set Methods
 
