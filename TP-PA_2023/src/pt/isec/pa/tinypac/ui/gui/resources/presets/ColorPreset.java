@@ -9,7 +9,18 @@ package pt.isec.pa.tinypac.ui.gui.resources.presets;
  */
 
 public enum ColorPreset {
-    COLOR_PRESET1, COLOR_PRESET2, COLOR_PRESET3;
+    /**
+     * COLOR_PRESET1
+     */
+    COLOR_PRESET1,
+    /**
+     * COLOR_PRESET2
+     */
+    COLOR_PRESET2,
+    /**
+     * COLOR_PRESET3
+     */
+    COLOR_PRESET3;
 
     @Override
     public String toString() {

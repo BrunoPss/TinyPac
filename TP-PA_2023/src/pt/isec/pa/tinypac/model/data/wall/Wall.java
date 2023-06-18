@@ -7,8 +7,8 @@ import pt.isec.pa.tinypac.model.data.game.Game;
  * Wall Class
  * <p>Class that represents the Wall Element</p>
  *
- * @ author Bruno Guiomar
- * @ version 1.0.0
+ * @author Bruno Guiomar
+ * @version 1.0.0
  */
 
 public class Wall extends Element {

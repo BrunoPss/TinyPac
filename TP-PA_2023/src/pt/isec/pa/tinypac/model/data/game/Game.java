@@ -24,6 +24,13 @@ import pt.isec.pa.tinypac.ui.gui.resources.presets.MusicPreset;
 import java.io.*;
 import java.util.*;
 
+/**
+ * Game Class
+ * <p>Class that represents the Data Model</p>
+ * @author Bruno Guiomar
+ * @version 1.0.0
+ */
+
 public class Game implements Serializable {
     //Internal Data
     private Map<EntityType, Entity> entities;
@@ -56,6 +63,10 @@ public class Game implements Serializable {
 
 
     //Constructor
+    /**
+     * Constructor
+     * @param context Finite State Machine
+     */
     public Game(GameContext context) {
         this.entities = new HashMap<>();
         this.levels = new ArrayList<>();
@@ -86,48 +97,194 @@ public class Game implements Serializable {
 
     //Game Configurations
     //Getters Config
+
+    /**
+     * getMainMenuState
+     * @return mainMenuState
+     */
     public boolean getMainMenuState() { return mainMenuState; }
+    /**
+     * getTop5MenuState
+     * @return top5MenuState
+     */
     public boolean getTop5MenuState() { return top5MenuState; }
+    /**
+     * getMusicPlayStatus
+     * @return musicPlayStatus
+     */
     public boolean getMusicPlayStatus() {
         return musicPlayStatus;
     }
+    /**
+     * getMusicVolume
+     * @return musicVolume
+     */
     public int getMusicVolume() { return musicVolume; }
+    /**
+     * getMuted
+     * @return muted
+     */
     public boolean getMuted() { return muted; }
+    /**
+     * getMainColorPreset
+     * @return mainColorPreset
+     */
     public ColorPreset getMainColorPreset() { return mainColorPreset; }
+    /**
+     * getMusicPreset
+     * @return musicPreset
+     */
     public MusicPreset getMusicPreset() { return musicPreset; }
+    /**
+     * getMainEQPreset
+     * @return mainEQPreset
+     */
     public EQPreset getMainEQPreset() { return mainEQPreset; }
+    /**
+     * getTop5List
+     * @return top5List
+     */
     public ArrayList<Player> getTop5List() { return top5List; }
 
     //Setters Config
+
+    /**
+     * setMainMenuState
+     * @param value boolean
+     */
     public void setMainMenuState(boolean value) { this.mainMenuState = value; }
+    /**
+     * setTop5MenuState
+     * @param value boolean
+     */
     public void setTop5MenuState(boolean value) { this.top5MenuState = value; }
+    /**
+     * setMusicPlayStatus
+     * @param value boolean
+     */
     public void setMusicPlayStatus(boolean value) {
         this.musicPlayStatus = value;
     }
+
+    /**
+     * setMusicVolume
+     * @param musicVolume int
+     */
     public void setMusicVolume(int musicVolume) { this.musicVolume = musicVolume; }
+
+    /**
+     * setMuted
+     * @param value boolean
+     */
     public void setMuted(boolean value) { this.muted = value; }
+
+    /**
+     * setMainColorPreset
+     * @param colorPreset ColorPreset
+      */
     public void setMainColorPreset(ColorPreset colorPreset) { this.mainColorPreset = colorPreset; }
+
+    /**
+     * setMusicPreset
+     * @param musicPreset MusicPreset
+     */
     public void setMusicPreset(MusicPreset musicPreset) { this.musicPreset = musicPreset; }
+
+    /**
+     * setMainEQPreset
+     * @param eqPreset EQPreset
+     */
     public void setMainEQPreset(EQPreset eqPreset) { this.mainEQPreset = eqPreset; }
 
     //Get Methods
-    public Entity getEntity(EntityType type) { return entities.get(type); } //ELIMINAR (FAZER SET CONTROLADO DA DIRECTION)
+
+    /**
+     * getEntity
+     * @param type EntityType
+     * @return entity
+     */
+    public Entity getEntity(EntityType type) { return entities.get(type); }
+
+    /**
+     * getGhostDoor
+     * @return ghostDoor
+     */
     public int[] getGhostDoor() { return ghostDoor; }
+
+    /**
+     * fsmEnchance
+     * Enhance Pacman
+     */
     public void fsmEnchance() { context.enhancedPacman(); }
+
+    /**
+     * getEvolveInstantsPacman
+     * @return evolveInstantsPacman
+     */
     public int getEvolveInstantsPacman() { return evolveInstantsPacman; }
+
+    /**
+     * getEvolveInstantsGhosts
+     * @return evolveInstantsGhosts
+     */
     public int getEvolveInstantsGhosts() { return evolveInstantsGhosts; }
+
+    /**
+     * getCurrentLevelFilePath
+     * @return currentLevelFilePath
+     */
     public String getCurrentLevelFilePath() { return levels.get(currentLevel); }
+
+    /**
+     * getPacmanGhostsEaten
+     * @return pacmanGhostsEaten
+     */
     public int getPacmanGhostsEaten() { return pacmanGhostsEaten; }
+
+    /**
+     * Increment Ghosts Eaten
+     */
     public void incPacmanGhostsEaten() {
         if (pacmanGhostsEaten < 4)
             pacmanGhostsEaten++;
         else
             pacmanGhostsEaten = 0;
     }
+
+    /**
+     * getIMazeElement
+     * @param y y coordinate
+     * @param x x coordinate
+     * @return element
+     */
     public IMazeElement getIMazeElement(int y, int x) { return maze.get(y,x); }
+
+    /**
+     * setIMazeElement
+     * @param y y coordinate
+     * @param x x coordinate
+     * @param element element
+     */
     public void setIMazeElement(int y, int x, IMazeElement element) { maze.set(y,x,element); }
+
+    /**
+     * getMazeHeight
+     * @return mazeHeight
+     */
     public int getMazeHeight() { return maze.getMaze().length; }
+
+    /**
+     * getMazeLength
+     * @return mazeLength
+     */
     public int getMazeLength() { return maze.getMaze()[0].length; }
+
+    /**
+     * getMazeElement
+     * @param x x coordinate
+     * @param y y coordinate
+     * @return element char
+     */
     public char getMazeElement(int x, int y) {
         IMazeElement element = maze.get(y,x);
         if (element != null) {
@@ -137,17 +294,69 @@ public class Game implements Serializable {
             return ' ';
         }
     }
+
+    /**
+     * getEnchancedPhase
+     * @return enchancedPhase
+     */
     public boolean getEnchancedPhase() { return enchancedPhase; }
+
+    /**
+     * getEnchancedTimeout
+     * @return enchancedTimeout
+     */
     public int getEnchancedTimeout() { return enchancedTimeout; }
+
+    /**
+     * getTotalBalls
+     * @return totalBalls
+     */
     public int getTotalBalls() { return totalBalls; }
+
+    /**
+     * getCurrentLevel
+     * @return currentLevel
+     */
     public int getCurrentLevel() { return currentLevel; }
+
+    /**
+     * setPacmanDirection
+     * @param direction pacmanDirection
+     */
     public void setPacmanDirection(Directions direction) { ((Pacman)entities.get(EntityType.PACMAN)).setDirection(direction); }
+
+    /**
+     * getPacmanDirections
+     * @return pacman Direction
+     */
     public Directions getPacmanDirections() { return ((Pacman) entities.get(EntityType.PACMAN)).getDirection(); }
+
+    /**
+     * getPacmanPoints
+     * @return pacmanPoints
+     */
     public int getPacmanPoints() { return ((Pacman) entities.get(EntityType.PACMAN)).getPoints(); }
+
+    /**
+     * getPacmanLives
+     * @return pacmanLives
+     */
     public int getPacmanLives() { return pacmanLives; }
+
+    /**
+     * getEntityCord
+     * @param type EntityType
+     * @return Entity Cord
+     */
     public int[] getEntityCord(EntityType type) {
         return new int[]{entities.get(type).getX(), entities.get(type).getY()};
     }
+
+    /**
+     * getElementActive
+     * @param type ElementType
+     * @return elementActive
+     */
     public boolean getElementActive(ElementType type) {
         return switch (type) {
             case FRUIT -> Fruit.ACTIVE;
@@ -155,6 +364,12 @@ public class Game implements Serializable {
             default -> false;
         };
     }
+
+    /**
+     * getEntityActive
+     * @param type EntityType
+     * @return entityActive
+     */
     public boolean getEntityActive(EntityType type) {
         return switch (type) {
             case PINKY -> Pinky.ACTIVE;
@@ -164,6 +379,12 @@ public class Game implements Serializable {
             default -> false;
         };
     }
+
+    /**
+     * setEntityActive
+     * @param type EntityType
+     * @param value boolean
+     */
     public void setEntityActive(EntityType type, boolean value) {
         switch (type) {
             case PINKY -> Pinky.ACTIVE = value;
@@ -172,6 +393,10 @@ public class Game implements Serializable {
             case CLYDE -> Clyde.ACTIVE = value;
         };
     }
+
+    /**
+     * Set Entities Active
+     */
     public void setEntitiesActive() {
         setEntityActive(EntityType.BLINKY, true);
         setEntityActive(EntityType.CLYDE, true);
@@ -180,16 +405,58 @@ public class Game implements Serializable {
     }
 
     //Set Methods
+
+    /**
+     * setGhostDoor
+     * @param x x coordinate
+     * @param y y coordinate
+     */
     public void setGhostDoor(int x, int y) { this.ghostDoor[0] = x; this.ghostDoor[1] = y; }
+
+    /**
+     * setEntity
+     * @param type EntityType
+     * @param entity Entity
+     */
     public void setEntity(EntityType type, Entity entity) { entities.put(type, entity); }
+
+    /**
+     * setEnchancedPhase
+     * @param state boolean
+     */
     public void setEnchancedPhase(boolean state) { enchancedPhase = state; }
+
+    /**
+     * setEnchancedTimeout
+     * @param timeout Enhanced Timeout
+     */
     public void setEnchancedTimeout(int timeout) { enchancedTimeout = timeout; }
+
+    /**
+     * Set Super Ball Inactive
+     */
     public void setSuperBallInactive() { SuperBall.ACTIVE = false; }
+
+    /**
+     * Decrease Enhanced Timeout
+     */
     public void decreaseEnchancedTimeout() { enchancedTimeout--; }
+
+    /**
+     * Increment Total Balls
+     */
     public void incrementTotalBalls() { totalBalls++; }
+
+    /**
+     * Initialize Total Balls (0)
+     */
     public void initTotalBalls() { totalBalls = 0; }
+
+    /**
+     * insertPlayerTop5
+     * @param name Player Name
+     */
     public void insertPlayerTop5(String name) {
-        //Place = 0 alterar
         top5List.add(0, new Player(0, name, getPacmanPoints()));
         Collections.sort(top5List);
         top5List.forEach( (p) -> p.setPlace(top5List.indexOf(p)+1));
@@ -197,30 +464,53 @@ public class Game implements Serializable {
             top5List.remove(top5List.size()-1);
         }
     }
+
+    /**
+     * Decrement Total Balls
+     */
     public void decrementTotalBalls() {
         totalBalls--;
         if (!((Fruit) fruit).getVisible()) {
             ((Fruit) fruit).decrementNextFruitTimeout();
         }
     }
+
+    /**
+     * setFruit
+     * @param fruit Element
+     */
     public void setFruit(Element fruit) { this.fruit = fruit; }
+
+    /**
+     * Catch Fruit
+     */
     public void catchFruit() {
         ((Fruit) fruit).setVisible(false);
         Fruit.ACTIVE = false;
     }
+
+    /**
+     * Pacman Dead
+     */
     public void pacmanDead() {
         checkGameEnd();
         pacmanLives--;
         context.restart();
     }
-    public void increaseCurrentLevel() { currentLevel++; }
 
     //Methods
+
+    /**
+     * Initialize Maze
+     */
     public void initMaze() {
         System.out.println("CURRENT LEVEL " + currentLevel);
         maze = new Maze(MazeManager.getYSize(levels.get(currentLevel)), MazeManager.getXSize(levels.get(currentLevel)));
     }
 
+    /**
+     * Save Top5
+     */
     public void saveTop5() {
         File file = new File("top5/tinypac_top5.top");
 
@@ -231,6 +521,10 @@ public class Game implements Serializable {
             System.out.println(e);
         }
     }
+
+    /**
+     * Load Top5
+     */
     public void loadTop5() {
         File file = new File("top5/tinypac_top5.top");
 
@@ -242,15 +536,25 @@ public class Game implements Serializable {
         }
     }
 
+    /**
+     * isTopPlayer
+     * @return boolean (checks if a player enters the Top5)
+     */
     public boolean isTopPlayer() {
         return checkPlayerPointsTop5(getPacmanPoints());
     }
 
+    /**
+     * New Fruit
+     */
     public void newFruit() {
         Fruit.ACTIVE = true;
         maze.set(((Fruit)fruit).getY(), ((Fruit)fruit).getX(), fruit);
     }
 
+    /**
+     * Checks Enhanced Mode
+     */
     public void checkEnchancedMode() {
         //Enchanced Mode
         if (findValidInstantsPacman().contains(getEvolveInstantsPacman())) {
@@ -269,6 +573,10 @@ public class Game implements Serializable {
             }
         }
     }
+
+    /**
+     * Checks Level Change
+     */
     public void checkLevelChange() {
         //Change Level
         if (totalBalls == 0) {
@@ -281,38 +589,67 @@ public class Game implements Serializable {
             }
         }
     }
+
+    /**
+     * Checks Game End
+     */
     public void checkGameEnd() {
         //End Game
         if (pacmanLives <= 1) {
             context.endGame();
         }
     }
+
+    /**
+     * Evolve Entities
+     */
     public void evolveEntities() {
         //Entities Evolve
         entities.forEach((ElementType, Element) -> Element.move());
     }
+
+    /**
+     * Initialize Evolve Instants Pacman
+     */
     public void initializeEvolveInstantsPacman() {
         evolveInstantsPacman = 1;
         evolveInstantsGhosts = 1;
         validInstants = findValidInstantsPacman();
     }
+
+    /**
+     * Initialize Evolve Instants Ghosts
+     */
     public void initializeEvolveInstantsGhosts() {
         evolveInstantsPacman = 1;
         evolveInstantsGhosts = 1;
         validInstants = findValidInstantsGhosts();
     }
+
+    /**
+     * Increment Evolve Instants Pacman
+     */
     public void incrementEvolveInstantsPacman() {
         if (evolveInstantsPacman < 20)
             evolveInstantsPacman++;
         else
             evolveInstantsPacman = 1;
     }
+
+    /**
+     * Increment Evolve Instants Ghosts
+     */
     public void incrementEvolveInstantsGhosts() {
         if (evolveInstantsGhosts < 20)
             evolveInstantsGhosts++;
         else
             evolveInstantsGhosts = 1;
     }
+
+    /**
+     * findValidInstantsPacman
+     * @return Integer List
+     */
     public List<Integer> findValidInstantsPacman() {
         int range = 20;
         int partSize = range / 2;
@@ -326,6 +663,11 @@ public class Game implements Serializable {
         }
         return pontos;
     }
+
+    /**
+     * findValidInstantsGhosts
+     * @return Integer List
+     */
     public List<Integer> findValidInstantsGhosts() {
         int range = 20;
         int partSize = range / (currentLevel+2);

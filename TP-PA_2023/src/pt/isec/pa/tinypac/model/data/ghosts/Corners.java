@@ -9,5 +9,8 @@ package pt.isec.pa.tinypac.model.data.ghosts;
  */
 
 public enum Corners {
+    /**
+     * Corners
+     */
     UPPER_LEFT, UPPER_RIGHT, BOTTOM_RIGHT, BOTTOM_LEFT
 }

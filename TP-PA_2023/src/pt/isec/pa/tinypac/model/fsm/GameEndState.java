@@ -37,7 +37,7 @@ public class GameEndState extends GameStateAdapter {
 
     /**
      * Gets the current State
-     * @return
+     * @return current State
      */
     @Override
     public GameState getState() {

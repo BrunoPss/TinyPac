@@ -12,7 +12,14 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 
+/**
+ * Game Test Class
+ */
+
 public class GameTest {
+    /**
+     * setEntityActiveTest1
+     */
     @Test
     public void setEntityActiveTest1() {
         //Arrange
@@ -36,6 +43,9 @@ public class GameTest {
         assertTrue(testVar4);
     }
 
+    /**
+     * setGhostDoorTest1
+     */
     @Test
     public void setGhostDoorTest1() {
         //Arrange
@@ -50,6 +60,9 @@ public class GameTest {
         assertArrayEquals(new int[]{13,25}, testVar1);
     }
 
+    /**
+     * setEnchancedTimeTest1
+     */
     @Test
     public void setEnchancedTimeTest1() {
         //Arrange
@@ -64,6 +77,9 @@ public class GameTest {
         assertEquals(50, testVar1);
     }
 
+    /**
+     * setEntityTest1
+     */
     @Test
     public void setEntityTest1() {
         //Arrange

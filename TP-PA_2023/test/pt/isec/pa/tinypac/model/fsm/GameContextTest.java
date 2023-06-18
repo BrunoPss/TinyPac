@@ -6,7 +6,14 @@ import pt.isec.pa.tinypac.model.data.game.Game;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
+/**
+ * GameContextTest Class
+ */
+
 public class GameContextTest {
+    /**
+     * changePauseStateTest1
+     */
     @Test
     public void changePauseStateTest1() {
         //Arrange
@@ -21,6 +28,10 @@ public class GameContextTest {
         //Assert
         assertEquals(GameState.NORMALRUNSTATE, state);
     }
+
+    /**
+     * changePauseStateTest2
+     */
     @Test
     public void changePauseStateTest2() {
         //Arrange
@@ -36,6 +47,9 @@ public class GameContextTest {
         assertEquals(GameState.SUPERPACMANSTATE, state);
     }
 
+    /**
+     * changeInitStateTest1
+     */
     @Test
     public void changeInitStateTest1() {
         //Arrange
@@ -50,6 +64,10 @@ public class GameContextTest {
         //Assert
         assertEquals(GameState.INITSTATE, state);
     }
+
+    /**
+     * changeInitStateTest2
+     */
     @Test
     public void changeInitStateTest2() {
         //Arrange
@@ -65,6 +83,9 @@ public class GameContextTest {
         assertEquals(GameState.NORMALRUNSTATE, state);
     }
 
+    /**
+     * changeNormalStateTest1
+     */
     @Test
     public void changeNormalStateTest1() {
         //Arrange
@@ -79,6 +100,10 @@ public class GameContextTest {
         //Assert
         assertEquals(GameState.INITSTATE, state);
     }
+
+    /**
+     * changeNormalStateTest2
+     */
     @Test
     public void changeNormalStateTest2() {
         //Arrange
@@ -94,6 +119,9 @@ public class GameContextTest {
         assertEquals(GameState.GAME_ENDSTATE, state);
     }
 
+    /**
+     * changeEndStateTest1
+     */
     @Test
     public void changeEndStateTest1() {
         //Arrange
@@ -108,6 +136,10 @@ public class GameContextTest {
         //Assert
         assertEquals(GameState.GAME_ENDSTATE, state);
     }
+
+    /**
+     * changeEndStateTest2
+     */
     @Test
     public void changeEndStateTest2() {
         //Arrange
@@ -122,6 +154,9 @@ public class GameContextTest {
         assertFalse(testVar);
     }
 
+    /**
+     * changeSuperStateTest1
+     */
     @Test
     public void changeSuperStateTest1() {
         //Arrange
@@ -137,6 +172,9 @@ public class GameContextTest {
         assertEquals(GameState.NORMALRUNSTATE, state);
     }
 
+    /**
+     * changeSuperStateTest2
+     */
     @Test
     public void changeSuperStateTest2() {
         //Arrange

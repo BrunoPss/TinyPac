@@ -8,7 +8,14 @@ import pt.isec.pa.tinypac.model.fsm.GameState;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+/**
+ * GameManagerTest Class
+ */
+
 public class GameManagerTest {
+    /**
+     * changeNormalStateTest1
+     */
     @Test
     public void changeNormalStateTest1() {
         //Arrange
@@ -21,6 +28,10 @@ public class GameManagerTest {
         //Assert
         assertEquals(GameState.NORMALRUNSTATE, state);
     }
+
+    /**
+     * changeNormalStateTest2
+     */
     @Test
     public void changeNormalStateTest2() {
         //Arrange
@@ -34,6 +45,9 @@ public class GameManagerTest {
         assertEquals(GameState.INITSTATE, state);
     }
 
+    /**
+     * setVolumeTest1
+     */
     @Test
     public void setVolumeTest1() {
         //Arrange
@@ -50,6 +64,9 @@ public class GameManagerTest {
         assertEquals(20, testVolume, testVolume2);
     }
 
+    /**
+     * setMainMenuStateTest1
+     */
     @Test
     public void setMainMenuStateTest1() {
         //Arrange

@@ -9,5 +9,8 @@ package pt.isec.pa.tinypac.model.data.element;
  */
 
 public enum ElementType {
+    /**
+     * Element Type
+     */
     WALL, WARP, BALL, FRUIT, SUPER_BALL, PORTAL, CAVE
 }

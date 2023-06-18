@@ -14,13 +14,14 @@ import java.io.IOException;
 
 /**
  * Main Class
- * <p>
- *
- * @ author Bruno Guiomar
- * @ version 1.0.0
+ * @author Bruno Guiomar
+ * @version 1.0.0
  */
 
 public class Main {
+    /**
+     * Game Manager
+     */
     public static GameManager gameManager;
     static {
         IGameEngine gameEngine = new GameEngine();
@@ -28,6 +29,11 @@ public class Main {
         gameEngine.registerClient((g,t) -> gameManager.update());
         gameEngine.start(100);
     }
+
+    /**
+     * Main Function
+     * @param args Arguments
+     */
     public static void main(String[] args) {
         //IGameEngine gameEngine = new GameEngine();
         //GameContext fsm = new GameContext(gameEngine);

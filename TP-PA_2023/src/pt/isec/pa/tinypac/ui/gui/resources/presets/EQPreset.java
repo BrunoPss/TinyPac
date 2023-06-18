@@ -12,7 +12,42 @@ import javafx.scene.media.EqualizerBand;
  */
 
 public enum EQPreset {
-    NONE, ACOUSTIC, ELECTRONIC, LATIN, PIANO, POP, ROCK, BASS_BOOSTER, HIGH_BOOSTER;
+    /**
+     * NONE
+     */
+    NONE,
+    /**
+     * ACOUSTIC
+     */
+    ACOUSTIC,
+    /**
+     * ELECTRONIC
+     */
+    ELECTRONIC,
+    /**
+     * LATIN
+     */
+    LATIN,
+    /**
+     * PIANO
+     */
+    PIANO,
+    /**
+     * POP
+     */
+    POP,
+    /**
+     * ROCK
+     */
+    ROCK,
+    /**
+     * BASS_BOOSTER
+     */
+    BASS_BOOSTER,
+    /**
+     * HIGH_BOOSTER
+     */
+    HIGH_BOOSTER;
 
     /**
      * Loads a EQ Preset

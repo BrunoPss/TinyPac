@@ -30,7 +30,17 @@ public class Player implements Serializable, Comparable<Player> {
     }
 
     //Get Methods
+
+    /**
+     * getPlace
+     * @return Player Place
+     */
     public int getPlace() { return this.place; }
+
+    /**
+     * getUserName
+     * @return player user name
+     */
     public String getUserName() { return this.userName; }
 
     /**
