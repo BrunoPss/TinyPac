@@ -6,6 +6,10 @@ import pt.isec.pa.tinypac.utils.PAInput;
 
 import java.io.IOException;
 
+/**
+ * Text Game UI
+ */
+
 public class TextGameUI {
     //Internal Data
     GameContext fsm;
@@ -13,6 +17,12 @@ public class TextGameUI {
     boolean finish = false;
 
     //Constructor
+
+    /**
+     * Constructor
+     * @param fsm Finite State Machine
+     * @param cursesUI Curses
+     */
     public TextGameUI(GameContext fsm, CursesGameUI cursesUI) {
         this.fsm = fsm;
         this.cursesUI = cursesUI;
@@ -25,6 +35,11 @@ public class TextGameUI {
 
 
     //Methods
+
+    /**
+     * initMenu
+     * @throws IOException exception
+     */
     public void initMenu() throws IOException {
         int op;
         do {

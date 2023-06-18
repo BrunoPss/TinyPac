@@ -43,6 +43,12 @@ public class ImageManager {
             }
         return image;
     }
+
+    /**
+     * getExternalImage
+     * @param filename filename
+     * @return Image
+     */
     public static Image getExternalImage(String filename) {
         Image image = images.get(filename);
         if (image == null)
@@ -54,6 +60,11 @@ public class ImageManager {
             }
         return image;
     }
+
+    /**
+     * purgeImage
+     * @param filename filename
+     */
     public static void purgeImage(String filename) { images.remove(filename); }
 
     //Overrides

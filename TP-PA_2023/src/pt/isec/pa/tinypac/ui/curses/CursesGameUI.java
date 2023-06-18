@@ -15,6 +15,9 @@ import pt.isec.pa.tinypac.model.data.ball.Ball;
 
 import java.io.IOException;
 
+/**
+ * Curses Game UI Class
+ */
 
 public class CursesGameUI implements IGameEngineEvolve {
     //Internal Data
@@ -24,6 +27,12 @@ public class CursesGameUI implements IGameEngineEvolve {
     GameContext fsm;
 
     //Constructor
+
+    /**
+     * CursesGameUI
+     * @param fsm Finite State Machine
+     * @throws IOException Exception
+     */
     public CursesGameUI(GameContext fsm) throws IOException {
         this.fsm = fsm;
         screen = new DefaultTerminalFactory().createScreen();
@@ -40,6 +49,11 @@ public class CursesGameUI implements IGameEngineEvolve {
 
 
     //Methods
+
+    /**
+     * show
+     * @throws IOException Exception
+     */
     public void show() throws IOException {
         /*
         char[][] env = fsm.getMaze();

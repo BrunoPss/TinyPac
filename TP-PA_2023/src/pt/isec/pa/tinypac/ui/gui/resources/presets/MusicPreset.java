@@ -9,7 +9,18 @@ package pt.isec.pa.tinypac.ui.gui.resources.presets;
  */
 
 public enum MusicPreset {
-    LOFI, CALM, ELECTRONIC;
+    /**
+     * LOFI
+     */
+    LOFI,
+    /**
+     * CALM
+     */
+    CALM,
+    /**
+     * ELECTRONIC
+     */
+    ELECTRONIC;
 
     @Override
     public String toString() {

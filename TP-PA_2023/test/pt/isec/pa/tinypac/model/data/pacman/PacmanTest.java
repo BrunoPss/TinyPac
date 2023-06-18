@@ -12,7 +12,14 @@ import pt.isec.pa.tinypac.model.fsm.GameState;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
+/**
+ * PacmanTest Class
+ */
+
 public class PacmanTest {
+    /**
+     * pacmanDirectionsTest1
+     */
     @Test
     public void pacmanDirectionsTest1() {
         //Arrange
@@ -40,6 +47,9 @@ public class PacmanTest {
         assertEquals(Directions.UP, testVar4);
     }
 
+    /**
+     * pacmanPointsTest1
+     */
     @Test
     public void pacmanPointsTest1() {
         //Arrange
@@ -55,6 +65,9 @@ public class PacmanTest {
         assertEquals(0, testVar1, testVar2);
     }
 
+    /**
+     * pacmanSymbolTest
+     */
     @Test
     public void pacmanSymbolTest() {
         //Arrange
@@ -69,6 +82,9 @@ public class PacmanTest {
         assertEquals('M', testVar1);
     }
 
+    /**
+     * pacmanCordsTest
+     */
     @Test
     public void pacmanCordsTest() {
         //Arrange

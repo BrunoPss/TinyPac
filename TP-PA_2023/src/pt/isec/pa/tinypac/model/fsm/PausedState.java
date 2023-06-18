@@ -11,6 +11,9 @@ import pt.isec.pa.tinypac.model.data.game.Game;
 
 public class PausedState extends GameStateAdapter {
     //Internal Data
+    /**
+     * FSM Previous State
+     */
     GameState previousState;
 
     //Constructor

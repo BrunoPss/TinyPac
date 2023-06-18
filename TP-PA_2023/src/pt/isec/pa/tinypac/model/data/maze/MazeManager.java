@@ -15,6 +15,10 @@ import java.io.IOException;
 import java.util.Dictionary;
 import java.util.Hashtable;
 
+/**
+ * MazeManager Class
+ */
+
 public class MazeManager {
     //Internal Data
 
@@ -29,6 +33,12 @@ public class MazeManager {
 
 
     //Methods
+
+    /**
+     * loadLevel
+     * @param gameData gameData
+     * @param filePath filepath
+     */
     public static void loadLevel(Game gameData, String filePath) {
         File file = new File(filePath);
         int x=0, y=0;
@@ -102,6 +112,11 @@ public class MazeManager {
         }
     }
 
+    /**
+     * getXSize
+     * @param filePath filepaht
+     * @return int
+     */
     public static int getXSize(String filePath) {
         int x=0;
         int content;
@@ -115,6 +130,12 @@ public class MazeManager {
         }
         return x-1;
     }
+
+    /**
+     * getYSize
+     * @param filePath filepath
+     * @return int
+     */
     public static int getYSize(String filePath) {
         int y=0;
         int content;

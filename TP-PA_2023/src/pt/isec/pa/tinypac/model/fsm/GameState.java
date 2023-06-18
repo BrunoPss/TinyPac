@@ -9,5 +9,24 @@ package pt.isec.pa.tinypac.model.fsm;
  */
 
 public enum GameState {
-    INITSTATE, NORMALRUNSTATE, PAUSEDSTATE, GAME_ENDSTATE, SUPERPACMANSTATE
+    /**
+     * INITSTATE
+     */
+    INITSTATE,
+    /**
+     * NORMALRUNSTATE
+     */
+    NORMALRUNSTATE,
+    /**
+     * PAUSEDSTATE
+     */
+    PAUSEDSTATE,
+    /**
+     * GAME_ENDSTATE
+     */
+    GAME_ENDSTATE,
+    /**
+     * SUPERPACMANSTATE
+     */
+    SUPERPACMANSTATE
 }

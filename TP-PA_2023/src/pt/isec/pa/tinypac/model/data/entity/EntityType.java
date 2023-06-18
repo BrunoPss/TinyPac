@@ -9,5 +9,8 @@ package pt.isec.pa.tinypac.model.data.entity;
  */
 
 public enum EntityType {
+    /**
+     * Entity Type
+     */
     PACMAN, BLINKY, CLYDE, INKY, PINKY
 }
