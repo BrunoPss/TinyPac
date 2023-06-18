@@ -2,6 +2,14 @@ package pt.isec.pa.tinypac.model.data.player;
 
 import java.io.Serializable;
 
+/**
+ * Player Class
+ * <p>Class that represents the Current Player</p>
+ *
+ * @author Bruno Guiomar
+ * @version 1.0.0
+ */
+
 public class Player implements Serializable, Comparable<Player> {
     //Internal Data
     private int place;
@@ -9,6 +17,12 @@ public class Player implements Serializable, Comparable<Player> {
     private int points;
 
     //Constructor
+    /**
+     * Constructor
+     * @param place place in top5
+     * @param userName name of the player
+     * @param points player's points
+     */
     public Player(int place, String userName, int points) {
         this.place = place;
         this.userName = userName;
@@ -18,15 +32,31 @@ public class Player implements Serializable, Comparable<Player> {
     //Get Methods
     public int getPlace() { return this.place; }
     public String getUserName() { return this.userName; }
+
+    /**
+     * Gets Player points
+     * @return current points
+     */
     public int getPoints() { return this.points; }
 
     //Set Methods
+
+    /**
+     * Sets Player Place
+     * @param place current place
+     */
     public void setPlace(int place) { this.place = place; }
 
     //Methods
 
 
     //Overrides
+
+    /**
+     * Compares two player object points
+     * @param o the object to be compared.
+     * @return comparation result
+     */
     @Override
     public int compareTo(Player o) {
         int comparePoints = ((Player)o).getPoints();

@@ -6,6 +6,13 @@ import javafx.stage.Stage;
 import pt.isec.pa.tinypac.model.GameManager;
 import pt.isec.pa.tinypac.Main;
 
+/**
+ * Main JavaFx Class
+ * <p>Class that represents the Main JavaFx</p>
+ * @author Bruno Guiomar
+ * @version 1.0.0
+ */
+
 public class MainJFX extends Application {
     //Internal Data
     GameManager gameManager;

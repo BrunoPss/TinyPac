@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 import pt.isec.pa.tinypac.model.data.game.Game;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
 public class GameContextTest {
     @Test
@@ -108,6 +109,20 @@ public class GameContextTest {
         assertEquals(GameState.GAME_ENDSTATE, state);
     }
     @Test
+    public void changeEndStateTest2() {
+        //Arrange
+        GameContext fsm = new GameContext();
+        Game game = new Game(fsm);
+        fsm.changeState(new GameEndState(fsm, game));
+
+        //Act
+        boolean testVar = fsm.up();
+
+        //Assert
+        assertFalse(testVar);
+    }
+
+    @Test
     public void changeSuperStateTest1() {
         //Arrange
         GameContext fsm = new GameContext();
@@ -120,5 +135,19 @@ public class GameContextTest {
 
         //Assert
         assertEquals(GameState.NORMALRUNSTATE, state);
+    }
+
+    @Test
+    public void changeSuperStateTest2() {
+        //Arrange
+        GameContext fsm = new GameContext();
+        Game game = new Game(fsm);
+        fsm.changeState(new SuperPacmanState(fsm, game));
+
+        //Act
+        boolean testVar = fsm.enhancedPacman();
+
+        //Assert
+        assertFalse(testVar);
     }
 }

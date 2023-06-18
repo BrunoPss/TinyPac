@@ -6,18 +6,24 @@ import pt.isec.pa.tinypac.model.data.maze.IMazeElement;
 import java.io.Serializable;
 
 /**
- * Element Abstract Base Class
- * <p>Abstract Base class that represents all concrete Elements</p>
- *
- * @ author Bruno Guiomar
- * @ version 1.0.0
+ * Element Class
+ * <p>Abstract Class that represents the Elements</p>
+ * @author Bruno Guiomar
+ * @version 1.0.0
  */
 
 public abstract class Element implements IMazeElement, Serializable {
     //Internal Data
+    /**
+     * Data Model
+     */
     protected Game gameData;
 
     //Constructor
+    /**
+     * Constructor
+     * @param gameData DataModel
+     */
     public Element(Game gameData) {
         this.gameData = gameData;
     }

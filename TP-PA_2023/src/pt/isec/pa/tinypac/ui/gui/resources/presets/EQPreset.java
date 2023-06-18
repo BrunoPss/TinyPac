@@ -3,9 +3,22 @@ package pt.isec.pa.tinypac.ui.gui.resources.presets;
 import javafx.scene.media.AudioEqualizer;
 import javafx.scene.media.EqualizerBand;
 
+/**
+ * Eq Preset Enumeration
+ * <p>Enumeration that contains all Eq Presets</p>
+ *
+ * @author Bruno Guiomar
+ * @version 1.0.0
+ */
+
 public enum EQPreset {
     NONE, ACOUSTIC, ELECTRONIC, LATIN, PIANO, POP, ROCK, BASS_BOOSTER, HIGH_BOOSTER;
 
+    /**
+     * Loads a EQ Preset
+     * @param preset preset Type
+     * @param equalizer preset equalizer
+     */
     public static void loadPreset(EQPreset preset, AudioEqualizer equalizer) {
         switch (preset) {
             case NONE -> {

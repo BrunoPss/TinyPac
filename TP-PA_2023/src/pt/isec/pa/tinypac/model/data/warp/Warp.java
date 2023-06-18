@@ -26,9 +26,9 @@ public class Warp extends Element {
     //Constructor
     /**
      * Constructor
-     * @param gameData Game Data Model
-     * @param x Initial Position (x cord.)
-     * @param y Initial Position (y cord.)
+     * @param gameData DataModel
+     * @param x coordinate (x)
+     * @param y coordinate (y)
      */
     public Warp(Game gameData, int x, int y) {
         super(gameData);
@@ -37,11 +37,20 @@ public class Warp extends Element {
     }
 
     //Get Methods
-    public int getX() { return x; }
-    public int getY() { return y; }
     /**
-     * Gets the complementary Warp Element
-     * @return Reference to the complementary Warp Element
+     * Get X Coordinate
+     * @return x - current x position
+     */
+    public int getX() { return x; }
+    /**
+     * Get Y Coordinate
+     * @return y - current y position
+     */
+    public int getY() { return y; }
+
+    /**
+     * Get Complementary Warp
+     * @return complementary Warp
      */
     public Warp getComplementWarp() {
         return this.complementWarp;
@@ -50,8 +59,8 @@ public class Warp extends Element {
     //Set Methods
 
     /**
-     * Sets the complementary Warp Element
-     * @param warp Complementary Warp Element
+     * Sets the complementary Warp
+     * @param warp complementary warp
      */
     public void setComplementWarp(Element warp) {
         this.complementWarp = (Warp) warp;
@@ -63,7 +72,7 @@ public class Warp extends Element {
     //Overrides
     /**
      * Gets Element Symbol
-     * @return Symbol of the Element (Warp)
+     * @return Element Symbol (Warp)
      */
     @Override
     public char getSymbol() {

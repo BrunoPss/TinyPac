@@ -1,11 +1,10 @@
 package pt.isec.pa.tinypac.ui.gui;
 
+import javafx.application.Platform;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.media.AudioEqualizer;
-import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
-import javafx.util.Duration;
 import pt.isec.pa.tinypac.model.GameManager;
 import pt.isec.pa.tinypac.ui.gui.resources.MediaManager;
 import pt.isec.pa.tinypac.ui.gui.resources.presets.EQPreset;
@@ -14,6 +13,13 @@ import pt.isec.pa.tinypac.ui.gui.uistates.*;
 import java.net.URISyntaxException;
 import java.util.Objects;
 
+/**
+ * Root Pane Class
+ * <p>Class that represents the Root Pane</p>
+ * @author Bruno Guiomar
+ * @version 1.0.0
+ */
+
 public class RootPane extends BorderPane {
     //Internal Data
     GameManager gameManager;
@@ -21,6 +27,10 @@ public class RootPane extends BorderPane {
     AudioEqualizer equalizer;
 
     //Constructor
+    /**
+     * Constructor
+     * @param gameManager Game Manager
+     */
     public RootPane(GameManager gameManager) {
         this.gameManager = gameManager;
 
@@ -65,7 +75,8 @@ public class RootPane extends BorderPane {
     }
     private void registerHandlers() {
         //Property ChangeListener
-        gameManager.addPropertyChangeListener( evt -> { update();});
+        //gameManager.addPropertyChangeListener( evt -> { update();});
+        gameManager.addPropertyChangeListener(evt -> Platform.runLater(this::update));
 
         //Music End ActionEvent
         mPlayer.setOnEndOfMedia( this::nextSong );

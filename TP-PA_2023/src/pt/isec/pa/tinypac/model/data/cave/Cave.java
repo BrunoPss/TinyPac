@@ -6,9 +6,8 @@ import pt.isec.pa.tinypac.model.data.game.Game;
 /**
  * Cave Class
  * <p>Class that represents the Cave Element</p>
- *
- * @ author Bruno Guiomar
- * @ version 1.0.0
+ * @author Bruno Guiomar
+ * @version 1.0.0
  */
 
 public class Cave extends Element {
@@ -19,6 +18,10 @@ public class Cave extends Element {
     public static final char SYMBOL = 'y';
 
     //Constructor
+    /**
+     * Constructor
+     * @param gameData DataModel
+     */
     public Cave(Game gameData) {
         super(gameData);
     }
@@ -35,7 +38,7 @@ public class Cave extends Element {
     //Overrides
     /**
      * Gets Element Symbol
-     * @return Symbol of the Element (Cave)
+     * @return Element Symbol (Cave)
      */
     @Override
     public char getSymbol() {

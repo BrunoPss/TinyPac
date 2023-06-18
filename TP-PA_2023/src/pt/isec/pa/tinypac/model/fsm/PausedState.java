@@ -2,11 +2,23 @@ package pt.isec.pa.tinypac.model.fsm;
 
 import pt.isec.pa.tinypac.model.data.game.Game;
 
+/**
+ * Paused State Class
+ * <p>Class that represents the Paused State</p>
+ * @author Bruno Guiomar
+ * @version 1.0.0
+ */
+
 public class PausedState extends GameStateAdapter {
     //Internal Data
     GameState previousState;
 
     //Constructor
+    /**
+     * Constructor
+     * @param context Game Context
+     * @param gameData DataModel
+     */
     PausedState(GameContext context, Game gameData, GameState previousState) {
         super(context, gameData);
         this.previousState = previousState;
@@ -23,6 +35,9 @@ public class PausedState extends GameStateAdapter {
 
 
     //Overrides
+    /**
+     * @see pt.isec.pa.tinypac.model.fsm.IGameState
+     */
     @Override
     public boolean resumeGame() {
         if (previousState == GameState.NORMALRUNSTATE)

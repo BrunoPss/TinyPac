@@ -4,16 +4,21 @@ import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
 import pt.isec.pa.tinypac.model.GameManager;
 import pt.isec.pa.tinypac.model.fsm.GameState;
-import pt.isec.pa.tinypac.ui.gui.resources.ImageManager;
 
 import java.util.Optional;
+
+/**
+ * Game End UI Class
+ * <p>Class that represents the Game End UI</p>
+ * @author Bruno Guiomar
+ * @version 1.0.0
+ */
 
 public class GameEndUI extends BorderPane {
     //Internal Data
@@ -24,6 +29,10 @@ public class GameEndUI extends BorderPane {
     private Label levelInfo, scoreInfo, lifesInfo;
 
     //Constructor
+    /**
+     * Constructor
+     * @param gameManager Game Manager
+     */
     public GameEndUI(GameManager gameManager) {
         this.gameManager = gameManager;
 

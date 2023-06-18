@@ -1,12 +1,9 @@
 package pt.isec.pa.tinypac.ui.gui.uistates;
 
-import com.googlecode.lanterna.gui2.WindowListenerAdapter;
 import javafx.application.Platform;
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
-import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -16,15 +13,13 @@ import javafx.scene.control.Label;
 import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.InputEvent;
 import javafx.scene.input.KeyCode;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import pt.isec.pa.tinypac.model.GameManager;
-//NAO SE PODE IMPORTAR COISAS DO MODELO DE DADOS (APAGAR)
+//Necessario apenas para receber uma propriedade estatica
 import pt.isec.pa.tinypac.model.data.ball.Ball;
 import pt.isec.pa.tinypac.model.data.element.ElementType;
 import pt.isec.pa.tinypac.model.data.entity.EntityType;
@@ -32,15 +27,18 @@ import pt.isec.pa.tinypac.model.data.superBall.SuperBall;
 import pt.isec.pa.tinypac.model.data.pacman.Pacman;
 import pt.isec.pa.tinypac.model.data.warp.Warp;
 import pt.isec.pa.tinypac.model.data.fruit.Fruit;
-import pt.isec.pa.tinypac.model.data.ghosts.Inky;
-import pt.isec.pa.tinypac.model.data.ghosts.Blinky;
-import pt.isec.pa.tinypac.model.data.ghosts.Clyde;
-import pt.isec.pa.tinypac.model.data.ghosts.Pinky;
 import pt.isec.pa.tinypac.model.data.wall.Wall;
 import pt.isec.pa.tinypac.model.fsm.GameState;
 import pt.isec.pa.tinypac.ui.gui.resources.ImageManager;
 
 import java.awt.*;
+
+/**
+ * Main Game UI Class
+ * <p>Class that represents the Main Game UI</p>
+ * @author Bruno Guiomar
+ * @version 1.0.0
+ */
 
 public class MainGameUI extends BorderPane {
     //Internal Data
@@ -59,6 +57,10 @@ public class MainGameUI extends BorderPane {
     private String blinkyIMGName, clydeIMGName, inkyIMGName, pinkyIMGName;
 
     //Constructor
+    /**
+     * Constructor
+     * @param gameManager Game Manager
+     */
     public MainGameUI(GameManager gameManager) {
         this.gameManager = gameManager;
         this.blinkyIMGName = "blinky.png";

@@ -1,11 +1,6 @@
 package pt.isec.pa.tinypac.model.data.element;
 
 import pt.isec.pa.tinypac.model.data.game.Game;
-import pt.isec.pa.tinypac.model.data.ghosts.Blinky;
-import pt.isec.pa.tinypac.model.data.ghosts.Clyde;
-import pt.isec.pa.tinypac.model.data.ghosts.Inky;
-import pt.isec.pa.tinypac.model.data.ghosts.Pinky;
-import pt.isec.pa.tinypac.model.data.pacman.Pacman;
 import pt.isec.pa.tinypac.model.data.ball.Ball;
 import pt.isec.pa.tinypac.model.data.cave.Cave;
 import pt.isec.pa.tinypac.model.data.fruit.Fruit;
@@ -17,9 +12,8 @@ import pt.isec.pa.tinypac.model.data.warp.Warp;
 /**
  * Element Factory Class
  * <p>Class Factory that creates new Elements</p>
- *
- * @ author Bruno Guiomar
- * @ version 1.0.0
+ * @author Bruno Guiomar
+ * @version 1.0.0
  */
 
 public class ElementFactory {

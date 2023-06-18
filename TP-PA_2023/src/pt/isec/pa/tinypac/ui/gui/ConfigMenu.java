@@ -1,5 +1,6 @@
 package pt.isec.pa.tinypac.ui.gui;
 
+import javafx.application.Platform;
 import javafx.geometry.NodeOrientation;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -10,18 +11,29 @@ import pt.isec.pa.tinypac.ui.gui.resources.presets.ColorPreset;
 import pt.isec.pa.tinypac.ui.gui.resources.presets.EQPreset;
 import pt.isec.pa.tinypac.ui.gui.resources.presets.MusicPreset;
 
+/**
+ * Config Menu UI Class
+ * <p>Class that represents the Config Menu UI</p>
+ * @author Bruno Guiomar
+ * @version 1.0.0
+ */
+
 public class ConfigMenu extends VBox {
     //Internal Data
-    GameManager gameManager;
-    TabPane tPane;
-    ChoiceBox<ColorPreset> colorThemeSelector;
-    ChoiceBox<EQPreset> soundEqSelector;
-    ChoiceBox<MusicPreset> musicThemeSelector;
-    Slider volumeSlider;
-    Label volumeValue;
-    CheckBox muteButton;
+    private GameManager gameManager;
+    private TabPane tPane;
+    private ChoiceBox<ColorPreset> colorThemeSelector;
+    private ChoiceBox<EQPreset> soundEqSelector;
+    private ChoiceBox<MusicPreset> musicThemeSelector;
+    private Slider volumeSlider;
+    private Label volumeValue;
+    private CheckBox muteButton;
 
     //Constructor
+    /**
+     * Constructor
+     * @param gameManager Game Manager
+     */
     public ConfigMenu(GameManager gameManager) {
         this.gameManager = gameManager;
 
@@ -126,7 +138,8 @@ public class ConfigMenu extends VBox {
 
     private void registerHandlers() {
         //Property Change Listener
-        gameManager.addPropertyChangeListener( evt -> { update();});
+        //gameManager.addPropertyChangeListener( evt -> { update();});
+        gameManager.addPropertyChangeListener(evt -> Platform.runLater(this::update));
 
         //Color Theme ActionEvent
         colorThemeSelector.setOnAction(event -> {

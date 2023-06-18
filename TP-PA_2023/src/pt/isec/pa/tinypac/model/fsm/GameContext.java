@@ -1,30 +1,21 @@
 package pt.isec.pa.tinypac.model.fsm;
 
-import pt.isec.pa.tinypac.gameengine.IGameEngine;
-import pt.isec.pa.tinypac.gameengine.IGameEngineEvolve;
 import pt.isec.pa.tinypac.model.data.element.ElementType;
 import pt.isec.pa.tinypac.model.data.entity.Directions;
 import pt.isec.pa.tinypac.model.data.entity.EntityType;
 import pt.isec.pa.tinypac.model.data.game.Game;
-import pt.isec.pa.tinypac.model.data.pacman.Pacman;
 import pt.isec.pa.tinypac.model.data.player.Player;
 import pt.isec.pa.tinypac.ui.gui.resources.presets.ColorPreset;
 import pt.isec.pa.tinypac.ui.gui.resources.presets.EQPreset;
 import pt.isec.pa.tinypac.ui.gui.resources.presets.MusicPreset;
 
-import java.io.FileOutputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.List;
 
 public class GameContext implements Serializable {
     //Internal Data
     IGameState state;
     Game gameData;
-    //Maze maze;
-    //Dictionary<ElementType, Element> entities;
 
     //Constructor
     public GameContext() {
@@ -38,9 +29,6 @@ public class GameContext implements Serializable {
         return state.getState();
     }
     public int getPacmanPoints() { return gameData.getPacmanPoints(); }
-    //public String getPacmanDirection() { return entities.get(ElementType.PACMAN).getCurrentDirection(); }
-    //public String getPacmanPosition() { return entities.get(ElementType.PACMAN).getCurrentPosition(); }
-    //public char[][] getMaze() { return gameData.getMaze().getMaze(); }
     public int getMazeHeight() { return gameData.getMazeHeight(); }
     public int getMazeLength() { return gameData.getMazeLength(); }
     public char getMazeElement(int x, int y) {
@@ -110,7 +98,7 @@ public class GameContext implements Serializable {
 
     //Overrides
     public void update() {
-        state.update();  //Implementacao Correta
+        state.update();
     }
 
     //Internal Functions
