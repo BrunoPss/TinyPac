@@ -1,18 +1,24 @@
 package pt.isec.pa.tinypac.model.fsm;
 import pt.isec.pa.tinypac.model.data.entity.Directions;
-import pt.isec.pa.tinypac.model.data.entity.EntityType;
 import pt.isec.pa.tinypac.model.data.game.Game;
 import pt.isec.pa.tinypac.model.data.maze.MazeManager;
-import pt.isec.pa.tinypac.model.data.pacman.Pacman;
-import pt.isec.pa.tinypac.model.fsm.GameContext;
-import pt.isec.pa.tinypac.model.fsm.GameState;
-import pt.isec.pa.tinypac.model.fsm.GameStateAdapter;
-import pt.isec.pa.tinypac.model.fsm.NormalRunState;
+
+/**
+ * Init State State Class
+ * <p>Class that represents the Init State</p>
+ * @author Bruno Guiomar
+ * @version 1.0.0
+ */
 
 public class InitState extends GameStateAdapter {
     //Internal Data
 
     //Constructor
+    /**
+     * Constructor
+     * @param context Game Context
+     * @param gameData DataModel
+     */
     InitState(GameContext context, Game gameData) {
         super(context, gameData);
         System.out.println("INIT STATE");
@@ -33,6 +39,9 @@ public class InitState extends GameStateAdapter {
 
 
     //Overrides
+    /**
+     * @see pt.isec.pa.tinypac.model.fsm.IGameState
+     */
     @Override
     public boolean up() {
         gameData.setPacmanDirection(Directions.UP);

@@ -21,9 +21,7 @@ public class Wall extends Element {
     //Constructor
     /**
      * Constructor
-     * @param gameData Game Data Model
-     * @param x Initial Position (x cord.)
-     * @param y Initial Position (y cord.)
+     * @param gameData DataModel
      */
     public Wall(Game gameData) {
         super(gameData);
@@ -41,7 +39,7 @@ public class Wall extends Element {
     //Overrides
     /**
      * Gets Element Symbol
-     * @return Symbol of the Element (Wall)
+     * @return Element Symbol (Wall)
      */
     @Override
     public char getSymbol() {

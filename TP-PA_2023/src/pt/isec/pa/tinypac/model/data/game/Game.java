@@ -24,14 +24,6 @@ import pt.isec.pa.tinypac.ui.gui.resources.presets.MusicPreset;
 import java.io.*;
 import java.util.*;
 
-/**
- * Game Data Model
- * <p>Class that contains and manages all game data</p>
- *
- * @ author Bruno Guiomar
- * @ version 1.0.0
- */
-
 public class Game implements Serializable {
     //Internal Data
     private Map<EntityType, Entity> entities;

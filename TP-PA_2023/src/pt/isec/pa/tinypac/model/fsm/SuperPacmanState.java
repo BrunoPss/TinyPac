@@ -1,15 +1,25 @@
 package pt.isec.pa.tinypac.model.fsm;
 
 import pt.isec.pa.tinypac.model.data.entity.Directions;
-import pt.isec.pa.tinypac.model.data.entity.EntityType;
 import pt.isec.pa.tinypac.model.data.game.Game;
-import pt.isec.pa.tinypac.model.data.pacman.Pacman;
+
+/**
+ * Super Pacman State Class
+ * <p>Class that represents the Super Pacman State</p>
+ * @author Bruno Guiomar
+ * @version 1.0.0
+ */
 
 public class SuperPacmanState extends GameStateAdapter {
     //Internal Data
 
 
     //Constructor
+    /**
+     * Constructor
+     * @param context Game Context
+     * @param gameData DataModel
+     */
     SuperPacmanState(GameContext context, Game gameData) {
         super(context, gameData);
         System.out.println("SUPER PACMAN STATE");
@@ -27,15 +37,14 @@ public class SuperPacmanState extends GameStateAdapter {
 
 
     //Overrides
+    /**
+     * @see pt.isec.pa.tinypac.model.fsm.IGameState
+     */
     @Override
     public boolean update() {
-        //if (gameData.findValidInstants().contains(gameData.getEvolveInstants())) {
-            gameData.checkEnchancedMode();
-            gameData.checkLevelChange();
-            //gameData.checkGameEnd();
-            gameData.evolveEntities();
-        //}
-        //gameData.incrementEvolveInstants();
+        gameData.checkEnchancedMode();
+        gameData.checkLevelChange();
+        gameData.evolveEntities();
         return true;
     }
 

@@ -5,25 +5,29 @@ import pt.isec.pa.tinypac.model.data.entity.Entity;
 import pt.isec.pa.tinypac.model.data.game.Game;
 
 /**
- * Ghost Abstract Base Class
- * <p>Abstract Base class that represents all concrete Ghosts</p>
- *
- * @ author Bruno Guiomar
- * @ version 1.0.0
+ * Ghost Class
+ * <p>Abstract class that represents the Ghosts</p>
+ * @author Bruno Guiomar
+ * @version 1.0.0
  */
 
 abstract public class Ghost extends Entity {
     //Internal Data
-    //protected int initTime = 2; //5
+    /**
+     * Represents the current Direction
+     */
     protected Directions direction;
+    /**
+     * Ghost presence in the cave
+     */
     protected boolean cave = true;
 
     //Constructor
     /**
      * Constructor
-     * @param gameData Game Data Model
-     * @param x Initial Position (x cord.)
-     * @param y Initial Position (y cord.)
+     * @param gameData DataModel
+     * @param x coordinate (x)
+     * @param y coordinate (y)
      */
     public Ghost(Game gameData, int x, int y) {
         super(gameData, x, y);

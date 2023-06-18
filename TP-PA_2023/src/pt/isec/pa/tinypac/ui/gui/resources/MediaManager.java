@@ -1,15 +1,18 @@
 package pt.isec.pa.tinypac.ui.gui.resources;
 
-import javafx.scene.image.Image;
 import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
 import pt.isec.pa.tinypac.ui.gui.resources.presets.MusicPreset;
 
-import javax.print.URIException;
 import java.io.File;
-import java.io.InputStream;
 import java.net.URISyntaxException;
 import java.util.*;
+
+/**
+ * Media Manager Class
+ * <p>Class that represents the Media Manager</p>
+ * @author Bruno Guiomar
+ * @version 1.0.0
+ */
 
 public class MediaManager {
     //Internal Data
@@ -28,6 +31,11 @@ public class MediaManager {
 
 
     //Methods
+
+    /**
+     * Loads a Playlist
+     * @param musicPreset music preset
+     */
     public static void loadPlaylist(MusicPreset musicPreset) {
         if (!playList.isEmpty()) {
             playList.clear();
@@ -39,6 +47,12 @@ public class MediaManager {
         }
         Collections.shuffle(playList, rand);
     }
+
+    /**
+     * Gets the media
+     * @param musicPreset music preset
+     * @return Media Object
+     */
     public static Media getMedia(MusicPreset musicPreset) {
         Media media = medias.get(playList.get(currentSong));
 
@@ -52,6 +66,11 @@ public class MediaManager {
         }
         return media;
     }
+
+    /**
+     * Plays the next song in the playlist
+     * @param musicPreset music preset
+     */
     public static void nextSong(MusicPreset musicPreset) {
         if (currentSong < playList.size()-1) {
             currentSong++;

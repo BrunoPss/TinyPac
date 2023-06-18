@@ -1,5 +1,13 @@
 package pt.isec.pa.tinypac.ui.gui.resources.presets;
 
+/**
+ * Color Preset Enumeration
+ * <p>Enumeration that contains all Color Presets</p>
+ *
+ * @author Bruno Guiomar
+ * @version 1.0.0
+ */
+
 public enum ColorPreset {
     COLOR_PRESET1, COLOR_PRESET2, COLOR_PRESET3;
 

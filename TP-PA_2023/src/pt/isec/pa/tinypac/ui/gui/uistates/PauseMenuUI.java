@@ -14,12 +14,23 @@ import pt.isec.pa.tinypac.model.GameManager;
 import pt.isec.pa.tinypac.model.fsm.GameState;
 import pt.isec.pa.tinypac.ui.gui.ConfigMenu;
 
+/**
+ * Pause Menu UI Class
+ * <p>Class that represents the Pause Menu UI</p>
+ * @author Bruno Guiomar
+ * @version 1.0.0
+ */
+
 public class PauseMenuUI extends BorderPane {
     //Internal Data
     private final GameManager gameManager;
     private Button resumeBtn, saveBtn, configBtn, exitBtn;
 
     //Constructor
+    /**
+     * Constructor
+     * @param gameManager Game Manager
+     */
     public PauseMenuUI(GameManager gameManager) {
         this.gameManager = gameManager;
 

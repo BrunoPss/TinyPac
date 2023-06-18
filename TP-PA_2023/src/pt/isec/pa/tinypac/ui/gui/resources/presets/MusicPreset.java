@@ -1,5 +1,13 @@
 package pt.isec.pa.tinypac.ui.gui.resources.presets;
 
+/**
+ * Music Preset Enumeration
+ * <p>Enumeration that contains all Music Presets</p>
+ *
+ * @author Bruno Guiomar
+ * @version 1.0.0
+ */
+
 public enum MusicPreset {
     LOFI, CALM, ELECTRONIC;
 

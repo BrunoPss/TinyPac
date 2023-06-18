@@ -1,27 +1,31 @@
 package pt.isec.pa.tinypac.model.data.ghosts;
 
 import pt.isec.pa.tinypac.model.data.entity.Directions;
-import pt.isec.pa.tinypac.model.data.entity.EntityType;
 import pt.isec.pa.tinypac.model.data.game.Game;
 import pt.isec.pa.tinypac.model.data.maze.IMazeElement;
 import pt.isec.pa.tinypac.model.data.maze.MazeManager;
 
 import java.util.ArrayList;
-import java.util.ListIterator;
 import java.util.Random;
 
 /**
  * Pinky Class
  * <p>Class that represents the Pinky Ghost Element</p>
  *
- * @ author Bruno Guiomar
- * @ version 1.0.0
+ * @author Bruno Guiomar
+ * @version 1.0.0
  */
 
 public class Pinky extends Ghost {
     //Internal Data
+    /**
+     * Symbol of the Element (Pinky)
+     */
     public static final char SYMBOL = 'P';
     private int initTime = 10;
+    /**
+     * State of the Element
+     */
     public static boolean ACTIVE = false;
     private Corners objectiveCorner;
     private int[] objectiveCords;
@@ -31,9 +35,14 @@ public class Pinky extends Ghost {
     private int failedAttempts;
     private ArrayList<int[]> movementLog;
     private int movementIterator = 0;
-    //private ListIterator<int[]> movementIterator;
 
     //Constructor
+    /**
+     * Constructor
+     * @param gameData Game Data Model
+     * @param x Initial Position (x cord.)
+     * @param y Initial Position (y cord.)
+     */
     public Pinky(Game gameData, int x, int y) {
         super(gameData, x, y);
         this.direction = Directions.UP;
@@ -57,6 +66,9 @@ public class Pinky extends Ghost {
 
 
     //Overrides
+    /**
+     * Method that updates and moves the Ghost
+     */
     @Override
     public void move() {
         if (gameData.findValidInstantsGhosts().contains(gameData.getEvolveInstantsGhosts())) {
@@ -632,6 +644,11 @@ public class Pinky extends Ghost {
 
         }
     }
+
+    /**
+     * Gets Element Symbol
+     * @return Symbol of the Element (Pinky)
+     */
     @Override
     public char getSymbol() {
         return 'P';

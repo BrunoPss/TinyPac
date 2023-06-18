@@ -1,28 +1,31 @@
 package pt.isec.pa.tinypac.model.data.ghosts;
 
-import pt.isec.pa.tinypac.gameengine.IGameEngine;
 import pt.isec.pa.tinypac.model.data.entity.Directions;
-import pt.isec.pa.tinypac.model.data.entity.EntityType;
 import pt.isec.pa.tinypac.model.data.game.Game;
 import pt.isec.pa.tinypac.model.data.maze.IMazeElement;
 import pt.isec.pa.tinypac.model.data.maze.MazeManager;
 
 import java.util.ArrayList;
-import java.util.ListIterator;
 import java.util.Random;
 
 /**
  * Inky Class
  * <p>Class that represents the Inky Ghost Element</p>
  *
- * @ author Bruno Guiomar
- * @ version 1.0.0
+ * @author Bruno Guiomar
+ * @version 1.0.0
  */
 
 public class Inky extends Ghost {
     //Internal Data
+    /**
+     * Symbol of the Element (Blinky)
+     */
     public static final char SYMBOL = 'I';
     private int initTime = 8;
+    /**
+     * State of the Element
+     */
     public static boolean ACTIVE = false;
     private Corners objectiveCorner;
     private int[] objectiveCords;
@@ -32,9 +35,14 @@ public class Inky extends Ghost {
     private int failedAttempts;
     private ArrayList<int[]> movementLog;
     private int movementIterator = 0;
-    //private ListIterator<int[]> movementIterator;
 
     //Constructor
+    /**
+     * Constructor
+     * @param gameData Game Data Model
+     * @param x Initial Position (x cord.)
+     * @param y Initial Position (y cord.)
+     */
     public Inky(Game gameData, int x, int y) {
         super(gameData, x, y);
         this.direction = Directions.UP;
@@ -58,6 +66,9 @@ public class Inky extends Ghost {
 
 
     //Overrides
+    /**
+     * Method that updates and moves the Ghost
+     */
     @Override
     public void move() {
         if (gameData.findValidInstantsGhosts().contains(gameData.getEvolveInstantsGhosts())) {
@@ -634,6 +645,10 @@ public class Inky extends Ghost {
         }
     }
 
+    /**
+     * Gets Element Symbol
+     * @return Symbol of the Element (Inky)
+     */
     @Override
     public char getSymbol() {
         return 'I';

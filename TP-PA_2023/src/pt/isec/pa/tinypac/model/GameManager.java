@@ -19,7 +19,6 @@ public class GameManager {
     //Internal Data
     private GameContext fsm;
     PropertyChangeSupport pcs;
-    //IGameEngine gameEngine;
 
     //Constructor
     public GameManager() {

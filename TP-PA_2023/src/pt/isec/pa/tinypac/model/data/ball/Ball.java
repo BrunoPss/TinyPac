@@ -6,9 +6,8 @@ import pt.isec.pa.tinypac.model.data.game.Game;
 /**
  * Ball Class
  * <p>Class that represents the Ball Element</p>
- *
- * @ author Bruno Guiomar
- * @ version 1.0.0
+ * @author Bruno Guiomar
+ * @version 1.0.0
  */
 
 public class Ball extends Element {
@@ -19,6 +18,11 @@ public class Ball extends Element {
     public static final char SYMBOL = 'o';
 
     //Constructor
+
+    /**
+     * Constructor
+     * @param gameData DataModel
+     */
     public Ball(Game gameData) {
         super(gameData);
     }
@@ -33,9 +37,10 @@ public class Ball extends Element {
 
 
     //Overrides
+
     /**
      * Gets Element Symbol
-     * @return Symbol of the Element (Ball)
+     * @return Element Symbol (Ball)
      */
     @Override
     public char getSymbol() {

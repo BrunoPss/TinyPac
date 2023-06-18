@@ -1,33 +1,36 @@
 package pt.isec.pa.tinypac.model.data.ghosts;
 
 import pt.isec.pa.tinypac.model.data.entity.Directions;
-import pt.isec.pa.tinypac.model.data.entity.EntityType;
 import pt.isec.pa.tinypac.model.data.game.Game;
 import pt.isec.pa.tinypac.model.data.maze.IMazeElement;
 
 import java.util.ArrayList;
-import java.util.ListIterator;
 import java.util.Random;
 
 /**
  * Blinky Class
  * <p>Class that represents the Blinky Ghost Element</p>
  *
- * @ author Bruno Guiomar
- * @ version 1.0.0
+ * @author Bruno Guiomar
+ * @version 1.0.0
  */
 
 public class Blinky extends Ghost {
     //Internal Data
+    /**
+     * Symbol of the Element (Blinky)
+     */
     public static final char SYMBOL = 'B';
     private int initTime = 4;
+    /**
+     * State of the Element
+     */
     public static boolean ACTIVE = false;
     private IMazeElement auxF;
     private IMazeElement auxA;
     private Random rnd;
     private ArrayList<int[]> movementLog;
     private int movementIterator = 0;
-    //private ListIterator<int[]> movementIterator;
 
     //Constructor
     /**
@@ -56,6 +59,10 @@ public class Blinky extends Ghost {
 
 
     //Overrides
+
+    /**
+     * Method that updates and moves the Ghost
+     */
     @Override
     public void move() {
         if (gameData.findValidInstantsGhosts().contains(gameData.getEvolveInstantsGhosts())) {

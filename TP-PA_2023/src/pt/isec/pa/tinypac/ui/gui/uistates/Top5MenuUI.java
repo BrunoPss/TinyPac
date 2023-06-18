@@ -1,8 +1,6 @@
 package pt.isec.pa.tinypac.ui.gui.uistates;
 
 import javafx.application.Platform;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -11,18 +9,27 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import pt.isec.pa.tinypac.model.GameManager;
 import pt.isec.pa.tinypac.model.data.player.Player;
-import pt.isec.pa.tinypac.model.fsm.GameState;
+
+/**
+ * Top5 Menu UI Class
+ * <p>Class that represents the Top5 Menu UI</p>
+ * @author Bruno Guiomar
+ * @version 1.0.0
+ */
 
 public class Top5MenuUI extends BorderPane {
     //Internal Data
     private final GameManager gameManager;
-    Button backButton;
+    private Button backButton;
 
     //Constructor
+    /**
+     * Constructor
+     * @param gameManager Game Manager
+     */
     public Top5MenuUI(GameManager gameManager) {
         this.gameManager = gameManager;
 

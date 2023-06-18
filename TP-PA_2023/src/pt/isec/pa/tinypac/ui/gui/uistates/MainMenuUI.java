@@ -8,25 +8,32 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 import pt.isec.pa.tinypac.model.GameManager;
 import pt.isec.pa.tinypac.ui.gui.ConfigMenu;
 import pt.isec.pa.tinypac.ui.gui.resources.ImageManager;
 
 import java.io.File;
-import java.net.URISyntaxException;
-import java.util.Objects;
 import java.util.Optional;
+
+/**
+ * Main Menu UI Class
+ * <p>Class that represents the Main Menu UI</p>
+ * @author Bruno Guiomar
+ * @version 1.0.0
+ */
 
 public class MainMenuUI extends BorderPane {
     //Internal Data
-    GameManager gameManager;
-    MenuItem aboutItem, configItem;
-    Button btnStart, btnTop5, btnConfig, btnExit;
+    private GameManager gameManager;
+    private MenuItem aboutItem, configItem;
+    private Button btnStart, btnTop5, btnConfig, btnExit;
 
     //Constructor
+    /**
+     * Constructor
+     * @param gameManager Game Manager
+     */
     public MainMenuUI(GameManager gameManager) {
         this.gameManager = gameManager;
 
